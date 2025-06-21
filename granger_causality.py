@@ -3,25 +3,37 @@ import pandas as pd
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import grangercausalitytests
 from scipy.stats import f
+country = 'Canada'  # Change this to the desired country
 
 # --- CONFIGURABLE SECTION ---
 search_terms = [
-    'cough: (United States)',
-    'vaccine: (United States)',
-    'fever: (United States)'
+    f'cough: ({country})',
+    f'vaccine: ({country})',
+    f'fever: ({country})'
 ]  # Choose any subset of these columns
-max_lag = 4  # Number of lags
+max_lag = 1  # Number of lags
 # ----------------------------
+response_var = 'flu_pct_positive'  # The dependent variable in the flu data
 
 # Read the search data and flu data
-df_search = pd.read_csv("ShiHaoYang/multiTimeline-1.csv", skiprows=2)  # skiprows=2 skips the header lines
-df_flu = pd.read_csv("ShiHaoYang/ILINET.csv", skiprows=1)
+df_search = pd.read_csv("ShiHaoYang/multiTimeline-canada.csv", skiprows=2)  # skiprows=2 skips the header lines
+df_flu = pd.read_csv("ShiHaoYang/concatenated_rvdss_data.csv")
+
+#Filter flu data to only those that are national and for flu
+df_flu = df_flu[df_flu['geo_type'] == 'nation']
+df_flu = df_flu.drop(columns=["geo_value", "rsv_pct_positive", "sarscov2_pct_positive", "Season"])
 
 # Parse week and add YEAR/WEEK columns for merging
 df_search['Week'] = pd.to_datetime(df_search['Week'])
 df_search['YEAR'] = df_search['Week'].dt.isocalendar().year
 df_search['WEEK'] = df_search['Week'].dt.isocalendar().week
+df_flu['Week'] = pd.to_datetime(df_flu['time_value'])
+df_flu['YEAR'] = df_flu['Week'].dt.isocalendar().year
+df_flu['WEEK'] = df_flu['Week'].dt.isocalendar().week
+
+print(df_flu[['YEAR', 'WEEK', 'time_value']].head())
 print(df_flu.columns)
+
 # Merge search data into flu data
 df_flu = pd.merge(
     df_flu,
@@ -29,17 +41,20 @@ df_flu = pd.merge(
     on=['YEAR', 'WEEK'],
     how='left'
 )
+#Time Horizon
+df_flu = df_flu[df_flu['YEAR'] >= 2022]  # Filter to only include data from 2022 onwards
 
 # Optionally rename columns for easier access (remove " (United States)" etc.)
 rename_map = {col: col.split(':')[0] for col in search_terms}
 df_flu = df_flu.rename(columns=rename_map)
 search_terms_simple = [col.split(':')[0] for col in search_terms]
 
+
 # Create lagged variables
 flu_lags = []
 all_lags = []
 for lag in range(1, max_lag + 1):
-    df_flu[f'flu_lag{lag}'] = df_flu['% WEIGHTED ILI'].shift(lag)
+    df_flu[f'flu_lag{lag}'] = df_flu[response_var].shift(lag)
     flu_lags.append(f'flu_lag{lag}')
     for term in search_terms_simple:
         lag_col = f'{term}_lag{lag}'
@@ -47,10 +62,13 @@ for lag in range(1, max_lag + 1):
         all_lags.append(lag_col)
 
 df_flu = df_flu.dropna()
-
+print(df_flu)
+print(df_flu[['YEAR', 'WEEK', 'flu_pct_positive', 'cough', 'vaccine', 'fever']].head())
+print(len(df_flu))
+print(df_flu.sort_values(by='flu_pct_positive', ascending=False)[["flu_pct_positive", "cough", "vaccine", "fever"]].head(10))
 # Restricted model: only flu lags
 X_restricted = sm.add_constant(df_flu[flu_lags])
-y = df_flu['% WEIGHTED ILI']
+y = df_flu[response_var]
 model_restricted = sm.OLS(y, X_restricted).fit()
 
 # Unrestricted model: flu lags + all search term lags
@@ -66,7 +84,8 @@ p_value = 1 - f.cdf(F, df1, df2)
 print(f"F-statistic: {F}, p-value: {p_value}")
 
 # Granger causality test for each search term
+
 for term in search_terms_simple:
     print(f"\nGranger causality test for {term}:")
-    data = df_flu[['% WEIGHTED ILI', term]]
+    data = df_flu[[response_var, term]]
     grangercausalitytests(data, maxlag=max_lag)
