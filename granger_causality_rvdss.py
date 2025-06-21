@@ -11,7 +11,7 @@ search_terms = [
     f'vaccine: ({country})',
     f'fever: ({country})'
 ]  # Choose any subset of these columns
-max_lag = 1  # Number of lags
+max_lag = 3  # Number of lags
 # ----------------------------
 response_var = 'flu_pct_positive'  # The dependent variable in the flu data
 
@@ -21,7 +21,6 @@ df_flu = pd.read_csv("ShiHaoYang/concatenated_rvdss_data.csv")
 
 #Filter flu data to only those that are national and for flu
 df_flu = df_flu[df_flu['geo_type'] == 'nation']
-df_flu = df_flu.drop(columns=["geo_value", "rsv_pct_positive", "sarscov2_pct_positive", "Season"])
 
 # Parse week and add YEAR/WEEK columns for merging
 df_search['Week'] = pd.to_datetime(df_search['Week'])
@@ -31,8 +30,8 @@ df_flu['Week'] = pd.to_datetime(df_flu['time_value'])
 df_flu['YEAR'] = df_flu['Week'].dt.isocalendar().year
 df_flu['WEEK'] = df_flu['Week'].dt.isocalendar().week
 
-print(df_flu[['YEAR', 'WEEK', 'time_value']].head())
-print(df_flu.columns)
+#print(df_flu[['YEAR', 'WEEK', 'time']].head())
+#print(df_flu.columns)
 
 # Merge search data into flu data
 df_flu = pd.merge(
@@ -49,7 +48,7 @@ rename_map = {col: col.split(':')[0] for col in search_terms}
 df_flu = df_flu.rename(columns=rename_map)
 search_terms_simple = [col.split(':')[0] for col in search_terms]
 
-
+print(len(df_flu))
 # Create lagged variables
 flu_lags = []
 all_lags = []
@@ -60,12 +59,9 @@ for lag in range(1, max_lag + 1):
         lag_col = f'{term}_lag{lag}'
         df_flu[lag_col] = df_flu[term].shift(lag)
         all_lags.append(lag_col)
-
+df_flu = df_flu.drop(['rsv_pct_positive', 'sarscov2_pct_positive'], axis=1)
 df_flu = df_flu.dropna()
-print(df_flu)
-print(df_flu[['YEAR', 'WEEK', 'flu_pct_positive', 'cough', 'vaccine', 'fever']].head())
-print(len(df_flu))
-print(df_flu.sort_values(by='flu_pct_positive', ascending=False)[["flu_pct_positive", "cough", "vaccine", "fever"]].head(10))
+
 # Restricted model: only flu lags
 X_restricted = sm.add_constant(df_flu[flu_lags])
 y = df_flu[response_var]

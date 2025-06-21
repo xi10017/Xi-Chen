@@ -1,0 +1,71 @@
+164
+F-statistic: 0.33861859266223776, p-value: 0.9607286963165643
+
+Granger causality test for cough:
+
+Granger Causality
+number of lags (no zero) 1
+ssr based F test:         F=1.6491  , p=0.2010  , df_denom=157, df_num=1
+ssr based chi2 test:   chi2=1.6806  , p=0.1948  , df=1
+likelihood ratio test: chi2=1.6718  , p=0.1960  , df=1
+parameter F test:         F=1.6491  , p=0.2010  , df_denom=157, df_num=1
+
+Granger Causality
+number of lags (no zero) 2
+ssr based F test:         F=0.5231  , p=0.5937  , df_denom=154, df_num=2
+ssr based chi2 test:   chi2=1.0802  , p=0.5827  , df=2
+likelihood ratio test: chi2=1.0765  , p=0.5838  , df=2
+parameter F test:         F=0.5231  , p=0.5937  , df_denom=154, df_num=2
+
+Granger Causality
+number of lags (no zero) 3
+ssr based F test:         F=0.3517  , p=0.7880  , df_denom=151, df_num=3
+ssr based chi2 test:   chi2=1.1039  , p=0.7761  , df=3
+likelihood ratio test: chi2=1.1001  , p=0.7771  , df=3
+parameter F test:         F=0.3517  , p=0.7880  , df_denom=151, df_num=3
+
+Granger causality test for vaccine:
+
+Granger Causality
+number of lags (no zero) 1
+ssr based F test:         F=1.4859  , p=0.2247  , df_denom=157, df_num=1
+ssr based chi2 test:   chi2=1.5143  , p=0.2185  , df=1
+likelihood ratio test: chi2=1.5072  , p=0.2196  , df=1
+parameter F test:         F=1.4859  , p=0.2247  , df_denom=157, df_num=1
+
+Granger Causality
+number of lags (no zero) 2
+ssr based F test:         F=0.7574  , p=0.4706  , df_denom=154, df_num=2
+ssr based chi2 test:   chi2=1.5639  , p=0.4575  , df=2
+likelihood ratio test: chi2=1.5563  , p=0.4593  , df=2
+parameter F test:         F=0.7574  , p=0.4706  , df_denom=154, df_num=2
+
+Granger Causality
+number of lags (no zero) 3
+ssr based F test:         F=0.3448  , p=0.7930  , df_denom=151, df_num=3
+ssr based chi2 test:   chi2=1.0823  , p=0.7813  , df=3
+likelihood ratio test: chi2=1.0786  , p=0.7822  , df=3
+parameter F test:         F=0.3448  , p=0.7930  , df_denom=151, df_num=3
+
+Granger causality test for fever:
+
+Granger Causality
+number of lags (no zero) 1
+ssr based F test:         F=0.6080  , p=0.4367  , df_denom=157, df_num=1
+ssr based chi2 test:   chi2=0.6196  , p=0.4312  , df=1
+likelihood ratio test: chi2=0.6184  , p=0.4316  , df=1
+parameter F test:         F=0.6080  , p=0.4367  , df_denom=157, df_num=1
+
+Granger Causality
+number of lags (no zero) 2
+ssr based F test:         F=0.7080  , p=0.4942  , df_denom=154, df_num=2
+ssr based chi2 test:   chi2=1.4619  , p=0.4815  , df=2
+likelihood ratio test: chi2=1.4552  , p=0.4831  , df=2
+parameter F test:         F=0.7080  , p=0.4942  , df_denom=154, df_num=2
+
+Granger Causality
+number of lags (no zero) 3
+ssr based F test:         F=0.4211  , p=0.7381  , df_denom=151, df_num=3
+ssr based chi2 test:   chi2=1.3220  , p=0.7239  , df=3
+likelihood ratio test: chi2=1.3165  , p=0.7252  , df=3
+parameter F test:         F=0.4211  , p=0.7381  , df_denom=151, df_num=3
