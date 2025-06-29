@@ -6,24 +6,22 @@ from scipy.stats import f
 country = 'Canada'  # Change this to the desired country
 
 # --- CONFIGURABLE SECTION ---
-search_terms = [
-    f'cough: ({country})',
-    f'vaccine: ({country})',
-    f'fever: ({country})'
-]  # Choose any subset of these columns
 max_lag = 3  # Number of lags
 # ----------------------------
 response_var = 'flu_pct_positive'  # The dependent variable in the flu data
 
 # Read the search data and flu data
-df_search = pd.read_csv("ShiHaoYang/multiTimeline-canada.csv", skiprows=2)  # skiprows=2 skips the header lines
-df_flu = pd.read_csv("ShiHaoYang/concatenated_rvdss_data.csv")
+df_search = pd.read_csv("ShiHaoYang/Data/all_google_trends_canada_data.csv")  # skiprows=2 skips the header lines
+df_flu = pd.read_csv("ShiHaoYang/Data/concatenated_rvdss_data.csv")
+df_search = df_search.loc[:, (df_search != 0).any(axis=0)]
+
+search_terms = list(df_search.columns[1:])
 
 #Filter flu data to only those that are national and for flu
 df_flu = df_flu[df_flu['geo_type'] == 'nation']
-
+print(df_search.columns)
 # Parse week and add YEAR/WEEK columns for merging
-df_search['Week'] = pd.to_datetime(df_search['Week'])
+df_search['Week'] = pd.to_datetime(df_search['date'])
 df_search['YEAR'] = df_search['Week'].dt.isocalendar().year
 df_search['WEEK'] = df_search['Week'].dt.isocalendar().week
 df_flu['Week'] = pd.to_datetime(df_flu['time_value'])
@@ -40,6 +38,7 @@ df_flu = pd.merge(
     on=['YEAR', 'WEEK'],
     how='left'
 )
+
 #Time Horizon
 df_flu = df_flu[df_flu['YEAR'] >= 2022]  # Filter to only include data from 2022 onwards
 
@@ -59,16 +58,19 @@ for lag in range(1, max_lag + 1):
         lag_col = f'{term}_lag{lag}'
         df_flu[lag_col] = df_flu[term].shift(lag)
         all_lags.append(lag_col)
-df_flu = df_flu.drop(['rsv_pct_positive', 'sarscov2_pct_positive'], axis=1)
+df_flu = df_flu.drop(['sarscov2_pct_positive', 'rsv_pct_positive'], axis=1)
 df_flu = df_flu.dropna()
 
-# Restricted model: only flu lags
-X_restricted = sm.add_constant(df_flu[flu_lags])
+
+# Only use lag columns that exist in df_flu
+existing_flu_lags = [col for col in flu_lags if col in df_flu.columns]
+existing_all_lags = [col for col in all_lags if col in df_flu.columns]
+
+X_restricted = sm.add_constant(df_flu[existing_flu_lags])
 y = df_flu[response_var]
 model_restricted = sm.OLS(y, X_restricted).fit()
 
-# Unrestricted model: flu lags + all search term lags
-X_unrestricted = sm.add_constant(df_flu[flu_lags + all_lags])
+X_unrestricted = sm.add_constant(df_flu[existing_flu_lags + existing_all_lags])
 model_unrestricted = sm.OLS(y, X_unrestricted).fit()
 
 rss_restricted = np.sum(model_restricted.resid ** 2)
@@ -82,6 +84,32 @@ print(f"F-statistic: {F}, p-value: {p_value}")
 # Granger causality test for each search term
 
 for term in search_terms_simple:
+    if term not in df_flu.columns:
+        print(f"Skipping {term}: not in DataFrame")
+        continue
     print(f"\nGranger causality test for {term}:")
     data = df_flu[[response_var, term]]
     grangercausalitytests(data, maxlag=max_lag)
+
+import matplotlib.pyplot as plt
+granger_pvals = []
+valid_terms = []
+for term in search_terms_simple:
+    if term not in df_flu.columns:
+        continue
+    data = df_flu[[response_var, term]]
+    results = grangercausalitytests(data, maxlag=max_lag, verbose=False)
+    min_p = min([results[lag][0]['ssr_ftest'][1] for lag in range(1, max_lag+1)])
+    granger_pvals.append(min_p)
+    valid_terms.append(term)
+
+plt.figure(figsize=(12, 5))
+plt.bar(valid_terms, granger_pvals, color='orange')
+plt.ylabel('Min p-value (across lags)')
+plt.title('Granger Causality Test p-values of rvdss Data in Canada')
+plt.axhline(0.05, color='red', linestyle='--', label='p=0.05')
+plt.xticks(rotation=90, fontsize=8)  # Rotate and shrink font
+plt.tight_layout()
+plt.legend()
+plt.savefig("ShiHaoYang/Results/granger_pvalues_rvdss_canada_plot.png", dpi=300)
+plt.show()
