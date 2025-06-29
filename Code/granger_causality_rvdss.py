@@ -5,7 +5,7 @@ from statsmodels.tsa.stattools import grangercausalitytests
 from scipy.stats import f
 
 # --- CONFIGURABLE SECTION ---
-max_lag = 3  # Number of lags
+max_lag = 5  # Number of lags
 # ----------------------------
 response_var = 'flu_pct_positive'  # The dependent variable in the flu data
 
@@ -26,7 +26,6 @@ df_search['WEEK'] = df_search['Week'].dt.isocalendar().week
 df_flu['Week'] = pd.to_datetime(df_flu['time_value'])
 df_flu['YEAR'] = df_flu['Week'].dt.isocalendar().year
 df_flu['WEEK'] = df_flu['Week'].dt.isocalendar().week
-
 #print(df_flu[['YEAR', 'WEEK', 'time']].head())
 #print(df_flu.columns)
 
@@ -59,7 +58,7 @@ for lag in range(1, max_lag + 1):
         all_lags.append(lag_col)
 df_flu = df_flu.drop(['sarscov2_pct_positive', 'rsv_pct_positive'], axis=1)
 df_flu = df_flu.dropna()
-
+df_flu = df_flu.loc[:, (df_flu != 0).any(axis=0)]
 
 # Only use lag columns that exist in df_flu
 existing_flu_lags = [col for col in flu_lags if col in df_flu.columns]
@@ -86,9 +85,15 @@ for term in search_terms_simple:
     if term not in df_flu.columns:
         print(f"Skipping {term}: not in DataFrame")
         continue
-    print(f"\nGranger causality test for {term}:")
     data = df_flu[[response_var, term]]
-    grangercausalitytests(data, maxlag=max_lag)
+    # Skip if the predictor is constant
+    if data[term].nunique() <= 1:
+        print(f"Skipping {term}: constant after lagging")
+        continue
+    try:
+        grangercausalitytests(data, maxlag=max_lag)
+    except Exception as e:
+        print(f"Skipping {term}: {e}")
 
 import matplotlib.pyplot as plt
 granger_pvals = []
@@ -97,11 +102,18 @@ for term in search_terms_simple:
     if term not in df_flu.columns:
         continue
     data = df_flu[[response_var, term]]
-    results = grangercausalitytests(data, maxlag=max_lag, verbose=False)
-    min_p = min([results[lag][0]['ssr_ftest'][1] for lag in range(1, max_lag+1)])
-    granger_pvals.append(min_p)
-    valid_terms.append(term)
-
+    # Skip if the predictor is constant
+    if data[term].nunique() <= 1:
+        print(f"Skipping {term} in plotting: constant after lagging")
+        continue
+    try:
+        results = grangercausalitytests(data, maxlag=max_lag, verbose=False)
+        min_p = min([results[lag][0]['ssr_ftest'][1] for lag in range(1, max_lag+1)])
+        granger_pvals.append(min_p)
+        valid_terms.append(term)
+    except Exception as e:
+        print(f"Skipping {term} in plotting: {e}")
+    
 plt.figure(figsize=(12, 5))
 plt.bar(valid_terms, granger_pvals, color='orange')
 plt.ylabel('Min p-value (across lags)')

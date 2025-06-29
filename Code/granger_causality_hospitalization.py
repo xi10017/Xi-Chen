@@ -5,7 +5,7 @@ from statsmodels.tsa.stattools import grangercausalitytests
 from scipy.stats import f
 
 # --- CONFIGURABLE SECTION ---
-max_lag = 3  # Number of lags
+max_lag = 5  # Number of lags
 # ----------------------------
 response_var = 'flu'  # The dependent variable in the flu data
 
