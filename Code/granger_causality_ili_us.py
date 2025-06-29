@@ -7,25 +7,23 @@ from scipy.stats import f
 # --- CONFIGURABLE SECTION ---
 max_lag = 3  # Number of lags
 # ----------------------------
-response_var = 'flu'  # The dependent variable in the flu data
+response_var = '% WEIGHTED ILI'  # The dependent variable in the flu data
 
 # Read the search data and flu data
-df_search = pd.read_csv("ShiHaoYang/Data/all_google_trends_canada_data.csv")  # skiprows=2 skips the header lines
-df_flu = pd.read_csv("ShiHaoYang/Data/concatenated_hospitalization_data.csv")
+df_search = pd.read_csv("ShiHaoYang/Data/all_google_trends_us_data.csv")  # skiprows=2 skips the header lines
+df_flu = pd.read_csv("ShiHaoYang/Data/ILINet.csv", skiprows=1)
 df_search = df_search.loc[:, (df_search != 0).any(axis=0)]
 
 search_terms = list(df_search.columns[1:])
 
 #Filter flu data to only those that are national and for flu
-df_flu = df_flu[df_flu['geo_value'] == 'Ontario']
+#df_flu = df_flu[df_flu['geo_value'] == 'Ontario']
 print(df_search.columns)
 # Parse week and add YEAR/WEEK columns for merging
 df_search['Week'] = pd.to_datetime(df_search['date'])
 df_search['YEAR'] = df_search['Week'].dt.isocalendar().year
 df_search['WEEK'] = df_search['Week'].dt.isocalendar().week
-df_flu['Week'] = pd.to_datetime(df_flu['time'])
-df_flu['YEAR'] = df_flu['Week'].dt.isocalendar().year
-df_flu['WEEK'] = df_flu['Week'].dt.isocalendar().week
+
 
 #print(df_flu[['YEAR', 'WEEK', 'time']].head())
 #print(df_flu.columns)
@@ -57,7 +55,7 @@ for lag in range(1, max_lag + 1):
         lag_col = f'{term}_lag{lag}'
         df_flu[lag_col] = df_flu[term].shift(lag)
         all_lags.append(lag_col)
-df_flu = df_flu.drop(['covid', 'rsv'], axis=1)
+#df_flu = df_flu.drop(['covid', 'rsv'], axis=1)
 df_flu = df_flu.dropna()
 df_flu = df_flu.loc[:, (df_flu != 0).any(axis=0)]
 
@@ -105,10 +103,10 @@ for term in search_terms_simple:
 plt.figure(figsize=(12, 5))
 plt.bar(valid_terms, granger_pvals, color='orange')
 plt.ylabel('Min p-value (across lags)')
-plt.title('Granger Causality Test p-values of Hospitalization Data in Canada')
+plt.title('Granger Causality Test p-values of ILI Data in the US')
 plt.axhline(0.05, color='red', linestyle='--', label='p=0.05')
 plt.xticks(rotation=90, fontsize=8)  # Rotate and shrink font
 plt.tight_layout()
 plt.legend()
-plt.savefig("ShiHaoYang/Results/granger_pvalues_hospitalization_canada_plot.png", dpi=300)
+plt.savefig("ShiHaoYang/Results/granger_pvalues_ili_us_plot.png", dpi=300)
 plt.show()

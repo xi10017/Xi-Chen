@@ -41,7 +41,7 @@ all_data = pd.DataFrame()
 # Query each batch
 for i, batch in enumerate(term_batches):
     try:
-        pytrends.build_payload(batch, timeframe='2022-01-01 2024-12-31', geo='CA')
+        pytrends.build_payload(batch, timeframe='2022-01-01 2024-12-31', geo='US')
         df = pytrends.interest_over_time().drop(columns=['isPartial'])
 
         if all_data.empty:
@@ -55,5 +55,5 @@ for i, batch in enumerate(term_batches):
         print(f"Batch {i+1} failed: {e}")
 
 # Save to CSV
-all_data.to_csv("ShiHaoYang/all_google_trends_data.csv")
+all_data.to_csv("ShiHaoYang/Data/all_google_trends_us_data.csv")
 print("Saved to all_google_trends_data.csv")

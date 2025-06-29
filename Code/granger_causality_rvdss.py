@@ -3,7 +3,6 @@ import pandas as pd
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import grangercausalitytests
 from scipy.stats import f
-country = 'Canada'  # Change this to the desired country
 
 # --- CONFIGURABLE SECTION ---
 max_lag = 3  # Number of lags
@@ -106,7 +105,7 @@ for term in search_terms_simple:
 plt.figure(figsize=(12, 5))
 plt.bar(valid_terms, granger_pvals, color='orange')
 plt.ylabel('Min p-value (across lags)')
-plt.title('Granger Causality Test p-values of rvdss Data in Canada')
+plt.title('Granger Causality Test p-values of RVDSS Data in Canada')
 plt.axhline(0.05, color='red', linestyle='--', label='p=0.05')
 plt.xticks(rotation=90, fontsize=8)  # Rotate and shrink font
 plt.tight_layout()
