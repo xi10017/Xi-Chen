@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import grangercausalitytests
+from statsmodels.tools.sm_exceptions import InfeasibleTestError
 from scipy.stats import f
 
 # --- CONFIGURABLE SECTION ---
@@ -10,7 +11,7 @@ max_lag = 5  # Number of lags
 response_var = 'total_flu_positives'  # The dependent variable in the flu data
 
 # Read the search data and flu data
-df_search = pd.read_csv("ShiHaoYang/Data/all_google_trends_us_data.csv")  # skiprows=2 skips the header lines
+df_search = pd.read_csv("ShiHaoYang/Data/trends_us_data.csv")  # skiprows=2 skips the header lines
 df_flu = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs.csv", skiprows=1)
 df_search = df_search.loc[:, (df_search != 0).any(axis=0)]
 flu_case_cols = ['A (2009 H1N1)', 'A (H3)', 'A (Subtyping not Performed)', 'B']
@@ -88,7 +89,16 @@ for term in search_terms_simple:
         continue
     print(f"\nGranger causality test for {term}:")
     data = df_flu[[response_var, term]]
-    grangercausalitytests(data, maxlag=max_lag)
+    # Check for constant values before running test
+    if data[term].nunique() <= 1 or data[response_var].nunique() <= 1:
+        print(f"Skipping {term}: constant values detected")
+        continue
+    try:
+        grangercausalitytests(data, maxlag=max_lag)
+    except InfeasibleTestError as e:
+        print(f"Error for {term}: {e}")
+    except Exception as e:
+        print(f"Unexpected error for {term}: {e}")
 
 import matplotlib.pyplot as plt
 granger_pvals = []
@@ -97,18 +107,39 @@ for term in search_terms_simple:
     if term not in df_flu.columns:
         continue
     data = df_flu[[response_var, term]]
-    results = grangercausalitytests(data, maxlag=max_lag, verbose=False)
-    min_p = min([results[lag][0]['ssr_ftest'][1] for lag in range(1, max_lag+1)])
-    granger_pvals.append(min_p)
-    valid_terms.append(term)
+    # Check for constant values
+    if data[term].nunique() <= 1 or data[response_var].nunique() <= 1:
+        continue
+    try:
+        results = grangercausalitytests(data, maxlag=max_lag, verbose=False)
+        min_p = min([results[lag][0]['ssr_ftest'][1] for lag in range(1, max_lag+1)])
+        granger_pvals.append(min_p)
+        valid_terms.append(term)
+    except InfeasibleTestError:
+        print(f"Skipping {term}: InfeasibleTestError")
+    except Exception as e:
+        print(f"Error processing {term}: {e}")
 
-plt.figure(figsize=(12, 5))
-plt.bar(valid_terms, granger_pvals, color='orange')
-plt.ylabel('Min p-value (across lags)')
-plt.title('Granger Causality Test p-values of ICL/NREVSS Data in the US')
-plt.axhline(0.05, color='red', linestyle='--', label='p=0.05')
-plt.xticks(rotation=90, fontsize=8)  # Rotate and shrink font
-plt.tight_layout()
-plt.legend()
-plt.savefig("ShiHaoYang/Results/granger_pvalues_icl_nrevss_plot.png", dpi=300)
-plt.show()
+if valid_terms:
+    plt.figure(figsize=(16, 8))  # Increased figure size
+    bars = plt.bar(valid_terms, granger_pvals, color='orange', alpha=0.7)
+    plt.ylabel('Min p-value (across lags)', fontsize=12)
+    plt.title('Granger Causality Test p-values of ICL/NREVSS Data in the US', fontsize=14, pad=20)
+    plt.axhline(0.05, color='red', linestyle='--', label='p=0.05', linewidth=2)
+    
+    # Improve x-axis labels
+    plt.xticks(rotation=45, fontsize=2, ha='right')  # Made font size much smaller
+    
+    # Add value labels on bars
+    for bar, pval in zip(bars, granger_pvals):
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+                f'{pval:.3f}', ha='center', va='bottom', fontsize=3, rotation=90)
+    
+    plt.legend(fontsize=12)
+    plt.grid(axis='y', alpha=0.3)
+    plt.tight_layout()
+    plt.savefig("ShiHaoYang/Results/granger_pvalues_icl_nrevss_us_plot.png", dpi=300, bbox_inches='tight')
+    plt.show()
+else:
+    print("No valid terms found for plotting")
