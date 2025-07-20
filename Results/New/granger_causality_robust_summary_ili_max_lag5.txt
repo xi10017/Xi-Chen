@@ -1,0 +1,30 @@
+Granger Causality Robust Analysis (ILI) - max_lag=5
+
+Total terms tested: 140
+Consistently significant: 22 (15.7%)
+Sometimes significant: 0 (0.0%)
+Never significant: 118 (84.3%)
+
+All significant terms (p < 0.05):
+   1. alka seltzer cold and cough + cold vs sinus infection + flu vs stomach flu + food poisoning vs stomach flu + how long does stomach flu last + incubation period cold + incubation period for cold + incubation period for stomach flu + incubation period stomach flu + is stomach flu contagious + norovirus stomach flu + painful cough + stomach flu contagious + stomach flu fever + stomach flu medicine + stomach flu treatment + stomach flu with fever + symptoms of the stomach flu + tylenol cold and sinus + what is stomach flu: p=0.000110
+   2. food poisoning symptoms: p=0.002284
+   3. chest cold: p=0.002346
+   4. pneumonia symptoms: p=0.002467
+   5. symptoms of pneumonia: p=0.005231
+   6. walking pneumonia: p=0.006645
+   7. flu texas: p=0.007092
+   8. pneumonia: p=0.009500
+   9. rsv symptoms: p=0.009618
+  10. vomiting: p=0.012570
+  11. robitussin: p=0.013235
+  12. /m/0n073: p=0.013669
+  13. best cold medicine: p=0.017143
+  14. stomach flu symptoms: p=0.017988
+  15. food poisoning: p=0.021692
+  16. /m/01b_21: p=0.022495
+  17. /m/06n3pj: p=0.025579
+  18. stomach flu: p=0.028571
+  19. avian flu humans + avian flu in chickens + avian flu in humans + avian flu michigan + avian flu symptoms in chickens + bird flu avian influenza + bird flu texas + flu type a incubation period + symptoms of avian flu + what is avian flu: p=0.037293
+  20. symptoms of cold: p=0.037313
+  21. normal body temperature: p=0.043713
+  22. flu stomach pain: p=0.048613

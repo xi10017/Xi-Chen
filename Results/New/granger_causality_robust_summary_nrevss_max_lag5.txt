@@ -1,0 +1,47 @@
+Granger Causality Robust Analysis (NREVSS) - max_lag=5
+
+Total terms tested: 140
+Consistently significant: 39 (27.9%)
+Sometimes significant: 0 (0.0%)
+Never significant: 101 (72.1%)
+
+All significant terms (p < 0.05):
+   1. what is the flu: p=0.000006
+   2. low body: p=0.000033
+   3. /m/06n3pj: p=0.000896
+   4. what is a fever: p=0.001211
+   5. flu test: p=0.001429
+   6. human temperature: p=0.001501
+   7. robitussin: p=0.001576
+   8. how long contagious: p=0.002115
+   9. pneumonia symptoms: p=0.002116
+  10. expectorant: p=0.005461
+  11. stomach flu: p=0.005778
+  12. normal body: p=0.008533
+  13. stomach flu symptoms: p=0.009745
+  14. best cough medicine: p=0.010108
+  15. fever symptoms: p=0.010878
+  16. best over the counter flu medicine + cold and flu symptoms + cold symptoms vs flu symptoms + cold vs flu symptoms + cure the flu + do i have the flu + early flu symptoms + fight the flu + flu complications + flu contagious period + flu duration + flu germs + flu in children + flu incubation period + flu length + flu medicine over the counter + flu no fever + flu recovery + flu remedy + flu report + flu symptoms cough + flu symptoms treatment + flu symptoms without fever + flu treatments + get over the flu + get rid of the flu + how is the flu spread + how to get rid of the flu + how to treat flu + how to treat the flu + incubation period flu a + incubation period for flu + incubation period for flu a + incubation period for the flu + incubation period of flu + incubation period of the flu + influenza incubation + influenza incubation period + is influenza the flu + is the flu a virus + over the counter flu + over the counter flu medicine + over the counter medicine for flu + period flu symptoms + remedies for flu + remedies for the flu + respiratory flu + signs of the flu + symptoms for the flu + treat the flu + treating flu + treating the flu + treatment for flu + treatment for the flu + what are the symptoms of the flu + what is period flu + what to do if you have the flu + whats the flu: p=0.011081
+  17. the flu virus: p=0.011615
+  18. /m/0b2cnj: p=0.012123
+  19. fever with flu: p=0.014537
+  20. the flue: p=0.014802
+  21. /m/0cjf0: p=0.015306
+  22. tessalon: p=0.015615
+  23. /m/01b_21: p=0.017138
+  24. /m/028tns: p=0.017425
+  25. chest cold: p=0.017795
+  26. flu incubation: p=0.018148
+  27. best cold medicine: p=0.021163
+  28. pneumonia: p=0.024858
+  29. vomiting: p=0.026479
+  30. the flu symptoms: p=0.030034
+  31. walking pneumonia: p=0.034038
+  32. symptoms of pneumonia: p=0.036886
+  33. the flu: p=0.038074
+  34. fever and chills: p=0.040398
+  35. influenza symptoms: p=0.040663
+  36. flu treatment: p=0.046286
+  37. best medicine for cold: p=0.046760
+  38. alka seltzer cold and cough + cold vs sinus infection + flu vs stomach flu + food poisoning vs stomach flu + how long does stomach flu last + incubation period cold + incubation period for cold + incubation period for stomach flu + incubation period stomach flu + is stomach flu contagious + norovirus stomach flu + painful cough + stomach flu contagious + stomach flu fever + stomach flu medicine + stomach flu treatment + stomach flu with fever + symptoms of the stomach flu + tylenol cold and sinus + what is stomach flu: p=0.048607
+  39. food poisoning symptoms: p=0.049570

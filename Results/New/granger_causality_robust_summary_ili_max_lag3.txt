@@ -1,0 +1,46 @@
+Granger Causality Robust Analysis (ILI) - max_lag=3
+
+Total terms tested: 140
+Consistently significant: 38 (27.1%)
+Sometimes significant: 0 (0.0%)
+Never significant: 102 (72.9%)
+
+All significant terms (p < 0.05):
+   1. alka seltzer cold and cough + cold vs sinus infection + flu vs stomach flu + food poisoning vs stomach flu + how long does stomach flu last + incubation period cold + incubation period for cold + incubation period for stomach flu + incubation period stomach flu + is stomach flu contagious + norovirus stomach flu + painful cough + stomach flu contagious + stomach flu fever + stomach flu medicine + stomach flu treatment + stomach flu with fever + symptoms of the stomach flu + tylenol cold and sinus + what is stomach flu: p=0.000023
+   2. pneumonia symptoms: p=0.000087
+   3. symptoms of pneumonia: p=0.000177
+   4. pneumonia: p=0.000202
+   5. chest cold: p=0.000289
+   6. walking pneumonia: p=0.000387
+   7. flu texas: p=0.001849
+   8. /m/06n3pj: p=0.002889
+   9. stomach flu symptoms: p=0.004191
+  10. avian flu humans + avian flu in chickens + avian flu in humans + avian flu michigan + avian flu symptoms in chickens + bird flu avian influenza + bird flu texas + flu type a incubation period + symptoms of avian flu + what is avian flu: p=0.004276
+  11. /m/0n073: p=0.005779
+  12. cold flu: p=0.006463
+  13. /m/01b_21: p=0.006972
+  14. food poisoning symptoms: p=0.008247
+  15. tylenol extra strength: p=0.008526
+  16. bronchitis: p=0.009931
+  17. stomach flu: p=0.010427
+  18. dry cough: p=0.010819
+  19. cold and cough: p=0.011548
+  20. cough and sore throat: p=0.013093
+  21. best cold medicine: p=0.014499
+  22. tessalon: p=0.014902
+  23. influenza symptoms: p=0.016064
+  24. the flue: p=0.018468
+  25. avian flu: p=0.023549
+  26. h1n1: p=0.025350
+  27. /m/0b76bty: p=0.026562
+  28. rsv symptoms: p=0.027060
+  29. cold symptoms: p=0.027324
+  30. upper respiratory: p=0.027834
+  31. tussin: p=0.034699
+  32. symptoms of cold: p=0.036054
+  33. acute bronchitis: p=0.036539
+  34. best cough medicine: p=0.038400
+  35. best medicine for cold: p=0.039898
+  36. symptoms of bronchitis: p=0.043235
+  37. epidemic: p=0.049222
+  38. /m/0683jy: p=0.049867

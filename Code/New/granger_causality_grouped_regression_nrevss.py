@@ -109,7 +109,7 @@ def main():
     print(f"Data loaded: {len(df)} observations")
     
     # Parameters
-    max_lag = 5
+    max_lag = 2
     response_var = 'total_flu_positives'
     
     # Get all search terms (exclude flu data columns)
@@ -251,9 +251,28 @@ def main():
     
     results_df.to_csv(f'ShiHaoYang/Results/New/granger_causality_robust_results_nrevss_max_lag{max_lag}.csv', index=False)
     
+    # Write summary txt file
+    summary_lines = []
+    summary_lines.append(f"Granger Causality Robust Analysis (NREVSS) - max_lag={max_lag}\n")
+    summary_lines.append(f"Total terms tested: {len(search_terms)}")
+    summary_lines.append(f"Consistently significant: {len(consistently_sig)} ({len(consistently_sig)/len(search_terms)*100:.1f}%)")
+    summary_lines.append(f"Sometimes significant: {len(sometimes_sig)} ({len(sometimes_sig)/len(search_terms)*100:.1f}%)")
+    summary_lines.append(f"Never significant: {len(never_sig)} ({len(never_sig)/len(search_terms)*100:.1f}%)\n")
+    summary_lines.append("All significant terms (p < 0.05):")
+    significant_terms = [(term, results) for term, results in term_results.items() if results['individual_p'] < 0.05]
+    significant_terms.sort(key=lambda x: x[1]['individual_p'])
+    if significant_terms:
+        for i, (term, results) in enumerate(significant_terms, 1):
+            summary_lines.append(f"  {i:2d}. {term}: p={results['individual_p']:.6f}")
+    else:
+        summary_lines.append("  None")
+    with open(f'ShiHaoYang/Results/New/granger_causality_robust_summary_nrevss_max_lag{max_lag}.txt', 'w') as f:
+        f.write('\n'.join(summary_lines))
+    
     print(f"\nResults saved to:")
     print(f"- ShiHaoYang/Results/New/granger_causality_robust_analysis_nrevss_max_lag{max_lag}.png")
     print(f"- ShiHaoYang/Results/New/granger_causality_robust_results_nrevss_max_lag{max_lag}.csv")
+    print(f"- ShiHaoYang/Results/New/granger_causality_robust_summary_nrevss_max_lag{max_lag}.txt")
     
     print(f"\nSummary:")
     print(f"- Total terms tested: {len(search_terms)}")

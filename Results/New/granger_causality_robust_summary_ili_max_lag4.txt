@@ -1,0 +1,47 @@
+Granger Causality Robust Analysis (ILI) - max_lag=4
+
+Total terms tested: 140
+Consistently significant: 39 (27.9%)
+Sometimes significant: 0 (0.0%)
+Never significant: 101 (72.1%)
+
+All significant terms (p < 0.05):
+   1. alka seltzer cold and cough + cold vs sinus infection + flu vs stomach flu + food poisoning vs stomach flu + how long does stomach flu last + incubation period cold + incubation period for cold + incubation period for stomach flu + incubation period stomach flu + is stomach flu contagious + norovirus stomach flu + painful cough + stomach flu contagious + stomach flu fever + stomach flu medicine + stomach flu treatment + stomach flu with fever + symptoms of the stomach flu + tylenol cold and sinus + what is stomach flu: p=0.000011
+   2. chest cold: p=0.000131
+   3. pneumonia symptoms: p=0.001053
+   4. flu texas: p=0.001725
+   5. stomach flu symptoms: p=0.001881
+   6. symptoms of pneumonia: p=0.001977
+   7. pneumonia: p=0.002314
+   8. food poisoning symptoms: p=0.002588
+   9. /m/0n073: p=0.003229
+  10. walking pneumonia: p=0.004143
+  11. flu stomach pain: p=0.004883
+  12. /m/06n3pj: p=0.004907
+  13. /m/01b_21: p=0.005358
+  14. avian flu humans + avian flu in chickens + avian flu in humans + avian flu michigan + avian flu symptoms in chickens + bird flu avian influenza + bird flu texas + flu type a incubation period + symptoms of avian flu + what is avian flu: p=0.007831
+  15. robitussin: p=0.009079
+  16. rsv symptoms: p=0.009247
+  17. vomiting: p=0.010421
+  18. best cold medicine: p=0.010659
+  19. tessalon: p=0.015286
+  20. cold and cough: p=0.016956
+  21. stomach flu: p=0.017606
+  22. best medicine for cold: p=0.017808
+  23. flu medicine: p=0.018765
+  24. bronchitis: p=0.021274
+  25. food poisoning: p=0.022310
+  26. cold symptoms: p=0.023022
+  27. cold flu: p=0.024050
+  28. tylenol extra strength: p=0.027534
+  29. influenza symptoms: p=0.030514
+  30. upper respiratory: p=0.030954
+  31. normal body temperature: p=0.031924
+  32. flu and fever: p=0.036551
+  33. the flue: p=0.037293
+  34. cough and sore throat: p=0.038899
+  35. tussin: p=0.041124
+  36. dry cough: p=0.041971
+  37. /m/0683jy: p=0.042704
+  38. strep: p=0.046580
+  39. h1n1: p=0.048987

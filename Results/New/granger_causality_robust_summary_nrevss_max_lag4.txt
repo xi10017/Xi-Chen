@@ -1,0 +1,52 @@
+Granger Causality Robust Analysis (NREVSS) - max_lag=4
+
+Total terms tested: 140
+Consistently significant: 44 (31.4%)
+Sometimes significant: 0 (0.0%)
+Never significant: 96 (68.6%)
+
+All significant terms (p < 0.05):
+   1. what is the flu: p=0.000023
+   2. pneumonia symptoms: p=0.000130
+   3. flu test: p=0.000188
+   4. stomach flu symptoms: p=0.000214
+   5. tessalon: p=0.000307
+   6. stomach flu: p=0.000406
+   7. /m/0n073: p=0.001313
+   8. how long contagious: p=0.001494
+   9. pneumonia: p=0.001767
+  10. walking pneumonia: p=0.001943
+  11. best cough medicine: p=0.002034
+  12. expectorant: p=0.002239
+  13. flu stomach pain: p=0.002467
+  14. chest cold: p=0.002548
+  15. symptoms of stomach flu: p=0.002895
+  16. /m/028tns: p=0.003002
+  17. symptoms of pneumonia: p=0.003325
+  18. low body: p=0.003616
+  19. what is a fever: p=0.004429
+  20. the flu: p=0.005611
+  21. human temperature: p=0.005956
+  22. rsv symptoms: p=0.007321
+  23. /m/06n3pj: p=0.007485
+  24. the flu symptoms: p=0.007919
+  25. influenza symptoms: p=0.008101
+  26. /m/0683jy: p=0.008957
+  27. alka seltzer cold and cough + cold vs sinus infection + flu vs stomach flu + food poisoning vs stomach flu + how long does stomach flu last + incubation period cold + incubation period for cold + incubation period for stomach flu + incubation period stomach flu + is stomach flu contagious + norovirus stomach flu + painful cough + stomach flu contagious + stomach flu fever + stomach flu medicine + stomach flu treatment + stomach flu with fever + symptoms of the stomach flu + tylenol cold and sinus + what is stomach flu: p=0.009285
+  28. fever with flu: p=0.010471
+  29. flu a symptoms: p=0.010619
+  30. advil cold and flu + allergies vs cold + best cold and flu medicine + best cold flu medicine + best medicine for cold and flu + best medicine for flu and cold + body aches no fever + children's tylenol + cold and flu alka seltzer + cold flu medicine + coricidin cold and flu + cough and cold medicine + cough and flu medicine + dayquil cold and flu + dayquil severe cold and flu + daytime cold and flu + equate cold and flu + fever breaks + flu and cough medicine + flu cough medicine + how to break a fever + how to bring a fever down + is stomach flu going around + is the flu going around + kids cold and flu + kids flu medicine + medicine for cold and flu + medicine for fever + mucinex cold and flu + mucinex cough medicine + mucinex fast max + mucinex max cold and flu + mucinex night shift + mucinex sinus max + mucinex sore throat + nighttime cold and flu + nyquil cold and flu + nyquil cold and flu severe + nyquil severe cold and flu + reduce a fever + severe cold and flu + severe cold and flu medicine + severe flu medicine + stomach flu going around + symptoms of stomach bug + theraflu cold and flu + tylenol cold and flu + tylenol cold flu + tylenol cough and cold + tylenol for cold and flu + tylenol severe cold and flu + type a vs type b + vicks cold and flu: p=0.010976
+  31. /m/01b_21: p=0.011251
+  32. the flu virus: p=0.012978
+  33. best medicine for cold: p=0.015330
+  34. normal body: p=0.015578
+  35. cold symptoms: p=0.015765
+  36. best over the counter flu medicine + cold and flu symptoms + cold symptoms vs flu symptoms + cold vs flu symptoms + cure the flu + do i have the flu + early flu symptoms + fight the flu + flu complications + flu contagious period + flu duration + flu germs + flu in children + flu incubation period + flu length + flu medicine over the counter + flu no fever + flu recovery + flu remedy + flu report + flu symptoms cough + flu symptoms treatment + flu symptoms without fever + flu treatments + get over the flu + get rid of the flu + how is the flu spread + how to get rid of the flu + how to treat flu + how to treat the flu + incubation period flu a + incubation period for flu + incubation period for flu a + incubation period for the flu + incubation period of flu + incubation period of the flu + influenza incubation + influenza incubation period + is influenza the flu + is the flu a virus + over the counter flu + over the counter flu medicine + over the counter medicine for flu + period flu symptoms + remedies for flu + remedies for the flu + respiratory flu + signs of the flu + symptoms for the flu + treat the flu + treating flu + treating the flu + treatment for flu + treatment for the flu + what are the symptoms of the flu + what is period flu + what to do if you have the flu + whats the flu: p=0.020628
+  37. cold flu: p=0.022932
+  38. symptoms of cold: p=0.024321
+  39. best cold medicine: p=0.026329
+  40. upper respiratory: p=0.028715
+  41. sinus infections: p=0.034977
+  42. sinus: p=0.035126
+  43. tussin: p=0.041704
+  44. flu medicine: p=0.048053

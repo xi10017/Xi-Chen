@@ -1,0 +1,56 @@
+Granger Causality Robust Analysis (ILI) - max_lag=2
+
+Total terms tested: 140
+Consistently significant: 48 (34.3%)
+Sometimes significant: 0 (0.0%)
+Never significant: 92 (65.7%)
+
+All significant terms (p < 0.05):
+   1. pneumonia symptoms: p=0.000001
+   2. symptoms of pneumonia: p=0.000002
+   3. alka seltzer cold and cough + cold vs sinus infection + flu vs stomach flu + food poisoning vs stomach flu + how long does stomach flu last + incubation period cold + incubation period for cold + incubation period for stomach flu + incubation period stomach flu + is stomach flu contagious + norovirus stomach flu + painful cough + stomach flu contagious + stomach flu fever + stomach flu medicine + stomach flu treatment + stomach flu with fever + symptoms of the stomach flu + tylenol cold and sinus + what is stomach flu: p=0.000002
+   4. pneumonia: p=0.000002
+   5. walking pneumonia: p=0.000005
+   6. chest cold: p=0.000006
+   7. /m/06n3pj: p=0.000040
+   8. /m/0n073: p=0.000133
+   9. stomach flu symptoms: p=0.000144
+  10. cold and cough: p=0.000212
+  11. /m/01b_21: p=0.000333
+  12. bronchitis: p=0.000433
+  13. best cold medicine: p=0.000776
+  14. tussin: p=0.000964
+  15. stomach flu: p=0.001005
+  16. cold flu: p=0.001154
+  17. dry cough: p=0.001201
+  18. best cough medicine: p=0.001346
+  19. cough and sore throat: p=0.001468
+  20. best medicine for cold: p=0.001539
+  21. rsv symptoms: p=0.001731
+  22. symptoms of bronchitis: p=0.002574
+  23. the flue: p=0.002646
+  24. cold symptoms: p=0.003023
+  25. tessalon: p=0.003405
+  26. upper respiratory: p=0.004452
+  27. /m/0416v7: p=0.005517
+  28. acute bronchitis: p=0.005745
+  29. tylenol extra strength: p=0.006111
+  30. /m/0683jy: p=0.006780
+  31. symptoms of stomach flu: p=0.006956
+  32. symptoms of cold: p=0.007505
+  33. flu stomach pain: p=0.009652
+  34. congestion medicine: p=0.010176
+  35. advil cold and flu + allergies vs cold + best cold and flu medicine + best cold flu medicine + best medicine for cold and flu + best medicine for flu and cold + body aches no fever + children's tylenol + cold and flu alka seltzer + cold flu medicine + coricidin cold and flu + cough and cold medicine + cough and flu medicine + dayquil cold and flu + dayquil severe cold and flu + daytime cold and flu + equate cold and flu + fever breaks + flu and cough medicine + flu cough medicine + how to break a fever + how to bring a fever down + is stomach flu going around + is the flu going around + kids cold and flu + kids flu medicine + medicine for cold and flu + medicine for fever + mucinex cold and flu + mucinex cough medicine + mucinex fast max + mucinex max cold and flu + mucinex night shift + mucinex sinus max + mucinex sore throat + nighttime cold and flu + nyquil cold and flu + nyquil cold and flu severe + nyquil severe cold and flu + reduce a fever + severe cold and flu + severe cold and flu medicine + severe flu medicine + stomach flu going around + symptoms of stomach bug + theraflu cold and flu + tylenol cold and flu + tylenol cold flu + tylenol cough and cold + tylenol for cold and flu + tylenol severe cold and flu + type a vs type b + vicks cold and flu: p=0.010753
+  36. food poisoning symptoms: p=0.012127
+  37. i have the flu: p=0.016495
+  38. avian flu humans + avian flu in chickens + avian flu in humans + avian flu michigan + avian flu symptoms in chickens + bird flu avian influenza + bird flu texas + flu type a incubation period + symptoms of avian flu + what is avian flu: p=0.026651
+  39. signs of flu: p=0.031552
+  40. stomach virus: p=0.032327
+  41. flu children: p=0.032553
+  42. /m/0b76bty: p=0.037360
+  43. influenza symptoms: p=0.039587
+  44. stomach flu virus: p=0.040343
+  45. epidemic: p=0.041967
+  46. flu headache: p=0.042905
+  47. cold flu symptoms: p=0.043549
+  48. /m/03t8j0: p=0.048327
