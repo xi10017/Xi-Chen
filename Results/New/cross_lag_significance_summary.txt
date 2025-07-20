@@ -1,0 +1,118 @@
+CROSS-LAG SIGNIFICANCE ANALYSIS SUMMARY
+==================================================
+
+Total analyses: 8 (4 lags × 2 datasets)
+Total significant terms found: 337
+Unique terms: 90
+
+TERMS BY CONSISTENCY LEVEL:
+------------------------------
+
+8/8 analyses (100.0% consistency):
+  • chest cold (avg p-value: 0.003287)
+  • stomach flu symptoms (avg p-value: 0.004764)
+  • /m/06n3pj (avg p-value: 0.005329)
+  • symptoms of pneumonia (avg p-value: 0.007730)
+  • pneumonia symptoms (avg p-value: 0.010845)
+  • alka seltzer cold and cough + cold vs sinus infection + flu vs stomach flu + food poisoning vs stomach flu + how long does stomach flu last + incubation period cold + incubation period for cold + incubation period for stomach flu + incubation period stomach flu + is stomach flu contagious + norovirus stomach flu + painful cough + stomach flu contagious + stomach flu fever + stomach flu medicine + stomach flu treatment + stomach flu with fever + symptoms of the stomach flu + tylenol cold and sinus + what is stomach flu (avg p-value: 0.014954)
+
+7/8 analyses (87.5% consistency):
+  • /m/0n073 (avg p-value: 0.004766)
+  • tessalon (avg p-value: 0.007245)
+  • /m/01b_21 (avg p-value: 0.010558)
+  • pneumonia (avg p-value: 0.011834)
+  • walking pneumonia (avg p-value: 0.013879)
+  • stomach flu (avg p-value: 0.014786)
+  • best cold medicine (avg p-value: 0.016872)
+
+6/8 analyses (75.0% consistency):
+  • rsv symptoms (avg p-value: 0.010255)
+  • symptoms of cold (avg p-value: 0.020517)
+  • the flue (avg p-value: 0.021004)
+  • cold symptoms (avg p-value: 0.021094)
+  • influenza symptoms (avg p-value: 0.022927)
+  • tussin (avg p-value: 0.025074)
+
+5/8 analyses (62.5% consistency):
+  • best cough medicine (avg p-value: 0.010437)
+  • robitussin (avg p-value: 0.012321)
+  • cold flu (avg p-value: 0.014954)
+  • food poisoning symptoms (avg p-value: 0.014963)
+  • bronchitis (avg p-value: 0.019130)
+  • /m/0683jy (avg p-value: 0.023128)
+  • upper respiratory (avg p-value: 0.024238)
+  • best medicine for cold (avg p-value: 0.024267)
+
+4/8 analyses (50.0% consistency):
+  • what is the flu (avg p-value: 0.000008)
+  • flu test (avg p-value: 0.000421)
+  • low body (avg p-value: 0.001515)
+  • what is a fever (avg p-value: 0.002003)
+  • human temperature (avg p-value: 0.002431)
+  • symptoms of stomach flu (avg p-value: 0.006416)
+  • best over the counter flu medicine + cold and flu symptoms + cold symptoms vs flu symptoms + cold vs flu symptoms + cure the flu + do i have the flu + early flu symptoms + fight the flu + flu complications + flu contagious period + flu duration + flu germs + flu in children + flu incubation period + flu length + flu medicine over the counter + flu no fever + flu recovery + flu remedy + flu report + flu symptoms cough + flu symptoms treatment + flu symptoms without fever + flu treatments + get over the flu + get rid of the flu + how is the flu spread + how to get rid of the flu + how to treat flu + how to treat the flu + incubation period flu a + incubation period for flu + incubation period for flu a + incubation period for the flu + incubation period of flu + incubation period of the flu + influenza incubation + influenza incubation period + is influenza the flu + is the flu a virus + over the counter flu + over the counter flu medicine + over the counter medicine for flu + period flu symptoms + remedies for flu + remedies for the flu + respiratory flu + signs of the flu + symptoms for the flu + treat the flu + treating flu + treating the flu + treatment for flu + treatment for the flu + what are the symptoms of the flu + what is period flu + what to do if you have the flu + whats the flu (avg p-value: 0.008148)
+  • normal body (avg p-value: 0.008946)
+  • the flu symptoms (avg p-value: 0.009542)
+  • the flu (avg p-value: 0.011188)
+  • the flu virus (avg p-value: 0.014078)
+  • cold and cough (avg p-value: 0.015207)
+  • dry cough (avg p-value: 0.016018)
+  • flu stomach pain (avg p-value: 0.016404)
+  • avian flu humans + avian flu in chickens + avian flu in humans + avian flu michigan + avian flu symptoms in chickens + bird flu avian influenza + bird flu texas + flu type a incubation period + symptoms of avian flu + what is avian flu (avg p-value: 0.019013)
+  • cough and sore throat (avg p-value: 0.020651)
+  • h1n1 (avg p-value: 0.027110)
+
+3/8 analyses (37.5% consistency):
+  • how long contagious (avg p-value: 0.001245)
+  • flu texas (avg p-value: 0.003555)
+  • expectorant (avg p-value: 0.006669)
+  • flu a symptoms (avg p-value: 0.007485)
+  • /m/028tns (avg p-value: 0.008987)
+  • advil cold and flu + allergies vs cold + best cold and flu medicine + best cold flu medicine + best medicine for cold and flu + best medicine for flu and cold + body aches no fever + children's tylenol + cold and flu alka seltzer + cold flu medicine + coricidin cold and flu + cough and cold medicine + cough and flu medicine + dayquil cold and flu + dayquil severe cold and flu + daytime cold and flu + equate cold and flu + fever breaks + flu and cough medicine + flu cough medicine + how to break a fever + how to bring a fever down + is stomach flu going around + is the flu going around + kids cold and flu + kids flu medicine + medicine for cold and flu + medicine for fever + mucinex cold and flu + mucinex cough medicine + mucinex fast max + mucinex max cold and flu + mucinex night shift + mucinex sinus max + mucinex sore throat + nighttime cold and flu + nyquil cold and flu + nyquil cold and flu severe + nyquil severe cold and flu + reduce a fever + severe cold and flu + severe cold and flu medicine + severe flu medicine + stomach flu going around + symptoms of stomach bug + theraflu cold and flu + tylenol cold and flu + tylenol cold flu + tylenol cough and cold + tylenol for cold and flu + tylenol severe cold and flu + type a vs type b + vicks cold and flu (avg p-value: 0.012682)
+  • /m/0b2cnj (avg p-value: 0.013882)
+  • tylenol extra strength (avg p-value: 0.014057)
+  • vomiting (avg p-value: 0.016490)
+  • fever with flu (avg p-value: 0.017715)
+  • /m/03t8j0 (avg p-value: 0.018795)
+  • /m/0cjf0 (avg p-value: 0.024408)
+  • flu incubation (avg p-value: 0.027227)
+  • flu treatment (avg p-value: 0.027829)
+  • flu medicine (avg p-value: 0.031911)
+
+2/8 analyses (25.0% consistency):
+  • difference in flu type a and b + flu b incubation period + flu b symptoms + flu b treatment + flu type a vs b + flu type a vs type b + flu type b symptoms + flu type b vs a + influenza b symptoms + symptoms of flu b + symptoms of flu type b + symptoms of influenza b + the flu vs a cold + type a and b flu + type a flu vs type b flu + type b flu symptoms + what is flu b + what is flu b symptoms + what is type a and b flu (avg p-value: 0.000804)
+  • /m/09gh4jl + best flu medicine + best medicine for flu + best medicine for flu symptoms + best medicine for the flu + best over the counter medicine for flu + cough after flu + cough from flu + cough with flu + dry cough flu + exposed to flu + fever vs flu + fever with the flu + flu a and b symptoms + flu a contagious + flu a vs b symptoms + flu a vs flu b + flu a vs flu b symptoms + flu and cough + flu but no fever + flu how long are you contagious + flu lasts + flu medicine tamiflu + flu relief + flu symptoms medicine + flu type a symptoms + flu vs fever + flu with no fever + flu without fever + having the flu + how long is flu contagious + how long is the flu + how long is the flu contagious + how to treat the flu at home + influenza a and b + influenza a symptoms + influenza contagious + influenza treatment + medicine for flu + medicine for flu symptoms + medicine for the flu + rapid flu + stomach bug or flu + symptoms of influenza + symptoms of influenza a + tamiflu medicine + test for the flu + the flu type a + type a flu + type a flu contagious + type a flu symptoms + what is flu type a (avg p-value: 0.003888)
+  • flu like symptoms (avg p-value: 0.009956)
+  • cure flu (avg p-value: 0.013508)
+  • /m/0416v7 (avg p-value: 0.014683)
+  • avian flu california + avian flu symptoms in humans + avian influenza symptoms + best cold and flu medicine for adults + best cough medicine for flu + best medicine for flu and cough + best over the counter cold and flu medicine + children's mucinex cold and flu + cold and flu medicine for adults + current flu symptoms 2024 + cvs cold and flu medicine + flu gestation period + flu medicine for kids + flu no cough + flu reports + flu symptoms 2024 adults + human avian flu + influenza b symptoms in adults + mucinex cold and flu ingredients + mucinex cold and flu liquid + mucinex fast max cold flu and sore throat + mucinex fast-max cold and flu + mucinex nightshift cold and flu + mucinex pills + new avian flu + new flu symptoms 2024 + nighttime cold and flu medicine + period flu reddit + period flu sore throat + symptoms of bird flu in humans + symptoms of flu type a + symptoms of the bird flu + the bird flu symptoms + tylenol cold and flu day and night + tylenol cold and flu pills + tylenol cold and flu pregnancy + tylenol cold and flu severe liquid + tylenol cold and flu severe night + tylenol cold and flu walmart + tylenol nighttime cold and flu + tylenol severe cold and flu liquid + type a flu treatment + walgreens cold and flu + walgreens cold and flu medicine (avg p-value: 0.018231)
+  • i have the flu (avg p-value: 0.019709)
+  • acute bronchitis (avg p-value: 0.021142)
+  • food poisoning (avg p-value: 0.022001)
+  • symptoms of bronchitis (avg p-value: 0.022905)
+  • signs of flu (avg p-value: 0.022967)
+  • fever symptoms (avg p-value: 0.026335)
+  • treat flu (avg p-value: 0.027973)
+  • cold flu symptoms (avg p-value: 0.028698)
+  • /m/0b76bty (avg p-value: 0.031961)
+  • break a fever (avg p-value: 0.034189)
+  • normal body temperature (avg p-value: 0.037819)
+  • sinus infections (avg p-value: 0.040343)
+  • flu and fever (avg p-value: 0.042622)
+  • epidemic (avg p-value: 0.045594)
+
+1/8 analyses (12.5% consistency):
+  • congestion medicine (avg p-value: 0.010176)
+  • avian flu (avg p-value: 0.023549)
+  • flu cough (avg p-value: 0.030341)
+  • stomach virus (avg p-value: 0.032327)
+  • flu children (avg p-value: 0.032553)
+  • sinus (avg p-value: 0.035126)
+  • stomach flu virus (avg p-value: 0.040343)
+  • fever and chills (avg p-value: 0.040398)
+  • flu headache (avg p-value: 0.042905)
+  • fever reducer (avg p-value: 0.042998)
+  • strep (avg p-value: 0.046580)
+
+
+Detailed results saved to: cross_lag_significance_analysis.csv
