@@ -7,8 +7,8 @@ from scipy.stats import f
 import matplotlib.pyplot as plt
 
 # --- CONFIGURABLE SECTION ---
-max_lag = 2  # Number of lags
-max_terms = 80  # Maximum number of search terms to use (set to None to use all)
+max_lag = 5  # Number of lags
+max_terms = 20  # Maximum number of search terms to use (set to None to use all)
 # ----------------------------
 response_var = 'total_flu_positives'  # The dependent variable in the flu data
 
