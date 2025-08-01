@@ -25,7 +25,7 @@ all_data = pd.DataFrame()
 
 for i, batch in enumerate(batches):
     try:
-        pytrends.build_payload(batch, timeframe='2022-01-01 2024-12-31', geo='US')
+        pytrends.build_payload(batch, timeframe='2004-01-01 2024-12-31', geo='US')
         df = pytrends.interest_over_time().drop(columns=['isPartial'])
         if all_data.empty:
             all_data = df[batch]

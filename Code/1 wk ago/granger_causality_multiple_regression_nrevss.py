@@ -7,14 +7,14 @@ from scipy.stats import f
 import matplotlib.pyplot as plt
 
 # --- CONFIGURABLE SECTION ---
-max_lag =   # Number of lags
-max_terms = None  # Maximum number of search terms to use (set to None to use all)
+max_lag = 5  # Number of lags
+max_terms = 40  # Maximum number of search terms to use (set to None to use all)
 # ----------------------------
 response_var = 'total_flu_positives'  # The dependent variable in the flu data
 
 # Load the data
-df_search = pd.read_csv("ShiHaoYang/Data/flu_trends_regression_dataset.csv")
-df_flu = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs_all.csv", skiprows=1)
+df_search = pd.read_csv("ShiHaoYang/Data/trends_us_data_grouped.csv")
+df_flu = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs.csv", skiprows=1)
 
 # Create total flu positives column
 flu_case_cols = ['A (2009 H1N1)', 'A (H3)', 'A (Subtyping not Performed)', 'B']
@@ -113,8 +113,8 @@ df_flu = pd.merge(
     how='left'
 )
 
-# Time Horizon - Exclude COVID years (2020-2021)
-df_flu = df_flu[(df_flu['YEAR'] < 2019) | (df_flu['YEAR'] > 2022)]  # Exclude 2020 and 2021
+# Time Horizon
+df_flu = df_flu[df_flu['YEAR'] >= 2022]  # Filter to only include data from 2022 onwards
 
 # Rename columns for easier access
 rename_map = {col: col.split(':')[0] for col in search_terms}

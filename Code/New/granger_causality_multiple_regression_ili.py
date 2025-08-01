@@ -7,14 +7,30 @@ from scipy.stats import f
 import matplotlib.pyplot as plt
 
 # --- CONFIGURABLE SECTION ---
-max_lag = 5  # Number of lags
-max_terms = 20  # Maximum number of search terms to use (set to None to use all)
+max_lag = 1  # Number of lags
+max_terms = 30  # Maximum number of search terms to use (set to None to use all)
 # ----------------------------
 response_var = 'total_flu_positives'  # The dependent variable in the flu data
 
 # Read the search data and flu data
-df_search = pd.read_csv("ShiHaoYang/Data/trends_us_data_grouped.csv")
-df_flu = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs.csv", skiprows=1)
+df_search = pd.read_csv("ShiHaoYang/Data/flu_trends_regression_dataset.csv")
+df_flu = pd.read_csv("ShiHaoYang/Data/ILINet.csv", skiprows=1)
+
+# Let's also try ILINet data which might have different coverage
+try:
+    df_ili = pd.read_csv("ShiHaoYang/Data/ILINet.csv", skiprows=1)
+    print(f"ILINet data shape: {df_ili.shape}")
+    print(f"ILINet year range: {df_ili['YEAR'].min()} to {df_ili['YEAR'].max()}")
+except:
+    print("Could not read ILINet data")
+    df_ili = None
+
+print(f"Search data shape: {df_search.shape}")
+print(f"Flu data shape: {df_flu.shape}")
+print(f"Search data date range: {df_search['date'].min()} to {df_search['date'].max()}")
+print(f"Flu data year range: {df_flu['YEAR'].min()} to {df_flu['YEAR'].max()}")
+print(f"Search data years: {sorted(pd.to_datetime(df_search['date']).dt.year.unique())}")
+print(f"Flu data years: {sorted(df_flu['YEAR'].unique())}")
 
 # Create total flu positives column
 flu_case_cols = ['A (2009 H1N1)', 'A (H3)', 'A (Subtyping not Performed)', 'B']
@@ -45,9 +61,18 @@ df_flu = pd.merge(
     on=['YEAR', 'WEEK'],
     how='left'
 )
+print(f"Data after merging: {len(df_flu)} rows")
+print(f"Number of non-null search terms after merge: {df_flu[search_terms].notna().sum().sum()}")
+print(f"Merge success rate: {df_flu[search_terms].notna().sum().sum() / (len(df_flu) * len(search_terms)):.3f}")
+print(f"Rows with any search data: {df_flu[search_terms].notna().any(axis=1).sum()}")
 
 # Time Horizon
-df_flu = df_flu[df_flu['YEAR'] >= 2022]  # Filter to only include data from 2022 onwards
+print(f"Flu data before time filtering: {len(df_flu)} rows")
+print(f"Flu data years before filtering: {sorted(df_flu['YEAR'].unique())}")
+
+df_flu = df_flu[(df_flu['YEAR'] < 2019) | (df_flu['YEAR'] > 2022)]  # Exclude 2019-2022
+print(f"Flu data after time filtering: {len(df_flu)} rows")
+print(f"Flu data years after filtering: {sorted(df_flu['YEAR'].unique())}")
 
 # Rename columns for easier access
 rename_map = {col: col.split(':')[0] for col in search_terms}
@@ -71,9 +96,14 @@ for lag in range(1, max_lag + 1):
             all_lags.append(lag_col)
 
 # Clean data
-df_flu = df_flu.dropna()
-df_flu = df_flu.loc[:, (df_flu != 0).any(axis=0)]
+print(f"Data before dropna: {len(df_flu)} rows")
+print(f"Columns with any NaN: {df_flu.isna().any().sum()}")
+print(f"Rows with any NaN: {df_flu.isna().any(axis=1).sum()}")
 
+df_flu = df_flu.dropna()
+print(f"Data after dropna: {len(df_flu)} rows")
+
+df_flu = df_flu.loc[:, (df_flu != 0).any(axis=0)]
 print(f"Data points after cleaning: {len(df_flu)}")
 
 # Only use lag columns that exist in df_flu
@@ -82,6 +112,18 @@ existing_all_lags = [col for col in all_lags if col in df_flu.columns]
 
 print(f"Flu lag columns: {len(existing_flu_lags)}")
 print(f"Search term lag columns: {len(existing_all_lags)}")
+
+# Check the ratio of variables to observations
+total_variables = len(existing_flu_lags) + len(existing_all_lags) + 1  # +1 for constant
+print(f"Total variables in unrestricted model: {total_variables}")
+print(f"Observations: {len(df_flu)}")
+print(f"Variables/Observations ratio: {total_variables/len(df_flu):.3f}")
+
+# Rule of thumb: should be < 0.1 for stable regression
+if total_variables/len(df_flu) > 0.1:
+    print("WARNING: Too many variables relative to sample size!")
+    print("This will likely cause NaN p-values.")
+    print("Consider reducing max_terms or max_lag")
 
 # Check for constant values in response variable
 if df_flu[response_var].nunique() <= 1:
