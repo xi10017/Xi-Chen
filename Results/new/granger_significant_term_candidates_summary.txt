@@ -1,0 +1,137 @@
+Significant term candidates across all Granger causality runs
+Term	Count
+cold flu symptoms	9
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	9
+h1n1	8
+flu texas	8
+how long does the flu last	8
+flu cough	7
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid	7
+flu children	7
+symptoms of pneumonia	7
+how long contagious	7
+the flu virus	7
+avian flu news + avian flu outbreak + bird flu out_804ade0a	7
+flu like symptoms	7
+what is the flu	6
+incubation period	6
+flu incubation	6
+low body	6
+stomach virus	6
+fever reducer	6
+symptoms of the flu	6
+tessalon	6
+stomach flu virus	5
+high fever	5
+cold symptoms	5
+(TOPIC)0j5fv	5
+break a fever	5
+stomach virus symptoms	5
+(TOPIC)028tns	5
+strep	5
+sinus medicine	5
+epidemic	5
+flu treatment	5
+the flu	5
+(TOPIC)0cjf0	5
+robitussin	5
+the flue	5
+pneumonia symptoms	5
+fever with flu	5
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	5
+stomach flu	4
+rsv symptoms	4
+flu a symptoms	4
+(TOPIC)03t8j0	4
+flu remedies	4
+chest cold	4
+pandemic	4
+flu medicine	4
+strep throat	4
+(TOPIC)087cyy	4
+flu care	4
+flu headache	4
+stomach flu diarrhea	4
+avian flu california + avian flu symptoms in human_20e1d83d	4
+fever flu symptoms	4
+period fever	4
+avian flu	4
+(TOPIC)01c751	4
+what is a fever	4
+dry cough	3
+how long does flu last	3
+(TOPIC)0b2cnj	3
+best cough medicine	3
+current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms	3
+sinus infections	3
+flu stomach pain	3
+i have the flu	3
+tylenol extra strength	3
+(TOPIC)06n3pj	3
+(TOPIC)01b_21	3
+cough and sore throat	3
+flu and fever	3
+avian flu california + avian flu symptoms in human_58835c33	3
+avian flu california + avian flu symptoms in human_44b9fefd	3
+symptoms of cold	3
+(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b	3
+(TOPIC)0g9pc	3
+best over the counter flu medicine + cold and flu _4d7536f3	3
+congestion medicine	3
+avian flu humans + avian flu in chickens + avian f_de498a91	3
+tussionex	3
+treat flu	3
+cough and fever	2
+cure flu	2
+(TOPIC)0683jy	2
+reduce fever	2
+sinus	2
+advil cold and flu + allergies vs cold + best cold_52555453	2
+best flu medicine for adults + children's tylenol _de4e67e7	2
+best over the counter flu medicine + cold and flu _53c4abfe	2
+thermoscan	2
+the flu symptoms	2
+walking pneumonia	2
+oscillococcinum	2
+(TOPIC)08pr_0	2
+expectorant	2
+flu virus	2
+period flu	2
+symptoms of bronchitis	2
+dangerous fever	2
+pneumonia	2
+alka seltzer cold and cough + cold vs sinus infect_75a01e90	2
+influenza symptoms	2
+signs of flu	2
+advil cold and flu + allergies vs cold + best cold_7dd0ee04	2
+(TOPIC)06p_bp	2
+normal body temperature	2
+body temperature	1
+ear thermometer	1
+taking temperature	1
+food poisoning symptoms	1
+tussin	1
+(TOPIC)0b76bty	1
+best cold medicine	1
+symptoms of stomach flu	1
+(TOPIC)0n073	1
+food poisoning	1
+bronchitis	1
+fever symptoms	1
+(TOPIC)0416v7	1
+fever	1
+normal body	1
+avian flu 2024 + avian flu in milk + bird flu 2024_7be51fa5	1
+avian flu california + avian flu symptoms in human_d16842ee	1
+(TOPIC)09gh4jl + best flu medicine + best medicine_ac91b042	1
+acute bronchitis	1
+spanish flu	1
+advil cold and flu + allergies vs cold + best cold_2d4fc80d	1
+avian bird flu + avian flu h5n1 + avian flu sympto_b1d3aa48	1
+best medicine for cold	1
+advil cold and flu + allergies vs cold + best cold_46a6a780	1
+cold flu	1
+stomach flu symptoms	1
+difference in flu type a and b + flu b incubation _f0f3f08e	1
+flu test	1
+best flu medicine for adults + children's tylenol _c6535e4a	1

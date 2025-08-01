@@ -1,0 +1,35 @@
+Significant terms (p < 0.05) for NREVSS multiple regression, max_lag=1
+Total significant terms: 32
+
+h1n1: p = 0.0000
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129: p = 0.0000
+flu cough: p = 0.0000
+the flu: p = 0.0001
+(TOPIC)06p_bp: p = 0.0003
+fever flu symptoms: p = 0.0006
+(TOPIC)03t8j0: p = 0.0010
+flu incubation: p = 0.0011
+incubation period: p = 0.0017
+cold flu symptoms: p = 0.0019
+congestion medicine: p = 0.0052
+symptoms of pneumonia: p = 0.0059
+epidemic: p = 0.0101
+advil cold and flu + allergies vs cold + best cold_46a6a780: p = 0.0104
+stomach virus: p = 0.0107
+chest cold: p = 0.0113
+the flu virus: p = 0.0151
+reduce fever: p = 0.0157
+cold symptoms: p = 0.0163
+cold flu: p = 0.0164
+flu children: p = 0.0170
+sinus medicine: p = 0.0226
+stomach flu symptoms: p = 0.0229
+flu stomach pain: p = 0.0250
+flu a symptoms: p = 0.0361
+break a fever: p = 0.0361
+difference in flu type a and b + flu b incubation _f0f3f08e: p = 0.0371
+how long does the flu last: p = 0.0400
+treat flu: p = 0.0404
+tussionex: p = 0.0443
+what is a fever: p = 0.0449
+avian flu humans + avian flu in chickens + avian f_de498a91: p = 0.0493
