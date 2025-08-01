@@ -52,7 +52,7 @@ df_ili = pd.merge(
 )
 
 # --- CONFIGURABLE SECTION ---
-max_lag = 2
+max_lag = 5
 response_var = '% WEIGHTED ILI'
 
 # --- CREATE LAGGED VARIABLES ---
@@ -190,3 +190,17 @@ if valid_terms:
             print(f"{i+1}. {term}: p = {pval:.4f}")
 else:
     print("No valid terms found for plotting")
+
+# Save significant terms to a text file
+txt_filename = f"ShiHaoYang/Results/granger_significant_terms_ili_lag{max_lag}.txt"
+with open(txt_filename, "w") as f:
+    f.write(f"Significant terms (p < 0.05) for ILI multiple regression, max_lag={max_lag}\n")
+    f.write(f"Total significant terms: {len(significant_terms)}\n\n")
+    if significant_terms:
+        for term in significant_terms:
+            # Find the p-value for this term
+            pval = [p for t, p in zip(valid_terms, granger_pvals) if t == term][0]
+            f.write(f"{term}: p = {pval:.4f}\n")
+    else:
+        f.write("None\n")
+print(f"Significant terms saved to {txt_filename}")
