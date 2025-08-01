@@ -6,19 +6,32 @@ from statsmodels.tools.sm_exceptions import InfeasibleTestError
 from scipy.stats import f
 import matplotlib.pyplot as plt
 
+# --- FLU DATA PREPARATION: Combine and create percent positive columns ---
+df_pub = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs_all.csv", skiprows=1)
+df_combined = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Combined_prior_to_2015_16.csv", skiprows=1)
+
+# Create percent positive columns
+flu_cols_pub = ['A (2009 H1N1)', 'A (H3)', 'A (Subtyping not Performed)', 'B', 'BVic', 'BYam', 'H3N2v', 'A (H5)']
+df_pub['flu_total_positive'] = df_pub[flu_cols_pub].sum(axis=1)
+df_pub['flu_pct_positive'] = df_pub['flu_total_positive'] / df_pub['TOTAL SPECIMENS']
+
+flu_cols_combined = ['A (2009 H1N1)', 'A (H1)', 'A (H3)', 'A (Subtyping not Performed)', 'A (Unable to Subtype)', 'B', 'H3N2v', 'A (H5)']
+df_combined['flu_total_positive'] = df_combined[flu_cols_combined].sum(axis=1)
+df_combined['flu_pct_positive'] = df_combined['flu_total_positive'] / df_combined['TOTAL SPECIMENS']
+
+# Standardize columns and concatenate
+common_cols = ['REGION TYPE', 'REGION', 'YEAR', 'WEEK', 'TOTAL SPECIMENS', 'flu_total_positive', 'flu_pct_positive']
+df_pub = df_pub[common_cols]
+df_combined = df_combined[common_cols]
+df_flu = pd.concat([df_combined, df_pub], ignore_index=True)
+
 # --- CONFIGURABLE SECTION ---
-max_lag = 1  # Number of lags
+max_lag = 5 # Number of lags
 max_terms = None  # Maximum number of search terms to use (set to None to use all)
-# ----------------------------
-response_var = 'total_flu_positives'  # The dependent variable in the flu data
+response_var = 'flu_total_positive'  # Or 'flu_pct_positive' for percent positive
 
-# Load the data
+# Load the search trends data
 df_search = pd.read_csv("ShiHaoYang/Data/flu_trends_regression_dataset.csv")
-df_flu = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs_all.csv", skiprows=1)
-
-# Create total flu positives column
-flu_case_cols = ['A (2009 H1N1)', 'A (H3)', 'A (Subtyping not Performed)', 'B']
-df_flu['total_flu_positives'] = df_flu[flu_case_cols].sum(axis=1)
 
 # --- DIAGNOSTIC SECTION ---
 print("=== DIAGNOSTIC ANALYSIS ===")
@@ -358,4 +371,4 @@ if valid_terms:
             for i, (term, pval) in enumerate(sorted_valid[:10]):
                 print(f"{i+1}. {term}: p = {pval:.4f}")
 else:
-    print("No valid terms found for plotting") 
+    print("No valid terms found for plotting")
