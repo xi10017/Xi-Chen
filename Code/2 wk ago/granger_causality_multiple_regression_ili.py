@@ -6,111 +6,31 @@ from statsmodels.tools.sm_exceptions import InfeasibleTestError
 from scipy.stats import f
 import matplotlib.pyplot as plt
 
-# --- FLU DATA PREPARATION: Combine and create percent positive columns ---
-df_pub = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs_all.csv", skiprows=1)
-df_combined = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Combined_prior_to_2015_16.csv", skiprows=1)
-
-# Create percent positive columns
-flu_cols_pub = ['A (2009 H1N1)', 'A (H3)', 'A (Subtyping not Performed)', 'B', 'BVic', 'BYam', 'H3N2v', 'A (H5)']
-df_pub['flu_total_positive'] = df_pub[flu_cols_pub].sum(axis=1)
-df_pub['flu_pct_positive'] = df_pub['flu_total_positive'] / df_pub['TOTAL SPECIMENS']
-
-flu_cols_combined = ['A (2009 H1N1)', 'A (H1)', 'A (H3)', 'A (Subtyping not Performed)', 'A (Unable to Subtype)', 'B', 'H3N2v', 'A (H5)']
-df_combined['flu_total_positive'] = df_combined[flu_cols_combined].sum(axis=1)
-df_combined['flu_pct_positive'] = df_combined['flu_total_positive'] / df_combined['TOTAL SPECIMENS']
-
-# Standardize columns and concatenate
-common_cols = ['REGION TYPE', 'REGION', 'YEAR', 'WEEK', 'TOTAL SPECIMENS', 'flu_total_positive', 'flu_pct_positive']
-df_pub = df_pub[common_cols]
-df_combined = df_combined[common_cols]
-df_flu = pd.concat([df_combined, df_pub], ignore_index=True)
-
 # --- CONFIGURABLE SECTION ---
-max_lag = 5 # Number of lags
-max_terms = None  # Maximum number of search terms to use (set to None to use all)
-response_var = 'flu_total_positive'  # Or 'flu_pct_positive' for percent positive
+max_lag = 5  # Number of lags
+max_terms = 40  # Maximum number of search terms to use (set to None to use all)
+# ----------------------------
+response_var = 'total_flu_positives'  # The dependent variable in the flu data
 
-# Load the search trends data
-df_search = pd.read_csv("ShiHaoYang/Data/flu_trends_regression_dataset.csv")
+# Read the search data and flu data
+df_search = pd.read_csv("ShiHaoYang/Data/trends_us_data_grouped.csv")
+df_flu = pd.read_csv("ShiHaoYang/Data/ICL_NREVSS_Public_Health_Labs.csv", skiprows=1)
 
-# --- DIAGNOSTIC SECTION ---
-print("=== DIAGNOSTIC ANALYSIS ===")
-print(f"Total search terms: {len(df_search.columns) - 1}")  # Subtract date column
+# Create total flu positives column
+flu_case_cols = ['A (2009 H1N1)', 'A (H3)', 'A (Subtyping not Performed)', 'B']
+df_flu['total_flu_positives'] = df_flu[flu_case_cols].sum(axis=1)
 
-# Check for constant columns
-constant_columns = []
-low_variance_columns = []
-for col in df_search.columns[1:]:  # Skip date column
-    if df_search[col].nunique() == 1:
-        constant_columns.append(col)
-    elif df_search[col].std() < 0.1:  # Very low variance
-        low_variance_columns.append(col)
+# Filter out zero columns
+df_search = df_search.loc[:, (df_search != 0).any(axis=0)]
 
-print(f"\nConstant columns: {len(constant_columns)}")
-if constant_columns:
-    print("Examples:", constant_columns[:5])
-
-print(f"Low variance columns (std < 0.1): {len(low_variance_columns)}")
-if low_variance_columns:
-    print("Examples:", low_variance_columns[:5])
-
-# Check for columns with too many zeros
-zero_dominant_columns = []
-for col in df_search.columns[1:]:
-    zero_ratio = (df_search[col] == 0).sum() / len(df_search)
-    if zero_ratio > 0.8:  # More than 80% zeros
-        zero_dominant_columns.append((col, zero_ratio))
-
-print(f"\nColumns with >80% zeros: {len(zero_dominant_columns)}")
-if zero_dominant_columns:
-    print("Examples:", zero_dominant_columns[:5])
-
-# Check correlation matrix for multicollinearity
-print("\n=== MULTICOLLINEARITY CHECK ===")
 search_terms = list(df_search.columns[1:])
-correlation_matrix = df_search[search_terms].corr()
 
-# Find highly correlated pairs
-high_corr_pairs = []
-for i in range(len(search_terms)):
-    for j in range(i+1, len(search_terms)):
-        corr = correlation_matrix.iloc[i, j]
-        if abs(corr) > 0.95:  # Very high correlation
-            high_corr_pairs.append((search_terms[i], search_terms[j], corr))
+# Limit the number of search terms if specified
+if max_terms is not None and len(search_terms) > max_terms:
+    search_terms = search_terms[:max_terms]
+    print(f"Limited to first {max_terms} search terms out of {len(df_search.columns)-1} total")
 
-print(f"Pairs with correlation > 0.95: {len(high_corr_pairs)}")
-if high_corr_pairs:
-    print("Examples:", high_corr_pairs[:3])
-
-# Recommend filtering strategy
-print("\n=== RECOMMENDATIONS ===")
-print("1. Remove constant columns")
-print("2. Remove columns with >80% zeros")
-print("3. Remove one of each highly correlated pair")
-print("4. Consider using fewer terms (max_terms = 20-50)")
-
-# Filter out problematic columns
-filtered_columns = []
-for col in search_terms:
-    # Skip constant columns
-    if col in constant_columns:
-        continue
-    # Skip low variance columns
-    if col in low_variance_columns:
-        continue
-    # Skip zero-dominant columns
-    zero_ratio = (df_search[col] == 0).sum() / len(df_search)
-    if zero_ratio > 0.8:
-        continue
-    filtered_columns.append(col)
-
-print(f"\nAfter filtering problematic columns: {len(filtered_columns)} terms remaining")
-print("This should significantly reduce NaN p-values!")
-
-# Use filtered columns for the analysis
-search_terms = filtered_columns[:max_terms] if max_terms else filtered_columns
-
-print(f"Final number of search terms to use: {len(search_terms)}")
+print(f"Number of search terms: {len(search_terms)}")
 print("Search terms:", search_terms[:10], "...")  # Show first 10 terms
 
 # Parse week and add YEAR/WEEK columns for merging
@@ -126,8 +46,8 @@ df_flu = pd.merge(
     how='left'
 )
 
-# Time Horizon - Exclude COVID years (2020-2021)
-df_flu = df_flu[(df_flu['YEAR'] < 2019) | (df_flu['YEAR'] > 2022)]  # Exclude 2020 and 2021
+# Time Horizon
+df_flu = df_flu[df_flu['YEAR'] >= 2022]  # Filter to only include data from 2022 onwards
 
 # Rename columns for easier access
 rename_map = {col: col.split(':')[0] for col in search_terms}
@@ -255,9 +175,6 @@ print("="*60)
 # Extract individual term significance from the unrestricted model
 term_significance = []
 
-# Get the summary of the unrestricted model
-model_summary = model_unrestricted.summary()
-
 # Extract coefficients and p-values for search term lags
 for term in search_terms_simple:
     term_lags = [f'{term}_lag{lag}' for lag in range(1, max_lag + 1)]
@@ -305,25 +222,7 @@ if valid_terms:
         valid_terms_plot = [term for term, pval in valid_pvals]
         granger_pvals_plot = [pval for term, pval in valid_pvals]
         
-        # Dynamic figure sizing based on number of terms
-        num_terms = len(valid_terms_plot)
-        if num_terms <= 20:
-            fig_width = 16
-            fig_height = 8
-            font_size = 8
-            value_font_size = 6
-        elif num_terms <= 50:
-            fig_width = 20
-            fig_height = 10
-            font_size = 6
-            value_font_size = 5
-        else:
-            fig_width = 24
-            fig_height = 12
-            font_size = 4
-            value_font_size = 4
-        
-        plt.figure(figsize=(fig_width, fig_height))
+        plt.figure(figsize=(16, 8))  # Similar to the original script
         
         # Create bars with better colors for significance
         colors = ['red' if pval < 0.05 else 'orange' for pval in granger_pvals_plot]
@@ -334,14 +233,14 @@ if valid_terms:
         plt.axhline(0.05, color='red', linestyle='--', label='p=0.05', linewidth=2)
         
         # Improve x-axis labels with better rotation and positioning
-        plt.xticks(rotation=45, fontsize=font_size, ha='right')
+        plt.xticks(rotation=45, fontsize=5, ha='right')
         
         # Add value labels on bars with better positioning
         for bar, pval in zip(bars, granger_pvals_plot):
             height = bar.get_height()
             # Position text above bar with small offset
             plt.text(bar.get_x() + bar.get_width()/2., height + 0.005,
-                    f'{pval:.3f}', ha='center', va='bottom', fontsize=value_font_size, rotation=90)
+                    f'{pval:.3f}', ha='center', va='bottom', fontsize=6, rotation=90)
         
         # Set y-axis limits to ensure visibility (only if we have valid values)
         if granger_pvals_plot:
@@ -351,8 +250,8 @@ if valid_terms:
         plt.grid(axis='y', alpha=0.3)
         
         # Better layout with more space
-        plt.tight_layout(pad=2.0)
-        plt.savefig(f"ShiHaoYang/Results/granger_pvalues_multiple_regression_nrevss_lag{max_lag}.png", 
+        plt.tight_layout()
+        plt.savefig(f"ShiHaoYang/Results/granger_pvalues_multiple_regression_ili_lag{max_lag}.png", 
                     dpi=300, bbox_inches='tight')
         plt.show()
         
@@ -371,18 +270,4 @@ if valid_terms:
             for i, (term, pval) in enumerate(sorted_valid[:10]):
                 print(f"{i+1}. {term}: p = {pval:.4f}")
 else:
-    print("No valid terms found for plotting")
-
-# Save significant terms to a text file
-txt_filename = f"ShiHaoYang/Results/granger_significant_terms_nrevss_lag{max_lag}.txt"
-with open(txt_filename, "w") as f:
-    f.write(f"Significant terms (p < 0.05) for NREVSS multiple regression, max_lag={max_lag}\n")
-    f.write(f"Total significant terms: {len(significant_terms)}\n\n")
-    if significant_terms:
-        for term in significant_terms:
-            # Find the p-value for this term
-            pval = [p for t, p in zip(valid_terms, granger_pvals) if t == term][0]
-            f.write(f"{term}: p = {pval:.4f}\n")
-    else:
-        f.write("None\n")
-print(f"Significant terms saved to {txt_filename}")
+    print("No valid terms found for plotting") 
