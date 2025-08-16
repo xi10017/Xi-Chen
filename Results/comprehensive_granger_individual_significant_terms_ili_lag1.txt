@@ -3,66 +3,46 @@ Response variable: % WEIGHTED ILI
 Max lag: 1
 Number of tests: 149
 Bonferroni threshold: 0.000336
-Overall Granger causality F-statistic: 13.0390
+Overall Granger causality F-statistic: 22.9337
 Overall Granger causality p-value: 0.000000
 Model R-squared: 0.9803
 
 === SIGNIFICANCE SUMMARY ===
-Uncorrected significant (p < 0.05): 53 terms
-Bonferroni significant (p < 0.000336): 10 terms
-FDR significant: 25 terms
+Uncorrected significant (p < 0.05): 33 terms
+Bonferroni significant (p < 0.000336): 3 terms
+FDR significant: 11 terms
 
-=== ALL SIGNIFICANT TERMS (n=52) ===
+=== ALL SIGNIFICANT TERMS (n=32) ===
 Term	Min_p_value	Most_Conservative_Significance
-h1n1_lag1	0.000000	FDR
-cough and fever_lag1	0.000000	FDR
-stomach flu virus_lag1	0.000013	FDR
-high fever_lag1	0.000013	FDR
-dry cough_lag1	0.000020	FDR
-flu cough_lag1	0.000027	FDR
-stomach flu_lag1	0.000048	FDR
-what is the flu_lag1	0.000198	FDR
-how long does flu last_lag1	0.000319	FDR
-cold symptoms_lag1	0.000363	FDR
-incubation period_lag1	0.000719	FDR
-flu incubation_lag1	0.000753	FDR
-(TOPIC)0j5fv_lag1	0.001581	FDR
-covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid_lag1	0.001595	FDR
-break a fever_lag1	0.002118	FDR
-stomach virus symptoms_lag1	0.002552	FDR
-rsv symptoms_lag1	0.002929	FDR
-(TOPIC)028tns_lag1	0.004188	FDR
-cure flu_lag1	0.004449	FDR
-body temperature_lag1	0.004786	FDR
-(TOPIC)0683jy_lag1	0.004954	FDR
-flu a symptoms_lag1	0.005866	FDR
-(TOPIC)03t8j0_lag1	0.007076	FDR
-(TOPIC)0b2cnj_lag1	0.007216	FDR
-reduce fever_lag1	0.007543	FDR
-cold flu symptoms_lag1	0.009065	Uncorrected
-strep_lag1	0.009086	Uncorrected
-sinus_lag1	0.009443	Uncorrected
-advil cold and flu + allergies vs cold + best cold_52555453_lag1	0.011380	Uncorrected
-sinus medicine_lag1	0.013038	Uncorrected
-ear thermometer_lag1	0.013198	Uncorrected
-best cough medicine_lag1	0.014164	Uncorrected
-current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms_lag1	0.014565	Uncorrected
-epidemic_lag1	0.014687	Uncorrected
-taking temperature_lag1	0.015597	Uncorrected
-(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129_lag1	0.016050	Uncorrected
-sinus infections_lag1	0.016475	Uncorrected
-low body_lag1	0.017775	Uncorrected
-food poisoning symptoms_lag1	0.018730	Uncorrected
-tussin_lag1	0.024490	Uncorrected
-stomach virus_lag1	0.026813	Uncorrected
-best flu medicine for adults + children's tylenol _de4e67e7_lag1	0.026949	Uncorrected
-flu treatment_lag1	0.027356	Uncorrected
-best over the counter flu medicine + cold and flu _53c4abfe_lag1	0.028231	Uncorrected
-flu remedies_lag1	0.036244	Uncorrected
-thermoscan_lag1	0.036585	Uncorrected
-flu stomach pain_lag1	0.037667	Uncorrected
-chest cold_lag1	0.040144	Uncorrected
-the flu_lag1	0.040612	Uncorrected
-pandemic_lag1	0.041935	Uncorrected
-i have the flu_lag1	0.043007	Uncorrected
-flu medicine_lag1	0.046855	Uncorrected
+cough and fever_lag1	0.000016	FDR
+dry cough_lag1	0.000031	FDR
+what is the flu_lag1	0.000356	FDR
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid_lag1	0.000494	FDR
+high fever_lag1	0.000566	FDR
+rsv symptoms_lag1	0.001924	FDR
+stomach flu virus_lag1	0.001963	FDR
+cold symptoms_lag1	0.001980	FDR
+(TOPIC)0j5fv_lag1	0.002895	FDR
+how long does flu last_lag1	0.003101	FDR
+stomach flu_lag1	0.003589	FDR
+body temperature_lag1	0.004682	Uncorrected
+stomach virus symptoms_lag1	0.005441	Uncorrected
+flu cough_lag1	0.005672	Uncorrected
+advil cold and flu + allergies vs cold + best cold_52555453_lag1	0.006115	Uncorrected
+strep_lag1	0.007932	Uncorrected
+epidemic_lag1	0.009533	Uncorrected
+food poisoning symptoms_lag1	0.017057	Uncorrected
+flu incubation_lag1	0.017804	Uncorrected
+taking temperature_lag1	0.020930	Uncorrected
+best cough medicine_lag1	0.022343	Uncorrected
+(TOPIC)0b2cnj_lag1	0.026366	Uncorrected
+sinus medicine_lag1	0.028365	Uncorrected
+incubation period_lag1	0.031381	Uncorrected
+break a fever_lag1	0.033715	Uncorrected
+h1n1_lag1	0.034741	Uncorrected
+flu a symptoms_lag1	0.035008	Uncorrected
+sinus infections_lag1	0.039139	Uncorrected
+low body_lag1	0.040026	Uncorrected
+stomach virus_lag1	0.043220	Uncorrected
+pandemic_lag1	0.044503	Uncorrected
+ear thermometer_lag1	0.049433	Uncorrected

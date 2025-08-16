@@ -5,6 +5,7 @@ from scipy.stats import f
 import matplotlib.pyplot as plt
 from statsmodels.stats.stattools import durbin_watson
 from statsmodels.stats.multitest import multipletests
+from statsmodels.stats.sandwich_covariance import cov_hac_simple, cov_hac
 
 
 def load_and_prepare_data():
@@ -167,17 +168,20 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
     # Count search term lags (excluding ILI lags and intercept)
     search_term_lags = [col for col in coef_results.index if not col.startswith('ili_lag') and col != 'const']
     num_tests = len(search_term_lags)
-    bonferroni_threshold = 0.05 / num_tests
+    bonferroni_threshold = 0.05 / num_tests if num_tests > 0 else 0.05
     
     # Perform FDR correction (Benjamini-Hochberg)
-    search_term_pvalues = coef_results.loc[search_term_lags, 'p-value'].values
-    fdr_rejected, fdr_pvalues, _, _ = multipletests(search_term_pvalues, method='fdr_bh', alpha=0.05)
-    
-    # Create mapping of terms to FDR significance
-    fdr_significant_terms = set()
-    for i, term in enumerate(search_term_lags):
-        if fdr_rejected[i]:
-            fdr_significant_terms.add(term)
+    if num_tests > 0:
+        search_term_pvalues = coef_results.loc[search_term_lags, 'p-value'].values
+        fdr_rejected, fdr_pvalues, _, _ = multipletests(search_term_pvalues, method='fdr_bh', alpha=0.05)
+        
+        # Create mapping of terms to FDR significance
+        fdr_significant_terms = set()
+        for i, term in enumerate(search_term_lags):
+            if fdr_rejected[i]:
+                fdr_significant_terms.add(term)
+    else:
+        fdr_significant_terms = set()
     
     print(f"\n=== INDIVIDUAL TERM ANALYSIS ===")
     print(f"Number of search term lags tested: {num_tests}")
@@ -321,7 +325,17 @@ def create_comprehensive_visualization(model_unrestricted, filtered_columns, max
         term_pvals = []
         for lag_col in term_lags:
             if lag_col in model_unrestricted.params.index:
-                pval = model_unrestricted.pvalues[lag_col]
+                # Get p-value for this lag
+                try:
+                    pval = model_unrestricted.pvalues[lag_col]
+                except (IndexError, TypeError):
+                    # For HAC results, pvalues might be a numpy array
+                    if hasattr(model_unrestricted.pvalues, 'loc'):
+                        pval = model_unrestricted.pvalues.loc[lag_col]
+                    else:
+                        # Find the index position
+                        param_index = list(model_unrestricted.params.index).index(lag_col)
+                        pval = model_unrestricted.pvalues[param_index]
                 term_pvals.append(pval)
         if term_pvals:
             min_p = min(term_pvals)
@@ -446,8 +460,8 @@ def create_comprehensive_visualization(model_unrestricted, filtered_columns, max
         print("No valid terms found for plotting")
 
 
-def perform_hac_analysis(df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=4):
-    """Perform HAC analysis using correct Wald test approach"""
+def perform_hac_analysis(df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None):
+    """Perform HAC analysis using direct covariance matrix computation"""
     try:
         print(f"\n=== HAC ANALYSIS (Autocorrelation-Adjusted) ===")
         
@@ -455,36 +469,100 @@ def perform_hac_analysis(df_ili, existing_flu_lags, existing_all_lags, response_
         X_unrestricted = sm.add_constant(df_ili[existing_flu_lags + existing_all_lags])
         y = df_ili[response_var]
         
-
-        
         ols_u = sm.OLS(y, X_unrestricted).fit()
         
+        # Determine optimal maxlags if not provided
+        if maxlags is None:
+            # Use Newey-West automatic lag selection rule
+            # Rule: maxlags = floor(4*(T/100)^(2/9)) where T is sample size
+            T = len(y)
+            maxlags = int(np.floor(4 * (T/100)**(2/9)))
+            print(f"Automatic maxlags selection: {maxlags} (based on sample size T={T})")
+        
+        # Compute HAC covariance matrix using the correct approach
+        try:
+            # Use the built-in HAC method from statsmodels (most reliable)
+            ols_u_hac = ols_u.get_robustcov_results(cov_type='HAC', cov_kwds={'maxlags': int(maxlags)})
+            hac_cov = ols_u_hac.cov_params()
+            print(f"Using statsmodels built-in HAC method with maxlags={maxlags}")
+        except Exception as e:
+            print(f"Error with statsmodels HAC: {e}")
+            # Fallback: try cov_hac function
+            try:
+                hac_cov = cov_hac(ols_u, nlags=int(maxlags))
+                print(f"Using cov_hac function with maxlags={maxlags}")
+            except Exception as e2:
+                print(f"Error with cov_hac: {e2}")
+                # Final fallback: try cov_hac_simple
+                try:
+                    hac_cov = cov_hac_simple(ols_u.resid, ols_u.model.exog, nlags=int(maxlags))
+                    print(f"Using cov_hac_simple with maxlags={maxlags}")
+                except Exception as e3:
+                    print(f"Error with cov_hac_simple: {e3}")
+                    return None, None
+        
         # Build restriction matrix R to test that all search-term coefficients = 0
-        k_params = ols_u.params.size
+        k_params = len(ols_u.params)
         q = len(existing_all_lags)
         R = np.zeros((q, k_params))
         
         # Identify indices of search-term lag columns
+        search_indices = []
         for j, col in enumerate(X_unrestricted.columns):
             if col in existing_all_lags:
-                row = existing_all_lags.index(col)
-                R[row, j] = 1
+                row_idx = existing_all_lags.index(col)
+                R[row_idx, j] = 1
+                search_indices.append(j)
         
-        # Get HAC robust results object
-        ols_u_hac = ols_u.get_robustcov_results(cov_type='HAC', cov_kwds={'maxlags': maxlags})
+        # Compute Wald statistic manually using HAC covariance
+        beta = ols_u.params.values
+        Rbeta = R @ beta
+        RVR = R @ hac_cov @ R.T
         
-        # Run Wald/F test using HAC covariance
-        wald_res = ols_u_hac.f_test(R)
+        try:
+            wald_stat = Rbeta.T @ np.linalg.solve(RVR, Rbeta)
+        except np.linalg.LinAlgError:
+            print("Warning: Singular matrix in Wald test computation, using pseudo-inverse")
+            wald_stat = Rbeta.T @ np.linalg.pinv(RVR) @ Rbeta
+        
+        # Convert to F-statistic
+        f_stat_hac = wald_stat / q
+        df_num = q
+        df_denom = len(y) - k_params
+        
+        # Compute p-value
+        p_val_hac = 1 - f.cdf(f_stat_hac, df_num, df_denom)
         
         print(f"Original OLS F-statistic: {F:.4f}, p-value: {p_value:.6f}")
-        print(f"HAC Wald F-statistic: {wald_res.fvalue:.4f}, p-value: {wald_res.pvalue:.6f}")
-        print(f"Degrees of freedom: ({wald_res.df_num}, {wald_res.df_denom})")
+        print(f"HAC-adjusted F-statistic: {f_stat_hac:.4f}, p-value: {p_val_hac:.6f}")
+        print(f"Degrees of freedom: ({df_num}, {df_denom})")
         print(f"Max lags for HAC: {maxlags}")
         
-        return ols_u_hac, wald_res
+        # Create a mock results object for consistency with downstream functions
+        from scipy.stats import t
+        class HACResults:
+            def __init__(self, original_model, hac_cov, f_stat, p_val):
+                self.params = original_model.params
+                self.bse = np.sqrt(np.diag(hac_cov))
+                self.tvalues = self.params / self.bse
+                df = len(original_model.resid) - len(self.params)
+                self.pvalues = 2 * (1 - t.cdf(np.abs(self.tvalues), df))
+                self.rsquared = original_model.rsquared
+                self.fvalue = f_stat
+                self.pvalue = p_val
+                self.conf_int = lambda: pd.DataFrame({
+                    0: self.params - 1.96 * self.bse,
+                    1: self.params + 1.96 * self.bse
+                }, index=self.params.index)
+        
+        hac_results = HACResults(ols_u, hac_cov, f_stat_hac, p_val_hac)
+        
+        return hac_results, {'fvalue': f_stat_hac, 'pvalue': p_val_hac, 'df_num': df_num, 'df_denom': df_denom}
         
     except Exception as e:
         print(f"Error in HAC analysis: {e}")
+        import traceback
+        traceback.print_exc()
         return None, None
 
 
@@ -497,8 +575,6 @@ def perform_autocorrelation_correction(df_ili, existing_flu_lags, existing_all_l
         print("Method 1: Cochrane-Orcutt Transformation")
         X_unrestricted = sm.add_constant(df_ili[existing_flu_lags + existing_all_lags])
         y = df_ili[response_var]
-        
-
         
         # Fit initial model
         model_initial = sm.OLS(y, X_unrestricted).fit()
@@ -520,8 +596,6 @@ def perform_autocorrelation_correction(df_ili, existing_flu_lags, existing_all_l
             X_transformed = X_transformed[mask]
             y_transformed = y_transformed[mask]
             print(f"Removed {np.sum(~mask)} rows with infinite/NaN values from transformed X")
-        
-
         
         # Fit transformed model
         model_corrected = sm.OLS(y_transformed, X_transformed).fit()
@@ -545,19 +619,17 @@ def perform_hac_sensitivity_analysis(df_ili, existing_flu_lags, existing_all_lag
         X_unrestricted = sm.add_constant(df_ili[existing_flu_lags + existing_all_lags])
         y = df_ili[response_var]
         
-
-        
         ols_u = sm.OLS(y, X_unrestricted).fit()
         
         # Build restriction matrix
-        k_params = ols_u.params.size
+        k_params = len(ols_u.params)
         q = len(existing_all_lags)
         R = np.zeros((q, k_params))
         
         for j, col in enumerate(X_unrestricted.columns):
             if col in existing_all_lags:
-                row = existing_all_lags.index(col)
-                R[row, j] = 1
+                row_idx = existing_all_lags.index(col)
+                R[row_idx, j] = 1
         
         # Test different maxlags values
         maxlags_values = [1, 2, 4, 6, 8]
@@ -568,17 +640,43 @@ def perform_hac_sensitivity_analysis(df_ili, existing_flu_lags, existing_all_lag
         
         for maxlags in maxlags_values:
             try:
-                ols_u_hac = ols_u.get_robustcov_results(cov_type='HAC', cov_kwds={'maxlags': maxlags})
-                wald_res = ols_u_hac.f_test(R)
+                # Compute HAC covariance matrix using the correct approach
+                try:
+                    # Use the built-in HAC method from statsmodels (most reliable)
+                    ols_u_hac = ols_u.get_robustcov_results(cov_type='HAC', cov_kwds={'maxlags': int(maxlags)})
+                    hac_cov = ols_u_hac.cov_params()
+                except Exception as e:
+                    # Fallback: try cov_hac function
+                    try:
+                        hac_cov = cov_hac(ols_u, nlags=int(maxlags))
+                    except:
+                        # Final fallback: try cov_hac_simple
+                        hac_cov = cov_hac_simple(ols_u.resid, ols_u.model.exog, nlags=int(maxlags))
                 
-                significant = "Yes" if wald_res.pvalue < 0.05 else "No"
-                print(f"{maxlags:<8} {wald_res.fvalue:<12.4f} {wald_res.pvalue:<12.6f} {significant:<12}")
+                # Compute Wald statistic manually
+                beta = ols_u.params.values
+                Rbeta = R @ beta
+                RVR = R @ hac_cov @ R.T
+                
+                try:
+                    wald_stat = Rbeta.T @ np.linalg.solve(RVR, Rbeta)
+                except np.linalg.LinAlgError:
+                    wald_stat = Rbeta.T @ np.linalg.pinv(RVR) @ Rbeta
+                
+                # Convert to F-statistic
+                f_stat_hac = wald_stat / q
+                df_num = q
+                df_denom = len(y) - k_params
+                p_val_hac = 1 - f.cdf(f_stat_hac, df_num, df_denom)
+                
+                significant = "Yes" if p_val_hac < 0.05 else "No"
+                print(f"{maxlags:<8} {f_stat_hac:<12.4f} {p_val_hac:<12.6f} {significant:<12}")
                 
                 results.append({
                     'maxlags': maxlags,
-                    'f_statistic': wald_res.fvalue,
-                    'p_value': wald_res.pvalue,
-                    'significant': wald_res.pvalue < 0.05
+                    'f_statistic': f_stat_hac,
+                    'p_value': p_val_hac,
+                    'significant': p_val_hac < 0.05
                 })
                 
             except Exception as e:
@@ -598,6 +696,8 @@ def perform_hac_sensitivity_analysis(df_ili, existing_flu_lags, existing_all_lag
         
     except Exception as e:
         print(f"Error in HAC sensitivity analysis: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
 
@@ -631,7 +731,7 @@ def main():
             
             # Method 1: HAC standard errors (corrected approach)
             ols_u_hac, wald_res = perform_hac_analysis(
-                df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=4
+                df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None
             )
             
             # Method 2: Cochrane-Orcutt transformation
@@ -639,19 +739,17 @@ def main():
                 df_ili, existing_flu_lags, existing_all_lags, response_var
             )
             
-            # Method 3: HAC sensitivity analysis
-            hac_sensitivity_results = perform_hac_sensitivity_analysis(
-                df_ili, existing_flu_lags, existing_all_lags, response_var
-            )
-            
             # Use HAC-adjusted results for individual term analysis
             if ols_u_hac is not None:
                 print(f"\nUsing HAC-adjusted results for individual term analysis...")
                 # Use the HAC-adjusted model for individual term analysis
-                analyze_individual_terms(ols_u_hac, filtered_columns, max_lag, response_var, wald_res.fvalue, wald_res.pvalue)
+                analyze_individual_terms(ols_u_hac, filtered_columns, max_lag, response_var, wald_res['fvalue'], wald_res['pvalue'])
             else:
                 print(f"\nUsing original results for individual term analysis...")
                 analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
+            
+            # Perform HAC sensitivity analysis
+            perform_hac_sensitivity_analysis(df_ili, existing_flu_lags, existing_all_lags, response_var)
         else:
             # No autocorrelation detected, use original results
             print(f"\n✓ No autocorrelation detected. Using standard results...")
@@ -664,4 +762,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
