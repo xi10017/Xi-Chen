@@ -89,21 +89,59 @@ def prepare_merged_data(df_flu, df_search, search_terms, max_lag, response_var):
     df_search['YEAR'] = df_search['Week'].dt.isocalendar().year
     df_search['WEEK'] = df_search['Week'].dt.isocalendar().week
 
-    # Merge search data into flu data
+    # Merge search data into flu data with suffixes to avoid conflicts
     df_flu = pd.merge(
         df_flu,
         df_search[['YEAR', 'WEEK'] + search_terms],
         on=['YEAR', 'WEEK'],
-        how='left'
+        how='left',
+        suffixes=('', '_search')
     )
 
     # Time Horizon - Exclude COVID years (2020-2021)
     df_flu = df_flu[(df_flu['YEAR'] < 2019) | (df_flu['YEAR'] > 2022)]
 
-    # Rename columns for easier access
-    rename_map = {col: col.split(':')[0] for col in search_terms}
+    # Rename columns for easier access and ensure uniqueness
+    rename_map = {}
+    search_terms_simple = []
+    seen_terms = set()
+    
+    for col in search_terms:
+        simple_name = col.split(':')[0]
+        # Check if the column exists with _search suffix
+        search_col = f"{col}_search"
+        if search_col in df_flu.columns:
+            # Use the search column
+            if simple_name in seen_terms:
+                # If duplicate, add a suffix to make it unique
+                counter = 1
+                while f"{simple_name}_{counter}" in seen_terms:
+                    counter += 1
+                unique_name = f"{simple_name}_{counter}"
+                rename_map[search_col] = unique_name
+                search_terms_simple.append(unique_name)
+                seen_terms.add(unique_name)
+            else:
+                rename_map[search_col] = simple_name
+                search_terms_simple.append(simple_name)
+                seen_terms.add(simple_name)
+        else:
+            # Use the original column
+            if simple_name in seen_terms:
+                # If duplicate, add a suffix to make it unique
+                counter = 1
+                while f"{simple_name}_{counter}" in seen_terms:
+                    counter += 1
+                unique_name = f"{simple_name}_{counter}"
+                rename_map[col] = unique_name
+                search_terms_simple.append(unique_name)
+                seen_terms.add(unique_name)
+            else:
+                rename_map[col] = simple_name
+                search_terms_simple.append(simple_name)
+                seen_terms.add(simple_name)
+    
     df_flu = df_flu.rename(columns=rename_map)
-    search_terms_simple = [col.split(':')[0] for col in search_terms]
 
     print(f"Data points after filtering: {len(df_flu)}")
 
@@ -736,20 +774,23 @@ def main():
         print(f"RUNNING ANALYSIS FOR MAX LAG = {max_lag}")
         print(f"{'='*80}")
         
+        # Create a fresh copy of the data for each iteration
+        df_flu_fresh = df_flu.copy()
+        
         # Prepare merged data
-        df_flu, existing_flu_lags, existing_all_lags, search_terms_simple = prepare_merged_data(
-            df_flu, df_search, search_terms, max_lag, response_var
+        df_flu_fresh, existing_flu_lags, existing_all_lags, search_terms_simple = prepare_merged_data(
+            df_flu_fresh, df_search, search_terms, max_lag, response_var
         )
     
         # Check for constant values in response variable
-        if df_flu[response_var].nunique() <= 1:
+        if df_flu_fresh[response_var].nunique() <= 1:
             print(f"Error: Response variable '{response_var}' has constant values")
             continue
         
         # Check for constant values in search terms
         constant_terms = []
         for term in search_terms_simple:
-            if term in df_flu.columns and df_flu[term].nunique() <= 1:
+            if term in df_flu_fresh.columns and df_flu_fresh[term].nunique() <= 1:
                 constant_terms.append(term)
         
         if constant_terms:
@@ -762,7 +803,7 @@ def main():
         
         # Perform Granger causality test
         model_restricted, model_unrestricted, F, p_value, X_unrestricted, y = perform_granger_causality_test(
-            df_flu, existing_flu_lags, existing_all_lags, response_var
+            df_flu_fresh, existing_flu_lags, existing_all_lags, response_var
         )
         
         if model_unrestricted is None:
@@ -779,17 +820,17 @@ def main():
             
             # Method 1: HAC standard errors (corrected approach)
             ols_u_hac, wald_res = perform_hac_analysis(
-                df_flu, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None
+                df_flu_fresh, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None
             )
             
             # Method 2: Cochrane-Orcutt transformation
             model_corrected, rho = perform_autocorrelation_correction(
-                df_flu, existing_flu_lags, existing_all_lags, response_var
+                df_flu_fresh, existing_flu_lags, existing_all_lags, response_var
             )
             
             # Method 3: HAC sensitivity analysis
             hac_sensitivity_results = perform_hac_sensitivity_analysis(
-                df_flu, existing_flu_lags, existing_all_lags, response_var
+                df_flu_fresh, existing_flu_lags, existing_all_lags, response_var
             )
             
             # Use HAC results for individual term analysis if available

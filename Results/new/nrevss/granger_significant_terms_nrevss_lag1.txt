@@ -8,6 +8,13 @@ Overall Granger causality F-statistic: 6.1052
 Overall Granger causality p-value: 0.000000
 Model R-squared: 0.9674
 
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: Yes
+Durbin-Watson statistic: 1.4069
+Interpretation: Strong positive autocorrelation
+HAC-adjusted F-statistic: 10.0087
+HAC-adjusted p-value: 0.000000
+
 === SIGNIFICANCE SUMMARY ===
 Uncorrected significant (p < 0.05): 32 terms
 Bonferroni significant (p < 0.000336): 5 terms

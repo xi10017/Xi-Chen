@@ -1,75 +1,72 @@
 === COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
 Response variable: % WEIGHTED ILI
 Max lag: 5
-Number of tests: 745
-Bonferroni threshold: 0.000067
+Number of tests: 149
+Bonferroni threshold: 0.000336
 Overall Granger causality F-statistic: 6.5340
 Overall Granger causality p-value: 0.000000
 Model R-squared: 0.9973
 
-=== SIGNIFICANCE SUMMARY ===
-Uncorrected significant (p < 0.05): 60 terms
-Bonferroni significant (p < 0.000067): 1 terms
-FDR significant: 0 terms
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.1497
+Interpretation: No significant autocorrelation
 
-=== ALL SIGNIFICANT TERMS (n=59) ===
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 51 terms
+Bonferroni significant (p < 0.000336): 1 terms
+FDR significant: 4 terms
+
+=== ALL SIGNIFICANT TERMS (n=51) ===
 Term	Min_p_value	Most_Conservative_Significance
-avian flu california + avian flu symptoms in human_58835c33_lag2	0.000292	Uncorrected
-(TOPIC)01b_21_lag4	0.001026	Uncorrected
-flu texas_lag2	0.001113	Uncorrected
-h1n1_lag4	0.001337	Uncorrected
-strep_lag2	0.002892	Uncorrected
-the flue_lag2	0.003264	Uncorrected
-symptoms of cold_lag5	0.003622	Uncorrected
-flu and fever_lag4	0.004839	Uncorrected
-how long does the flu last_lag1	0.005039	Uncorrected
-what is the flu_lag1	0.005167	Uncorrected
-symptoms of bronchitis_lag2	0.007197	Uncorrected
-strep throat_lag2	0.007296	Uncorrected
-break a fever_lag2	0.007449	Uncorrected
-(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b_lag3	0.008029	Uncorrected
-flu texas_lag4	0.008074	Uncorrected
-avian flu california + avian flu symptoms in human_44b9fefd_lag5	0.008664	Uncorrected
-expectorant_lag3	0.009350	Uncorrected
-flu like symptoms_lag2	0.009692	Uncorrected
-avian flu california + avian flu symptoms in human_20e1d83d_lag5	0.011200	Uncorrected
-avian flu news + avian flu outbreak + bird flu out_804ade0a_lag2	0.011866	Uncorrected
-stomach virus symptoms_lag3	0.012339	Uncorrected
-(TOPIC)03t8j0_lag4	0.012509	Uncorrected
-period fever_lag2	0.012652	Uncorrected
-(TOPIC)0cjf0_lag5	0.014068	Uncorrected
-flu treatment_lag4	0.014484	Uncorrected
-(TOPIC)0g9pc_lag5	0.015956	Uncorrected
-dangerous fever_lag5	0.016260	Uncorrected
-flu incubation_lag1	0.017854	Uncorrected
-symptoms of cold_lag1	0.019924	Uncorrected
-symptoms of pneumonia_lag2	0.021755	Uncorrected
-flu headache_lag1	0.022357	Uncorrected
-(TOPIC)0cjf0_lag3	0.022530	Uncorrected
-covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid_lag4	0.022859	Uncorrected
-robitussin_lag2	0.023237	Uncorrected
-best over the counter flu medicine + cold and flu _4d7536f3_lag5	0.024701	Uncorrected
-fever_lag1	0.025877	Uncorrected
-avian flu_lag5	0.026491	Uncorrected
-stomach flu virus_lag1	0.026998	Uncorrected
-incubation period_lag3	0.029615	Uncorrected
-how long contagious_lag1	0.030953	Uncorrected
-influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug_lag4	0.031046	Uncorrected
-h1n1_lag5	0.031942	Uncorrected
-fever flu symptoms_lag3	0.031996	Uncorrected
-(TOPIC)0j5fv_lag1	0.032157	Uncorrected
-high fever_lag5	0.032250	Uncorrected
-flu treatment_lag3	0.033934	Uncorrected
-pandemic_lag4	0.034458	Uncorrected
-the flue_lag5	0.034752	Uncorrected
-tessalon_lag2	0.039091	Uncorrected
-fever flu symptoms_lag5	0.039722	Uncorrected
-pneumonia_lag4	0.041278	Uncorrected
-normal body_lag2	0.041848	Uncorrected
-(TOPIC)01c751_lag5	0.041862	Uncorrected
-flu and fever_lag3	0.042281	Uncorrected
-cold flu symptoms_lag5	0.042292	Uncorrected
-stomach flu diarrhea_lag5	0.043099	Uncorrected
-(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129_lag1	0.045696	Uncorrected
-flu children_lag1	0.049223	Uncorrected
-tylenol extra strength_lag5	0.049828	Uncorrected
+avian flu california + avian flu symptoms in human_58835c33	0.000292	FDR
+(TOPIC)01b_21	0.001026	FDR
+flu texas	0.001113	FDR
+h1n1	0.001337	FDR
+strep	0.002892	Uncorrected
+the flue	0.003264	Uncorrected
+symptoms of cold	0.003622	Uncorrected
+flu and fever	0.004839	Uncorrected
+how long does the flu last	0.005039	Uncorrected
+what is the flu	0.005167	Uncorrected
+symptoms of bronchitis	0.007197	Uncorrected
+strep throat	0.007296	Uncorrected
+break a fever	0.007449	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b	0.008029	Uncorrected
+avian flu california + avian flu symptoms in human_44b9fefd	0.008664	Uncorrected
+expectorant	0.009350	Uncorrected
+flu like symptoms	0.009692	Uncorrected
+avian flu california + avian flu symptoms in human_20e1d83d	0.011200	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.011866	Uncorrected
+stomach virus symptoms	0.012339	Uncorrected
+(TOPIC)03t8j0	0.012509	Uncorrected
+period fever	0.012652	Uncorrected
+(TOPIC)0cjf0	0.014068	Uncorrected
+flu treatment	0.014484	Uncorrected
+(TOPIC)0g9pc	0.015956	Uncorrected
+dangerous fever	0.016260	Uncorrected
+flu incubation	0.017854	Uncorrected
+symptoms of pneumonia	0.021755	Uncorrected
+flu headache	0.022357	Uncorrected
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid	0.022859	Uncorrected
+robitussin	0.023237	Uncorrected
+best over the counter flu medicine + cold and flu _4d7536f3	0.024701	Uncorrected
+fever	0.025877	Uncorrected
+avian flu	0.026491	Uncorrected
+stomach flu virus	0.026998	Uncorrected
+incubation period	0.029615	Uncorrected
+how long contagious	0.030953	Uncorrected
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.031046	Uncorrected
+fever flu symptoms	0.031996	Uncorrected
+(TOPIC)0j5fv	0.032157	Uncorrected
+high fever	0.032250	Uncorrected
+pandemic	0.034458	Uncorrected
+tessalon	0.039091	Uncorrected
+pneumonia	0.041278	Uncorrected
+normal body	0.041848	Uncorrected
+(TOPIC)01c751	0.041862	Uncorrected
+cold flu symptoms	0.042292	Uncorrected
+stomach flu diarrhea	0.043099	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.045696	Uncorrected
+flu children	0.049223	Uncorrected
+tylenol extra strength	0.049828	Uncorrected
