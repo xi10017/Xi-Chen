@@ -4,6 +4,7 @@ import statsmodels.api as sm
 from statsmodels.tsa.stattools import grangercausalitytests
 from statsmodels.tools.sm_exceptions import InfeasibleTestError
 from scipy.stats import f
+from statsmodels.stats.multitest import multipletests
 import matplotlib.pyplot as plt
 
 # --- FLU DATA PREPARATION: Combine and create percent positive columns ---
@@ -26,7 +27,7 @@ df_combined = df_combined[common_cols]
 df_flu = pd.concat([df_combined, df_pub], ignore_index=True)
 
 # --- CONFIGURABLE SECTION ---
-max_lag = 5 # Number of lags
+max_lag = 1 # Number of lags
 max_terms = None  # Maximum number of search terms to use (set to None to use all)
 response_var = 'flu_total_positive'  # Or 'flu_pct_positive' for percent positive
 
@@ -274,14 +275,39 @@ for term in search_terms_simple:
         # Use the minimum p-value across all lags for this term
         min_p = min(term_pvals)
         term_significance.append((term, min_p))
-        print(f"Term: {term}, Min p-value across lags: {min_p:.4f}")
 
 # Sort by significance
 term_significance.sort(key=lambda x: x[1])
 
+# Calculate Bonferroni-corrected significance threshold
+num_tests = len(term_significance)
+bonferroni_threshold = 0.05 / num_tests
+
+# Perform FDR correction (Benjamini-Hochberg)
+search_term_pvalues = [pval for term, pval in term_significance]
+fdr_rejected, fdr_pvalues, _, _ = multipletests(search_term_pvalues, method='fdr_bh', alpha=0.05)
+
+# Create mapping of terms to FDR significance
+fdr_significant_terms = set()
+for i, (term, pval) in enumerate(term_significance):
+    if fdr_rejected[i]:
+        fdr_significant_terms.add(term)
+
+print(f"Number of search terms tested: {num_tests}")
+print(f"Bonferroni-corrected significance threshold: {bonferroni_threshold:.6f} (0.05/{num_tests})")
+print(f"FDR correction applied (Benjamini-Hochberg method)")
+
 # Extract terms and p-values for plotting
 valid_terms = [term for term, pval in term_significance]
 granger_pvals = [pval for term, pval in term_significance]
+
+# Identify significant terms with different thresholds
+significant_uncorrected = [term for term, pval in term_significance if pval < 0.05]
+significant_bonferroni = [term for term, pval in term_significance if pval < bonferroni_threshold]
+
+print(f"Significant terms (uncorrected p < 0.05): {len(significant_uncorrected)}")
+print(f"Significant terms (Bonferroni-corrected p < {bonferroni_threshold:.6f}): {len(significant_bonferroni)}")
+print(f"Significant terms (FDR-corrected): {len(fdr_significant_terms)}")
 
 # Create the plot
 if valid_terms:
@@ -325,13 +351,33 @@ if valid_terms:
         
         plt.figure(figsize=(fig_width, fig_height))
         
-        # Create bars with better colors for significance
-        colors = ['red' if pval < 0.05 else 'orange' for pval in granger_pvals_plot]
+        # Create bars with colors for different significance levels
+        colors = []
+        for i, term in enumerate(valid_terms_plot):
+            pval = granger_pvals_plot[i]
+            if term in fdr_significant_terms:
+                colors.append('purple')  # FDR significant
+            elif pval < bonferroni_threshold:
+                colors.append('darkred')  # Bonferroni significant
+            elif pval < 0.05:
+                colors.append('red')      # Uncorrected significant
+            else:
+                colors.append('orange')   # Not significant
+        
         bars = plt.bar(valid_terms_plot, granger_pvals_plot, color=colors, alpha=0.7)
         
         plt.ylabel('Min p-value (across lags)', fontsize=12)
         plt.title(f'Individual Term Significance from Multiple Regression Model with Max Lag = {max_lag}', fontsize=14, pad=20)
-        plt.axhline(0.05, color='red', linestyle='--', label='p=0.05', linewidth=2)
+        plt.axhline(0.05, color='red', linestyle='--', label='p=0.05 (uncorrected)', linewidth=2)
+        
+        # Add custom legend entries for bar colors
+        from matplotlib.patches import Patch
+        legend_elements = [
+            Patch(facecolor='purple', alpha=0.7, label='FDR significant'),
+            Patch(facecolor='darkred', alpha=0.7, label='Bonferroni significant'),
+            Patch(facecolor='red', alpha=0.7, label='Uncorrected significant'),
+            Patch(facecolor='orange', alpha=0.7, label='Not significant')
+        ]
         
         # Improve x-axis labels with better rotation and positioning
         plt.xticks(rotation=45, fontsize=font_size, ha='right')
@@ -347,7 +393,7 @@ if valid_terms:
         if granger_pvals_plot:
             plt.ylim(0, max(granger_pvals_plot) * 1.1)
         
-        plt.legend(fontsize=12)
+        plt.legend(handles=legend_elements, fontsize=12)
         plt.grid(axis='y', alpha=0.3)
         
         # Better layout with more space
@@ -357,18 +403,33 @@ if valid_terms:
         plt.show()
         
         # Print summary statistics
-        significant_terms = [term for term, pval in valid_pvals if pval < 0.05]
+        significant_uncorrected_plot = [term for term, pval in valid_pvals if pval < 0.05]
+        significant_bonferroni_plot = [term for term, pval in valid_pvals if pval < bonferroni_threshold]
+        significant_fdr_plot = [term for term in valid_terms_plot if term in fdr_significant_terms]
+        
         print(f"\nSummary:")
         print(f"Total terms with valid p-values: {len(valid_terms_plot)}")
         print(f"Terms with NaN p-values: {len(valid_terms) - len(valid_terms_plot)}")
-        print(f"Significant terms (p < 0.05): {len(significant_terms)}")
-        if valid_terms_plot:
-            print(f"Percentage significant: {len(significant_terms)/len(valid_terms_plot)*100:.1f}%")
+        print(f"Uncorrected (p < 0.05): {len(significant_uncorrected_plot)} terms")
+        print(f"Bonferroni-corrected (p < {bonferroni_threshold:.6f}): {len(significant_bonferroni_plot)} terms")
+        print(f"FDR-corrected: {len(significant_fdr_plot)} terms")
         
-        if significant_terms:
-            print(f"\nTop 10 most significant terms in the multiple regression:")
+        if significant_fdr_plot:
+            print(f"\nTop 5 FDR-significant terms:")
             sorted_valid = sorted(valid_pvals, key=lambda x: x[1])
-            for i, (term, pval) in enumerate(sorted_valid[:10]):
+            for i, (term, pval) in enumerate(sorted_valid[:5]):
+                significance = "***" if term in fdr_significant_terms else "**" if pval < 0.05 else ""
+                print(f"{i+1}. {term}: p = {pval:.4f}{significance}")
+        elif significant_bonferroni_plot:
+            print(f"\nTop 5 Bonferroni-significant terms:")
+            sorted_valid = sorted(valid_pvals, key=lambda x: x[1])
+            for i, (term, pval) in enumerate(sorted_valid[:5]):
+                significance = "***" if pval < bonferroni_threshold else "**" if pval < 0.05 else ""
+                print(f"{i+1}. {term}: p = {pval:.4f}{significance}")
+        elif significant_uncorrected_plot:
+            print(f"\nTop 5 uncorrected-significant terms:")
+            sorted_valid = sorted(valid_pvals, key=lambda x: x[1])
+            for i, (term, pval) in enumerate(sorted_valid[:5]):
                 print(f"{i+1}. {term}: p = {pval:.4f}")
 else:
     print("No valid terms found for plotting")
@@ -376,13 +437,31 @@ else:
 # Save significant terms to a text file
 txt_filename = f"ShiHaoYang/Results/granger_significant_terms_nrevss_lag{max_lag}.txt"
 with open(txt_filename, "w") as f:
-    f.write(f"Significant terms (p < 0.05) for NREVSS multiple regression, max_lag={max_lag}\n")
-    f.write(f"Total significant terms: {len(significant_terms)}\n\n")
-    if significant_terms:
-        for term in significant_terms:
-            # Find the p-value for this term
-            pval = [p for t, p in zip(valid_terms, granger_pvals) if t == term][0]
-            f.write(f"{term}: p = {pval:.4f}\n")
+    f.write(f"Significant terms for NREVSS multiple regression, max_lag={max_lag}\n")
+    f.write(f"Number of tests: {num_tests}\n")
+    f.write(f"Bonferroni threshold: {bonferroni_threshold:.6f}\n")
+    f.write(f"FDR correction applied (Benjamini-Hochberg method)\n")
+    f.write(f"Total significant terms: {len(fdr_significant_terms) if fdr_significant_terms else len(significant_bonferroni)}\n\n")
+    
+    # Prioritize FDR significant terms, then Bonferroni
+    if fdr_significant_terms:
+        f.write("FDR-significant terms:\n")
+        for term in fdr_significant_terms:
+            pval = [p for t, p in term_significance if t == term][0]
+            f.write(f"{term}: p = {pval:.6f}\n")
+    elif significant_bonferroni:
+        f.write("Bonferroni-significant terms:\n")
+        for term in significant_bonferroni:
+            pval = [p for t, p in term_significance if t == term][0]
+            f.write(f"{term}: p = {pval:.6f}\n")
     else:
         f.write("None\n")
+        
+        # Also save uncorrected results for reference
+        if significant_uncorrected:
+            f.write(f"\nUncorrected significant terms (p < 0.05): {len(significant_uncorrected)}\n")
+            for term in significant_uncorrected:
+                pval = [p for t, p in term_significance if t == term][0]
+                f.write(f"{term}: p = {pval:.6f}\n")
+
 print(f"Significant terms saved to {txt_filename}")

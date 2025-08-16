@@ -1,0 +1,22 @@
+Significant terms for NREVSS multiple regression, max_lag=2
+Number of tests: 149
+Bonferroni threshold: 0.000336
+FDR correction applied (Benjamini-Hochberg method)
+Total significant terms: 15
+
+FDR-significant terms:
+flu like symptoms: p = 0.000246
+h1n1: p = 0.000030
+what is the flu: p = 0.000993
+tessalon: p = 0.001031
+fever with flu: p = 0.001866
+fever reducer: p = 0.003405
+the flu virus: p = 0.000128
+(TOPIC)028tns: p = 0.000004
+avian flu news + avian flu outbreak + bird flu out_804ade0a: p = 0.000525
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129: p = 0.000004
+cold flu symptoms: p = 0.004946
+normal body temperature: p = 0.004664
+flu children: p = 0.000469
+the flu: p = 0.002669
+symptoms of the flu: p = 0.002823

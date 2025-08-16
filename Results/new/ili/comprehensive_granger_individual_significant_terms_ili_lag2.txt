@@ -1,0 +1,28 @@
+Significant terms from comprehensive Granger causality model
+Response variable: % WEIGHTED ILI
+Max lag: 2
+Number of tests: 298
+Bonferroni threshold: 0.000168
+Overall Granger causality F-statistic: 9.6563
+Overall Granger causality p-value: 0.000000
+Total significant terms: 17
+Model R-squared: 0.9910
+
+Term	Coefficient	Std Error	t-value	p-value	CI Lower	CI Upper	Significance
+(TOPIC)0j5fv_lag1	-0.000397	0.000094	-4.2111	0.000028	-0.000582	-0.000212	FDR
+flu texas_lag2	0.002738	0.000677	4.0420	0.000058	0.001408	0.004068	FDR
+flu children_lag1	0.004620	0.001147	4.0279	0.000062	0.002368	0.006871	FDR
+strep throat_lag2	-0.001339	0.000342	-3.9169	0.000097	-0.002010	-0.000668	FDR
+high fever_lag1	0.003081	0.000838	3.6743	0.000254	0.001435	0.004726	FDR
+stomach flu virus_lag1	-0.007415	0.002037	-3.6407	0.000289	-0.011414	-0.003417	FDR
+tylenol extra strength_lag2	0.007315	0.002012	3.6360	0.000294	0.003366	0.011264	FDR
+(TOPIC)0b76bty_lag2	-0.000598	0.000172	-3.4735	0.000541	-0.000936	-0.000260	FDR
+symptoms of pneumonia_lag2	-0.003537	0.001052	-3.3616	0.000811	-0.005602	-0.001472	FDR
+strep_lag2	0.000803	0.000243	3.3070	0.000984	0.000326	0.001280	FDR
+flu children_lag2	-0.004050	0.001227	-3.2994	0.001011	-0.006459	-0.001640	FDR
+how long contagious_lag1	-0.000984	0.000299	-3.2908	0.001042	-0.001571	-0.000397	FDR
+low body_lag1	-0.002618	0.000813	-3.2209	0.001329	-0.004214	-0.001023	FDR
+the flu virus_lag1	0.004532	0.001425	3.1800	0.001528	0.001734	0.007329	FDR
+how long does the flu last_lag2	-0.007622	0.002462	-3.0956	0.002031	-0.012455	-0.002789	FDR
+cold flu symptoms_lag1	0.004617	0.001511	3.0557	0.002318	0.001651	0.007583	FDR
+fever reducer_lag1	0.008317	0.002733	3.0434	0.002414	0.002953	0.013681	FDR
