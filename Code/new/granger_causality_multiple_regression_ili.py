@@ -61,7 +61,7 @@ def merge_and_prepare_data(df_ili, df_search, filtered_columns):
     )
     
     # Create lagged variables
-    max_lag = 2
+    max_lag = 1
     response_var = '% WEIGHTED ILI'
     
     flu_lags = []
@@ -446,6 +446,161 @@ def create_comprehensive_visualization(model_unrestricted, filtered_columns, max
         print("No valid terms found for plotting")
 
 
+def perform_hac_analysis(df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=4):
+    """Perform HAC analysis using correct Wald test approach"""
+    try:
+        print(f"\n=== HAC ANALYSIS (Autocorrelation-Adjusted) ===")
+        
+        # Fit unrestricted model with OLS (get point estimates)
+        X_unrestricted = sm.add_constant(df_ili[existing_flu_lags + existing_all_lags])
+        y = df_ili[response_var]
+        
+
+        
+        ols_u = sm.OLS(y, X_unrestricted).fit()
+        
+        # Build restriction matrix R to test that all search-term coefficients = 0
+        k_params = ols_u.params.size
+        q = len(existing_all_lags)
+        R = np.zeros((q, k_params))
+        
+        # Identify indices of search-term lag columns
+        for j, col in enumerate(X_unrestricted.columns):
+            if col in existing_all_lags:
+                row = existing_all_lags.index(col)
+                R[row, j] = 1
+        
+        # Get HAC robust results object
+        ols_u_hac = ols_u.get_robustcov_results(cov_type='HAC', cov_kwds={'maxlags': maxlags})
+        
+        # Run Wald/F test using HAC covariance
+        wald_res = ols_u_hac.f_test(R)
+        
+        print(f"Original OLS F-statistic: {F:.4f}, p-value: {p_value:.6f}")
+        print(f"HAC Wald F-statistic: {wald_res.fvalue:.4f}, p-value: {wald_res.pvalue:.6f}")
+        print(f"Degrees of freedom: ({wald_res.df_num}, {wald_res.df_denom})")
+        print(f"Max lags for HAC: {maxlags}")
+        
+        return ols_u_hac, wald_res
+        
+    except Exception as e:
+        print(f"Error in HAC analysis: {e}")
+        return None, None
+
+
+def perform_autocorrelation_correction(df_ili, existing_flu_lags, existing_all_lags, response_var):
+    """Perform autocorrelation correction using Cochrane-Orcutt or HAC"""
+    try:
+        print(f"\n=== AUTOCORRELATION CORRECTION ===")
+        
+        # Method 1: Cochrane-Orcutt transformation
+        print("Method 1: Cochrane-Orcutt Transformation")
+        X_unrestricted = sm.add_constant(df_ili[existing_flu_lags + existing_all_lags])
+        y = df_ili[response_var]
+        
+
+        
+        # Fit initial model
+        model_initial = sm.OLS(y, X_unrestricted).fit()
+        
+        # Estimate AR(1) coefficient from residuals
+        residuals = model_initial.resid
+        rho = np.corrcoef(residuals[:-1], residuals[1:])[0, 1]
+        
+        print(f"Estimated AR(1) coefficient (rho): {rho:.4f}")
+        
+        # Apply Cochrane-Orcutt transformation
+        y_transformed = y[1:] - rho * y[:-1]
+        X_transformed = X_unrestricted.iloc[1:] - rho * X_unrestricted.iloc[:-1]
+        
+        # Check for infinite or NaN values in transformed data
+        if np.any(np.isinf(X_transformed.values)) or np.any(np.isnan(X_transformed.values)):
+            print("Warning: Infinite or NaN values in transformed X matrix")
+            mask = ~(np.isinf(X_transformed.values).any(axis=1) | np.isnan(X_transformed.values).any(axis=1))
+            X_transformed = X_transformed[mask]
+            y_transformed = y_transformed[mask]
+            print(f"Removed {np.sum(~mask)} rows with infinite/NaN values from transformed X")
+        
+
+        
+        # Fit transformed model
+        model_corrected = sm.OLS(y_transformed, X_transformed).fit()
+        
+        print(f"Original R²: {model_initial.rsquared:.4f}")
+        print(f"Corrected R²: {model_corrected.rsquared:.4f}")
+        
+        return model_corrected, rho
+        
+    except Exception as e:
+        print(f"Error in autocorrelation correction: {e}")
+        return None, None
+
+
+def perform_hac_sensitivity_analysis(df_ili, existing_flu_lags, existing_all_lags, response_var):
+    """Perform HAC sensitivity analysis with different maxlags values"""
+    try:
+        print(f"\n=== HAC SENSITIVITY ANALYSIS ===")
+        
+        # Fit unrestricted model
+        X_unrestricted = sm.add_constant(df_ili[existing_flu_lags + existing_all_lags])
+        y = df_ili[response_var]
+        
+
+        
+        ols_u = sm.OLS(y, X_unrestricted).fit()
+        
+        # Build restriction matrix
+        k_params = ols_u.params.size
+        q = len(existing_all_lags)
+        R = np.zeros((q, k_params))
+        
+        for j, col in enumerate(X_unrestricted.columns):
+            if col in existing_all_lags:
+                row = existing_all_lags.index(col)
+                R[row, j] = 1
+        
+        # Test different maxlags values
+        maxlags_values = [1, 2, 4, 6, 8]
+        results = []
+        
+        print(f"{'Maxlags':<8} {'F-statistic':<12} {'p-value':<12} {'Significant':<12}")
+        print("-" * 50)
+        
+        for maxlags in maxlags_values:
+            try:
+                ols_u_hac = ols_u.get_robustcov_results(cov_type='HAC', cov_kwds={'maxlags': maxlags})
+                wald_res = ols_u_hac.f_test(R)
+                
+                significant = "Yes" if wald_res.pvalue < 0.05 else "No"
+                print(f"{maxlags:<8} {wald_res.fvalue:<12.4f} {wald_res.pvalue:<12.6f} {significant:<12}")
+                
+                results.append({
+                    'maxlags': maxlags,
+                    'f_statistic': wald_res.fvalue,
+                    'p_value': wald_res.pvalue,
+                    'significant': wald_res.pvalue < 0.05
+                })
+                
+            except Exception as e:
+                print(f"{maxlags:<8} {'Error':<12} {'Error':<12} {'Error':<12}")
+                print(f"        Error details: {e}")
+        
+        # Summary
+        significant_count = sum(1 for r in results if r['significant'])
+        print(f"\nSummary: {significant_count}/{len(results)} maxlags values show significant results")
+        
+        if significant_count > 0:
+            print("Recommendation: Results are robust to maxlags choice")
+        else:
+            print("Recommendation: Results are sensitive to maxlags choice - interpret with caution")
+        
+        return results
+        
+    except Exception as e:
+        print(f"Error in HAC sensitivity analysis: {e}")
+        return None
+
+
 def main():
     """Main function to run the complete analysis"""
     print("=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS: ILI vs SEARCH TRENDS ===")
@@ -470,8 +625,37 @@ def main():
         # Perform autocorrelation analysis
         dw_restricted, dw_unrestricted, has_autocorrelation = perform_autocorrelation_analysis(model_restricted, model_unrestricted)
         
-        # Analyze individual terms
-        analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
+        # If autocorrelation is detected, perform corrections
+        if has_autocorrelation:
+            print(f"\n⚠️  Autocorrelation detected! Performing corrections...")
+            
+            # Method 1: HAC standard errors (corrected approach)
+            ols_u_hac, wald_res = perform_hac_analysis(
+                df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=4
+            )
+            
+            # Method 2: Cochrane-Orcutt transformation
+            model_corrected, rho = perform_autocorrelation_correction(
+                df_ili, existing_flu_lags, existing_all_lags, response_var
+            )
+            
+            # Method 3: HAC sensitivity analysis
+            hac_sensitivity_results = perform_hac_sensitivity_analysis(
+                df_ili, existing_flu_lags, existing_all_lags, response_var
+            )
+            
+            # Use HAC-adjusted results for individual term analysis
+            if ols_u_hac is not None:
+                print(f"\nUsing HAC-adjusted results for individual term analysis...")
+                # Use the HAC-adjusted model for individual term analysis
+                analyze_individual_terms(ols_u_hac, filtered_columns, max_lag, response_var, wald_res.fvalue, wald_res.pvalue)
+            else:
+                print(f"\nUsing original results for individual term analysis...")
+                analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
+        else:
+            # No autocorrelation detected, use original results
+            print(f"\n✓ No autocorrelation detected. Using standard results...")
+            analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
         
         print(f"\n=== ANALYSIS COMPLETE ===")
     else:

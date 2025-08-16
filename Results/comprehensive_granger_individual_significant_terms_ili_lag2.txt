@@ -1,0 +1,72 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: % WEIGHTED ILI
+Max lag: 2
+Number of tests: 298
+Bonferroni threshold: 0.000168
+Overall Granger causality F-statistic: 9.6563
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9910
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 58 terms
+Bonferroni significant (p < 0.000168): 6 terms
+FDR significant: 17 terms
+
+=== ALL SIGNIFICANT TERMS (n=56) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)0j5fv_lag1	0.000028	FDR
+flu texas_lag2	0.000058	FDR
+flu children_lag1	0.000062	FDR
+strep throat_lag2	0.000097	FDR
+high fever_lag1	0.000254	FDR
+stomach flu virus_lag1	0.000289	FDR
+tylenol extra strength_lag2	0.000294	FDR
+(TOPIC)0b76bty_lag2	0.000541	FDR
+symptoms of pneumonia_lag2	0.000811	FDR
+strep_lag2	0.000984	FDR
+flu children_lag2	0.001011	FDR
+how long contagious_lag1	0.001042	FDR
+low body_lag1	0.001329	FDR
+the flu virus_lag1	0.001528	FDR
+how long does the flu last_lag2	0.002031	FDR
+cold flu symptoms_lag1	0.002318	FDR
+fever reducer_lag1	0.002414	FDR
+(TOPIC)087cyy_lag2	0.003731	Uncorrected
+symptoms of the flu_lag2	0.003891	Uncorrected
+best cold medicine_lag2	0.004089	Uncorrected
+(TOPIC)0cjf0_lag2	0.004587	Uncorrected
+symptoms of stomach flu_lag1	0.004743	Uncorrected
+(TOPIC)06n3pj_lag1	0.005728	Uncorrected
+high fever_lag2	0.005901	Uncorrected
+(TOPIC)0j5fv_lag2	0.006741	Uncorrected
+how long does the flu last_lag1	0.007129	Uncorrected
+stomach virus_lag1	0.008514	Uncorrected
+(TOPIC)0n073_lag2	0.008846	Uncorrected
+thermoscan_lag1	0.009835	Uncorrected
+flu remedies_lag1	0.012177	Uncorrected
+flu incubation_lag2	0.012272	Uncorrected
+flu cough_lag1	0.013313	Uncorrected
+how long contagious_lag2	0.013420	Uncorrected
+robitussin_lag2	0.016032	Uncorrected
+(TOPIC)0b2cnj_lag1	0.016439	Uncorrected
+food poisoning_lag1	0.017495	Uncorrected
+flu care_lag2	0.018010	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a_lag2	0.019921	Uncorrected
+break a fever_lag2	0.023617	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129_lag1	0.024579	Uncorrected
+the flue_lag2	0.024792	Uncorrected
+flu medicine_lag2	0.025933	Uncorrected
+flu incubation_lag1	0.025959	Uncorrected
+flu headache_lag1	0.026053	Uncorrected
+cold symptoms_lag1	0.027770	Uncorrected
+(TOPIC)0cjf0_lag1	0.029878	Uncorrected
+(TOPIC)01b_21_lag1	0.030861	Uncorrected
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid_lag2	0.031338	Uncorrected
+the flu symptoms_lag2	0.033149	Uncorrected
+(TOPIC)0n073_lag1	0.036265	Uncorrected
+current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms_lag1	0.038367	Uncorrected
+h1n1_lag2	0.041562	Uncorrected
+(TOPIC)0b76bty_lag1	0.045810	Uncorrected
+robitussin_lag1	0.046031	Uncorrected
+pneumonia symptoms_lag1	0.048923	Uncorrected
+pandemic_lag1	0.049930	Uncorrected
