@@ -27,7 +27,7 @@ df_combined = df_combined[common_cols]
 df_flu = pd.concat([df_combined, df_pub], ignore_index=True)
 
 # --- CONFIGURABLE SECTION ---
-max_lag = 1 # Number of lags
+max_lag = 2 # Number of lags
 max_terms = None  # Maximum number of search terms to use (set to None to use all)
 response_var = 'flu_total_positive'  # Or 'flu_pct_positive' for percent positive
 
@@ -434,34 +434,55 @@ if valid_terms:
 else:
     print("No valid terms found for plotting")
 
-# Save significant terms to a text file
+# Save comprehensive results to a text file
 txt_filename = f"ShiHaoYang/Results/granger_significant_terms_nrevss_lag{max_lag}.txt"
 with open(txt_filename, "w") as f:
-    f.write(f"Significant terms for NREVSS multiple regression, max_lag={max_lag}\n")
+    # Write summary at the top
+    f.write(f"=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===\n")
+    f.write(f"Response variable: {response_var}\n")
+    f.write(f"Max lag: {max_lag}\n")
     f.write(f"Number of tests: {num_tests}\n")
     f.write(f"Bonferroni threshold: {bonferroni_threshold:.6f}\n")
     f.write(f"FDR correction applied (Benjamini-Hochberg method)\n")
-    f.write(f"Total significant terms: {len(fdr_significant_terms) if fdr_significant_terms else len(significant_bonferroni)}\n\n")
+    f.write(f"Overall Granger causality F-statistic: {F:.4f}\n")
+    f.write(f"Overall Granger causality p-value: {p_value:.6f}\n")
+    f.write(f"Model R-squared: {model_unrestricted.rsquared:.4f}\n\n")
     
-    # Prioritize FDR significant terms, then Bonferroni
-    if fdr_significant_terms:
-        f.write("FDR-significant terms:\n")
-        for term in fdr_significant_terms:
-            pval = [p for t, p in term_significance if t == term][0]
-            f.write(f"{term}: p = {pval:.6f}\n")
-    elif significant_bonferroni:
-        f.write("Bonferroni-significant terms:\n")
-        for term in significant_bonferroni:
-            pval = [p for t, p in term_significance if t == term][0]
-            f.write(f"{term}: p = {pval:.6f}\n")
-    else:
-        f.write("None\n")
+    f.write(f"=== SIGNIFICANCE SUMMARY ===\n")
+    f.write(f"Uncorrected significant (p < 0.05): {len(significant_uncorrected)} terms\n")
+    f.write(f"Bonferroni significant (p < {bonferroni_threshold:.6f}): {len(significant_bonferroni)} terms\n")
+    f.write(f"FDR significant: {len(fdr_significant_terms)} terms\n\n")
+    
+    # Get all significant terms (any type) and determine most conservative significance
+    all_significant_terms = set()
+    for term, pval in term_significance:
+        if pval < 0.05:  # Any type of significance
+            all_significant_terms.add(term)
+    
+    if all_significant_terms:
+        f.write(f"=== ALL SIGNIFICANT TERMS (n={len(all_significant_terms)}) ===\n")
+        f.write(f"Term\tMin_p_value\tMost_Conservative_Significance\n")
         
-        # Also save uncorrected results for reference
-        if significant_uncorrected:
-            f.write(f"\nUncorrected significant terms (p < 0.05): {len(significant_uncorrected)}\n")
-            for term in significant_uncorrected:
-                pval = [p for t, p in term_significance if t == term][0]
-                f.write(f"{term}: p = {pval:.6f}\n")
+        # Sort by p-value (most significant first)
+        significant_terms_sorted = []
+        for term in all_significant_terms:
+            pval = [p for t, p in term_significance if t == term][0]
+            # Determine most conservative significance
+            if term in fdr_significant_terms:
+                most_conservative = "FDR"
+            elif pval < bonferroni_threshold:
+                most_conservative = "Bonferroni"
+            else:
+                most_conservative = "Uncorrected"
+            
+            significant_terms_sorted.append((term, pval, most_conservative))
+        
+        # Sort by p-value
+        significant_terms_sorted.sort(key=lambda x: x[1])
+        
+        for term, pval, most_conservative in significant_terms_sorted:
+            f.write(f"{term}\t{pval:.6f}\t{most_conservative}\n")
+    else:
+        f.write("No terms were significant at any level.\n")
 
-print(f"Significant terms saved to {txt_filename}")
+print(f"Comprehensive results saved to {txt_filename}")

@@ -207,28 +207,57 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
         
         print(f"Breakdown: {len(significant_ili_lags)} ILI lags, {len(significant_search_lags)} search term lags")
         
-        # Save significant terms to file
+        # Save comprehensive results to file
         comprehensive_txt_filename = f"ShiHaoYang/Results/comprehensive_granger_individual_significant_terms_ili_lag{max_lag}.txt"
         with open(comprehensive_txt_filename, "w") as f:
-            f.write(f"Significant terms from comprehensive Granger causality model\n")
+            # Write summary at the top
+            f.write(f"=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===\n")
             f.write(f"Response variable: {response_var}\n")
             f.write(f"Max lag: {max_lag}\n")
             f.write(f"Number of tests: {num_tests}\n")
             f.write(f"Bonferroni threshold: {bonferroni_threshold:.6f}\n")
             f.write(f"Overall Granger causality F-statistic: {F:.4f}\n")
             f.write(f"Overall Granger causality p-value: {p_value:.6f}\n")
-            f.write(f"Total significant terms: {len(significant_in_model)}\n")
             f.write(f"Model R-squared: {model_unrestricted.rsquared:.4f}\n\n")
             
-            f.write("Term\tCoefficient\tStd Error\tt-value\tp-value\tCI Lower\tCI Upper\tSignificance\n")
-            for term, row in significant_in_model.iterrows():
-                if term in fdr_significant_terms:
-                    significance = "FDR"
-                elif row['p-value'] < bonferroni_threshold:
-                    significance = "Bonferroni"
-                else:
-                    significance = "Uncorrected"
-                f.write(f"{term}\t{row['Coefficient']:.6f}\t{row['Std Error']:.6f}\t{row['t-value']:.4f}\t{row['p-value']:.6f}\t{row['CI Lower']:.6f}\t{row['CI Upper']:.6f}\t{significance}\n")
+            f.write(f"=== SIGNIFICANCE SUMMARY ===\n")
+            f.write(f"Uncorrected significant (p < 0.05): {len(significant_uncorrected)} terms\n")
+            f.write(f"Bonferroni significant (p < {bonferroni_threshold:.6f}): {len(significant_bonferroni)} terms\n")
+            f.write(f"FDR significant: {len(significant_fdr)} terms\n\n")
+            
+            # Get all significant terms (any type) and determine most conservative significance
+            all_significant_terms = set()
+            for term in coef_results.index:
+                if term != 'const' and not term.startswith('ili_lag'):
+                    pval = coef_results.loc[term, 'p-value']
+                    if pval < 0.05:  # Any type of significance
+                        all_significant_terms.add(term)
+            
+            if all_significant_terms:
+                f.write(f"=== ALL SIGNIFICANT TERMS (n={len(all_significant_terms)}) ===\n")
+                f.write(f"Term\tMin_p_value\tMost_Conservative_Significance\n")
+                
+                # Sort by p-value (most significant first)
+                significant_terms_sorted = []
+                for term in all_significant_terms:
+                    row = coef_results.loc[term]
+                    # Determine most conservative significance
+                    if term in fdr_significant_terms:
+                        most_conservative = "FDR"
+                    elif row['p-value'] < bonferroni_threshold:
+                        most_conservative = "Bonferroni"
+                    else:
+                        most_conservative = "Uncorrected"
+                    
+                    significant_terms_sorted.append((term, row['p-value'], most_conservative))
+                
+                # Sort by p-value
+                significant_terms_sorted.sort(key=lambda x: x[1])
+                
+                for term, pval, most_conservative in significant_terms_sorted:
+                    f.write(f"{term}\t{pval:.6f}\t{most_conservative}\n")
+            else:
+                f.write("No terms were significant at any level.\n")
         
         print(f"Detailed results saved to {comprehensive_txt_filename}")
         
@@ -238,26 +267,49 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
     else:
         print("No terms were significant after multiple testing correction.")
         
-        # Still save uncorrected results for reference
+        # Still save comprehensive results even if no FDR/Bonferroni significant terms
         if len(significant_uncorrected) > 0:
             print(f"Note: {len(significant_uncorrected)} terms were significant at uncorrected p < 0.05")
             comprehensive_txt_filename = f"ShiHaoYang/Results/comprehensive_granger_individual_significant_terms_ili_lag{max_lag}.txt"
             with open(comprehensive_txt_filename, "w") as f:
-                f.write(f"Uncorrected significant terms (p < 0.05) from comprehensive Granger causality model\n")
+                # Write summary at the top
+                f.write(f"=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===\n")
                 f.write(f"Response variable: {response_var}\n")
                 f.write(f"Max lag: {max_lag}\n")
                 f.write(f"Number of tests: {num_tests}\n")
                 f.write(f"Bonferroni threshold: {bonferroni_threshold:.6f}\n")
                 f.write(f"Overall Granger causality F-statistic: {F:.4f}\n")
                 f.write(f"Overall Granger causality p-value: {p_value:.6f}\n")
-                f.write(f"Total significant terms (uncorrected): {len(significant_uncorrected)}\n")
                 f.write(f"Model R-squared: {model_unrestricted.rsquared:.4f}\n\n")
                 
-                f.write("Term\tCoefficient\tStd Error\tt-value\tp-value\tCI Lower\tCI Upper\n")
+                f.write(f"=== SIGNIFICANCE SUMMARY ===\n")
+                f.write(f"Uncorrected significant (p < 0.05): {len(significant_uncorrected)} terms\n")
+                f.write(f"Bonferroni significant (p < {bonferroni_threshold:.6f}): {len(significant_bonferroni)} terms\n")
+                f.write(f"FDR significant: {len(significant_fdr)} terms\n\n")
+                
+                f.write(f"=== ALL SIGNIFICANT TERMS (n={len(significant_uncorrected)}) ===\n")
+                f.write(f"Term\tMin_p_value\tMost_Conservative_Significance\n")
+                
+                # Sort by p-value (most significant first)
+                significant_terms_sorted = []
                 for term, row in significant_uncorrected.iterrows():
-                    f.write(f"{term}\t{row['Coefficient']:.6f}\t{row['Std Error']:.6f}\t{row['t-value']:.4f}\t{row['p-value']:.6f}\t{row['CI Lower']:.6f}\t{row['CI Upper']:.6f}\n")
+                    # Determine most conservative significance
+                    if term in fdr_significant_terms:
+                        most_conservative = "FDR"
+                    elif row['p-value'] < bonferroni_threshold:
+                        most_conservative = "Bonferroni"
+                    else:
+                        most_conservative = "Uncorrected"
+                    
+                    significant_terms_sorted.append((term, row['p-value'], most_conservative))
+                
+                # Sort by p-value
+                significant_terms_sorted.sort(key=lambda x: x[1])
+                
+                for term, pval, most_conservative in significant_terms_sorted:
+                    f.write(f"{term}\t{pval:.6f}\t{most_conservative}\n")
             
-            print(f"Uncorrected results saved to {comprehensive_txt_filename}")
+            print(f"Comprehensive results saved to {comprehensive_txt_filename}")
 
 
 def create_comprehensive_visualization(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value, bonferroni_threshold, fdr_significant_terms):

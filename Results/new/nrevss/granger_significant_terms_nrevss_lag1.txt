@@ -1,17 +1,49 @@
-Significant terms for NREVSS multiple regression, max_lag=1
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 1
 Number of tests: 149
 Bonferroni threshold: 0.000336
 FDR correction applied (Benjamini-Hochberg method)
-Total significant terms: 10
+Overall Granger causality F-statistic: 6.1052
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9674
 
-FDR-significant terms:
-flu incubation: p = 0.001134
-fever flu symptoms: p = 0.000602
-(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129: p = 0.000000
-the flu: p = 0.000079
-flu cough: p = 0.000000
-h1n1: p = 0.000000
-cold flu symptoms: p = 0.001879
-incubation period: p = 0.001677
-(TOPIC)03t8j0: p = 0.001008
-(TOPIC)06p_bp: p = 0.000313
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 32 terms
+Bonferroni significant (p < 0.000336): 5 terms
+FDR significant: 10 terms
+
+=== ALL SIGNIFICANT TERMS (n=32) ===
+Term	Min_p_value	Most_Conservative_Significance
+h1n1	0.000000	FDR
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.000000	FDR
+flu cough	0.000000	FDR
+the flu	0.000079	FDR
+(TOPIC)06p_bp	0.000313	FDR
+fever flu symptoms	0.000602	FDR
+(TOPIC)03t8j0	0.001008	FDR
+flu incubation	0.001134	FDR
+incubation period	0.001677	FDR
+cold flu symptoms	0.001879	FDR
+congestion medicine	0.005232	Uncorrected
+symptoms of pneumonia	0.005881	Uncorrected
+epidemic	0.010107	Uncorrected
+advil cold and flu + allergies vs cold + best cold_46a6a780	0.010396	Uncorrected
+stomach virus	0.010696	Uncorrected
+chest cold	0.011285	Uncorrected
+the flu virus	0.015073	Uncorrected
+reduce fever	0.015710	Uncorrected
+cold symptoms	0.016286	Uncorrected
+cold flu	0.016379	Uncorrected
+flu children	0.016966	Uncorrected
+sinus medicine	0.022556	Uncorrected
+stomach flu symptoms	0.022902	Uncorrected
+flu stomach pain	0.025047	Uncorrected
+flu a symptoms	0.036081	Uncorrected
+break a fever	0.036120	Uncorrected
+difference in flu type a and b + flu b incubation _f0f3f08e	0.037142	Uncorrected
+how long does the flu last	0.039988	Uncorrected
+treat flu	0.040380	Uncorrected
+tussionex	0.044267	Uncorrected
+what is a fever	0.044928	Uncorrected
+avian flu humans + avian flu in chickens + avian f_de498a91	0.049340	Uncorrected

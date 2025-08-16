@@ -1,36 +1,68 @@
-Significant terms from comprehensive Granger causality model
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
 Response variable: % WEIGHTED ILI
 Max lag: 1
 Number of tests: 149
 Bonferroni threshold: 0.000336
 Overall Granger causality F-statistic: 13.0390
 Overall Granger causality p-value: 0.000000
-Total significant terms: 25
 Model R-squared: 0.9803
 
-Term	Coefficient	Std Error	t-value	p-value	CI Lower	CI Upper	Significance
-h1n1_lag1	-0.000162	0.000029	-5.5982	0.000000	-0.000218	-0.000105	FDR
-cough and fever_lag1	0.013499	0.002518	5.3615	0.000000	0.008558	0.018440	FDR
-stomach flu virus_lag1	-0.010481	0.002388	-4.3890	0.000013	-0.015167	-0.005794	FDR
-high fever_lag1	0.004105	0.000937	4.3827	0.000013	0.002267	0.005944	FDR
-dry cough_lag1	-0.002856	0.000666	-4.2856	0.000020	-0.004164	-0.001548	FDR
-flu cough_lag1	-0.008396	0.001991	-4.2177	0.000027	-0.012302	-0.004489	FDR
-stomach flu_lag1	0.001905	0.000467	4.0832	0.000048	0.000989	0.002821	FDR
-what is the flu_lag1	-0.005102	0.001365	-3.7363	0.000198	-0.007781	-0.002422	FDR
-how long does flu last_lag1	-0.009127	0.002527	-3.6121	0.000319	-0.014085	-0.004168	FDR
-cold symptoms_lag1	0.002264	0.000633	3.5785	0.000363	0.001022	0.003505	FDR
-incubation period_lag1	-0.001832	0.000540	-3.3932	0.000719	-0.002891	-0.000772	FDR
-flu incubation_lag1	0.007804	0.002309	3.3802	0.000753	0.003273	0.012335	FDR
-(TOPIC)0j5fv_lag1	-0.000297	0.000094	-3.1684	0.001581	-0.000481	-0.000113	FDR
-covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid_lag1	-0.000004	0.000001	-3.1658	0.001595	-0.000007	-0.000002	FDR
-break a fever_lag1	0.009345	0.003033	3.0815	0.002118	0.003394	0.015297	FDR
-stomach virus symptoms_lag1	-0.006853	0.002266	-3.0250	0.002552	-0.011299	-0.002407	FDR
-rsv symptoms_lag1	0.000536	0.000180	2.9827	0.002929	0.000183	0.000889	FDR
-(TOPIC)028tns_lag1	-0.000944	0.000329	-2.8705	0.004188	-0.001589	-0.000299	FDR
-cure flu_lag1	-0.006681	0.002343	-2.8511	0.004449	-0.011280	-0.002083	FDR
-body temperature_lag1	0.001459	0.000516	2.8276	0.004786	0.000446	0.002472	FDR
-(TOPIC)0683jy_lag1	-0.001216	0.000432	-2.8165	0.004954	-0.002063	-0.000369	FDR
-flu a symptoms_lag1	0.004806	0.001741	2.7613	0.005866	0.001391	0.008222	FDR
-(TOPIC)03t8j0_lag1	-0.000465	0.000172	-2.6990	0.007076	-0.000804	-0.000127	FDR
-(TOPIC)0b2cnj_lag1	0.001115	0.000414	2.6924	0.007216	0.000302	0.001927	FDR
-reduce fever_lag1	0.006309	0.002356	2.6775	0.007543	0.001685	0.010933	FDR
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 53 terms
+Bonferroni significant (p < 0.000336): 10 terms
+FDR significant: 25 terms
+
+=== ALL SIGNIFICANT TERMS (n=52) ===
+Term	Min_p_value	Most_Conservative_Significance
+h1n1_lag1	0.000000	FDR
+cough and fever_lag1	0.000000	FDR
+stomach flu virus_lag1	0.000013	FDR
+high fever_lag1	0.000013	FDR
+dry cough_lag1	0.000020	FDR
+flu cough_lag1	0.000027	FDR
+stomach flu_lag1	0.000048	FDR
+what is the flu_lag1	0.000198	FDR
+how long does flu last_lag1	0.000319	FDR
+cold symptoms_lag1	0.000363	FDR
+incubation period_lag1	0.000719	FDR
+flu incubation_lag1	0.000753	FDR
+(TOPIC)0j5fv_lag1	0.001581	FDR
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid_lag1	0.001595	FDR
+break a fever_lag1	0.002118	FDR
+stomach virus symptoms_lag1	0.002552	FDR
+rsv symptoms_lag1	0.002929	FDR
+(TOPIC)028tns_lag1	0.004188	FDR
+cure flu_lag1	0.004449	FDR
+body temperature_lag1	0.004786	FDR
+(TOPIC)0683jy_lag1	0.004954	FDR
+flu a symptoms_lag1	0.005866	FDR
+(TOPIC)03t8j0_lag1	0.007076	FDR
+(TOPIC)0b2cnj_lag1	0.007216	FDR
+reduce fever_lag1	0.007543	FDR
+cold flu symptoms_lag1	0.009065	Uncorrected
+strep_lag1	0.009086	Uncorrected
+sinus_lag1	0.009443	Uncorrected
+advil cold and flu + allergies vs cold + best cold_52555453_lag1	0.011380	Uncorrected
+sinus medicine_lag1	0.013038	Uncorrected
+ear thermometer_lag1	0.013198	Uncorrected
+best cough medicine_lag1	0.014164	Uncorrected
+current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms_lag1	0.014565	Uncorrected
+epidemic_lag1	0.014687	Uncorrected
+taking temperature_lag1	0.015597	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129_lag1	0.016050	Uncorrected
+sinus infections_lag1	0.016475	Uncorrected
+low body_lag1	0.017775	Uncorrected
+food poisoning symptoms_lag1	0.018730	Uncorrected
+tussin_lag1	0.024490	Uncorrected
+stomach virus_lag1	0.026813	Uncorrected
+best flu medicine for adults + children's tylenol _de4e67e7_lag1	0.026949	Uncorrected
+flu treatment_lag1	0.027356	Uncorrected
+best over the counter flu medicine + cold and flu _53c4abfe_lag1	0.028231	Uncorrected
+flu remedies_lag1	0.036244	Uncorrected
+thermoscan_lag1	0.036585	Uncorrected
+flu stomach pain_lag1	0.037667	Uncorrected
+chest cold_lag1	0.040144	Uncorrected
+the flu_lag1	0.040612	Uncorrected
+pandemic_lag1	0.041935	Uncorrected
+i have the flu_lag1	0.043007	Uncorrected
+flu medicine_lag1	0.046855	Uncorrected
