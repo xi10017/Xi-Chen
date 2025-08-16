@@ -49,7 +49,7 @@ def perform_diagnostic_analysis(df_search):
     return filtered_columns
 
 
-def merge_and_prepare_data(df_ili, df_search, filtered_columns):
+def merge_and_prepare_data(df_ili, df_search, filtered_columns, max_lag=1):
     """Merge data and create lagged variables"""
     # Merge data
     df_ili['YEAR'] = df_ili['YEAR'].astype(int)
@@ -62,7 +62,7 @@ def merge_and_prepare_data(df_ili, df_search, filtered_columns):
     )
     
     # Create lagged variables
-    max_lag = 1
+    max_lag = 5
     response_var = '% WEIGHTED ILI'
     
     flu_lags = []
@@ -149,7 +149,8 @@ def perform_autocorrelation_analysis(model_restricted, model_unrestricted):
         return None, None, None
 
 
-def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value):
+def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value, 
+                           has_autocorrelation=None, dw_statistic=None, hac_results=None):
     """Analyze individual term significance within the comprehensive model"""
     # Get coefficient results for all terms in the unrestricted model
     coef_results = pd.DataFrame({
@@ -223,6 +224,23 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
             f.write(f"Overall Granger causality F-statistic: {F:.4f}\n")
             f.write(f"Overall Granger causality p-value: {p_value:.6f}\n")
             f.write(f"Model R-squared: {model_unrestricted.rsquared:.4f}\n\n")
+            
+            # Add autocorrelation information
+            f.write(f"=== AUTOCORRELATION ANALYSIS ===\n")
+            if has_autocorrelation is not None:
+                f.write(f"Autocorrelation detected: {'Yes' if has_autocorrelation else 'No'}\n")
+            if dw_statistic is not None:
+                f.write(f"Durbin-Watson statistic: {dw_statistic:.4f}\n")
+                if dw_statistic < 1.5:
+                    f.write(f"Interpretation: Strong positive autocorrelation\n")
+                elif dw_statistic > 2.5:
+                    f.write(f"Interpretation: Strong negative autocorrelation\n")
+                else:
+                    f.write(f"Interpretation: No significant autocorrelation\n")
+            if hac_results is not None:
+                f.write(f"HAC-adjusted F-statistic: {hac_results['fvalue']:.4f}\n")
+                f.write(f"HAC-adjusted p-value: {hac_results['pvalue']:.6f}\n")
+            f.write(f"\n")
             
             f.write(f"=== SIGNIFICANCE SUMMARY ===\n")
             f.write(f"Uncorrected significant (p < 0.05): {len(significant_uncorrected)} terms\n")
@@ -711,53 +729,67 @@ def main():
     # Perform diagnostic analysis
     filtered_columns = perform_diagnostic_analysis(df_search)
     
-    # Merge and prepare data with lags
-    df_ili, existing_flu_lags, existing_all_lags, response_var, max_lag = merge_and_prepare_data(
-        df_ili, df_search, filtered_columns
-    )
-    
-    # Perform Granger causality test
-    model_restricted, model_unrestricted, F, p_value, df1, df2 = perform_granger_causality_test(
-        df_ili, existing_flu_lags, existing_all_lags, response_var
-    )
-    
-    if model_restricted is not None and model_unrestricted is not None:
-        # Perform autocorrelation analysis
-        dw_restricted, dw_unrestricted, has_autocorrelation = perform_autocorrelation_analysis(model_restricted, model_unrestricted)
+    # Run analysis for max lags 1-5
+    for max_lag in range(1, 6):
+        print(f"\n{'='*80}")
+        print(f"RUNNING ANALYSIS FOR MAX LAG = {max_lag}")
+        print(f"{'='*80}")
         
-        # If autocorrelation is detected, perform corrections
-        if has_autocorrelation:
-            print(f"\n⚠️  Autocorrelation detected! Performing corrections...")
+        # Create a fresh copy of the data for each iteration
+        df_ili_fresh = df_ili.copy()
+        
+        # Merge and prepare data with lags
+        df_ili_fresh, existing_flu_lags, existing_all_lags, response_var, _ = merge_and_prepare_data(
+            df_ili_fresh, df_search, filtered_columns, max_lag
+        )
+    
+        # Perform Granger causality test
+        model_restricted, model_unrestricted, F, p_value, df1, df2 = perform_granger_causality_test(
+            df_ili_fresh, existing_flu_lags, existing_all_lags, response_var
+        )
+        
+        if model_restricted is not None and model_unrestricted is not None:
+            # Perform autocorrelation analysis
+            dw_restricted, dw_unrestricted, has_autocorrelation = perform_autocorrelation_analysis(model_restricted, model_unrestricted)
             
-            # Method 1: HAC standard errors (corrected approach)
-            ols_u_hac, wald_res = perform_hac_analysis(
-                df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None
-            )
-            
-            # Method 2: Cochrane-Orcutt transformation
-            model_corrected, rho = perform_autocorrelation_correction(
-                df_ili, existing_flu_lags, existing_all_lags, response_var
-            )
-            
-            # Use HAC-adjusted results for individual term analysis
-            if ols_u_hac is not None:
-                print(f"\nUsing HAC-adjusted results for individual term analysis...")
-                # Use the HAC-adjusted model for individual term analysis
-                analyze_individual_terms(ols_u_hac, filtered_columns, max_lag, response_var, wald_res['fvalue'], wald_res['pvalue'])
+            # If autocorrelation is detected, perform corrections
+            if has_autocorrelation:
+                print(f"\n⚠️  Autocorrelation detected! Performing corrections...")
+                
+                # Method 1: HAC standard errors (corrected approach)
+                ols_u_hac, wald_res = perform_hac_analysis(
+                    df_ili_fresh, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None
+                )
+                
+                # Method 2: Cochrane-Orcutt transformation
+                model_corrected, rho = perform_autocorrelation_correction(
+                    df_ili_fresh, existing_flu_lags, existing_all_lags, response_var
+                )
+                
+                # Use HAC-adjusted results for individual term analysis
+                if ols_u_hac is not None:
+                    print(f"\nUsing HAC-adjusted results for individual term analysis...")
+                    # Use the HAC-adjusted model for individual term analysis
+                    analyze_individual_terms(ols_u_hac, filtered_columns, max_lag, response_var, wald_res['fvalue'], wald_res['pvalue'],
+                                           has_autocorrelation, dw_unrestricted, wald_res)
+                else:
+                    print(f"\nUsing original results for individual term analysis...")
+                    analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value,
+                                           has_autocorrelation, dw_unrestricted, None)
+                
+                # Perform HAC sensitivity analysis
+                perform_hac_sensitivity_analysis(df_ili_fresh, existing_flu_lags, existing_all_lags, response_var)
             else:
-                print(f"\nUsing original results for individual term analysis...")
-                analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
+                # No autocorrelation detected, use original results
+                print(f"\n✓ No autocorrelation detected. Using standard results...")
+                analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value,
+                                       has_autocorrelation, dw_unrestricted, None)
             
-            # Perform HAC sensitivity analysis
-            perform_hac_sensitivity_analysis(df_ili, existing_flu_lags, existing_all_lags, response_var)
+            print(f"\n=== ANALYSIS COMPLETE FOR MAX LAG = {max_lag} ===")
         else:
-            # No autocorrelation detected, use original results
-            print(f"\n✓ No autocorrelation detected. Using standard results...")
-            analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
-        
-        print(f"\n=== ANALYSIS COMPLETE ===")
-    else:
-        print("Analysis could not be completed due to errors in model fitting.")
+            print("Analysis could not be completed due to errors in model fitting.")
+    
+    print(f"\n=== ALL ANALYSES COMPLETE ===")
 
 
 if __name__ == "__main__":

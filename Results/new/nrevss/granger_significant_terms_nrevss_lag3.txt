@@ -1,0 +1,55 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 3
+Number of tests: 149
+Bonferroni threshold: 0.000336
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 3.3272
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9897
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 38 terms
+Bonferroni significant (p < 0.000336): 4 terms
+FDR significant: 13 terms
+
+=== ALL SIGNIFICANT TERMS (n=38) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)028tns	0.000001	FDR
+tessalon	0.000040	FDR
+the flu virus	0.000308	FDR
+signs of flu	0.000320	FDR
+h1n1	0.000354	FDR
+the flu	0.000593	FDR
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.001218	FDR
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.001370	FDR
+the flue	0.002150	FDR
+symptoms of the flu	0.002379	FDR
+flu like symptoms	0.002829	FDR
+(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b	0.003145	FDR
+epidemic	0.004235	FDR
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid	0.006286	Uncorrected
+fever with flu	0.006608	Uncorrected
+best cough medicine	0.012090	Uncorrected
+what is a fever	0.012114	Uncorrected
+fever flu symptoms	0.016179	Uncorrected
+how long does flu last	0.017009	Uncorrected
+cold symptoms	0.017958	Uncorrected
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.018335	Uncorrected
+dry cough	0.019645	Uncorrected
+pneumonia symptoms	0.020351	Uncorrected
+fever reducer	0.021688	Uncorrected
+flu texas	0.022068	Uncorrected
+cold flu symptoms	0.027039	Uncorrected
+flu children	0.027089	Uncorrected
+normal body temperature	0.027484	Uncorrected
+treat flu	0.028980	Uncorrected
+symptoms of pneumonia	0.029641	Uncorrected
+flu test	0.029716	Uncorrected
+flu medicine	0.030369	Uncorrected
+(TOPIC)087cyy	0.031488	Uncorrected
+avian flu	0.031597	Uncorrected
+how long contagious	0.037350	Uncorrected
+advil cold and flu + allergies vs cold + best cold_7dd0ee04	0.039405	Uncorrected
+(TOPIC)01c751	0.045869	Uncorrected
+what is the flu	0.048944	Uncorrected

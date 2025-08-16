@@ -1,0 +1,68 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 4
+Number of tests: 149
+Bonferroni threshold: 0.000336
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 3.5158
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9944
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 51 terms
+Bonferroni significant (p < 0.000336): 2 terms
+FDR significant: 8 terms
+
+=== ALL SIGNIFICANT TERMS (n=51) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)028tns	0.000179	FDR
+(TOPIC)0g9pc	0.000260	FDR
+the flu virus	0.000366	FDR
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.000416	FDR
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.000660	FDR
+epidemic	0.000808	FDR
+tessalon	0.001210	FDR
+tussionex	0.002249	FDR
+flu like symptoms	0.004025	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.007824	Uncorrected
+avian flu humans + avian flu in chickens + avian f_de498a91	0.008064	Uncorrected
+(TOPIC)01c751	0.008330	Uncorrected
+avian flu	0.009200	Uncorrected
+flu texas	0.009802	Uncorrected
+pneumonia symptoms	0.009898	Uncorrected
+what is a fever	0.010734	Uncorrected
+i have the flu	0.012523	Uncorrected
+acute bronchitis	0.012897	Uncorrected
+symptoms of the flu	0.013679	Uncorrected
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid	0.014149	Uncorrected
+how long does the flu last	0.014224	Uncorrected
+spanish flu	0.015984	Uncorrected
+the flue	0.017448	Uncorrected
+stomach flu diarrhea	0.018363	Uncorrected
+h1n1	0.018641	Uncorrected
+stomach virus symptoms	0.019984	Uncorrected
+influenza symptoms	0.019996	Uncorrected
+stomach virus	0.021218	Uncorrected
+sinus medicine	0.021618	Uncorrected
+advil cold and flu + allergies vs cold + best cold_2d4fc80d	0.021904	Uncorrected
+the flu	0.023192	Uncorrected
+low body	0.023543	Uncorrected
+signs of flu	0.025364	Uncorrected
+advil cold and flu + allergies vs cold + best cold_52555453	0.028552	Uncorrected
+congestion medicine	0.029123	Uncorrected
+advil cold and flu + allergies vs cold + best cold_7dd0ee04	0.032874	Uncorrected
+best cough medicine	0.033474	Uncorrected
+alka seltzer cold and cough + cold vs sinus infect_75a01e90	0.035749	Uncorrected
+cough and sore throat	0.035853	Uncorrected
+fever reducer	0.036938	Uncorrected
+stomach flu	0.039211	Uncorrected
+flu cough	0.039947	Uncorrected
+dry cough	0.042556	Uncorrected
+cold flu symptoms	0.043806	Uncorrected
+fever with flu	0.043835	Uncorrected
+cough and fever	0.044589	Uncorrected
+(TOPIC)0cjf0	0.045709	Uncorrected
+robitussin	0.047805	Uncorrected
+best over the counter flu medicine + cold and flu _4d7536f3	0.048585	Uncorrected
+avian bird flu + avian flu h5n1 + avian flu sympto_b1d3aa48	0.049747	Uncorrected
+best medicine for cold	0.049800	Uncorrected

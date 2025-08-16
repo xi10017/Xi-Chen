@@ -1,0 +1,75 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 5
+Number of tests: 149
+Bonferroni threshold: 0.000336
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 4.0536
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9979
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 58 terms
+Bonferroni significant (p < 0.000336): 1 terms
+FDR significant: 16 terms
+
+=== ALL SIGNIFICANT TERMS (n=58) ===
+Term	Min_p_value	Most_Conservative_Significance
+incubation period	0.000293	FDR
+the flu virus	0.000476	FDR
+(TOPIC)0g9pc	0.000793	FDR
+cough and sore throat	0.000919	FDR
+how long contagious	0.001790	FDR
+the flue	0.001887	FDR
+symptoms of pneumonia	0.002021	FDR
+congestion medicine	0.002330	FDR
+stomach flu diarrhea	0.002539	FDR
+best over the counter flu medicine + cold and flu _4d7536f3	0.003077	FDR
+flu like symptoms	0.003156	FDR
+alka seltzer cold and cough + cold vs sinus infect_75a01e90	0.003988	FDR
+avian flu 2024 + avian flu in milk + bird flu 2024_7be51fa5	0.004087	FDR
+sinus medicine	0.004128	FDR
+stomach virus	0.004325	FDR
+robitussin	0.004744	FDR
+best over the counter flu medicine + cold and flu _53c4abfe	0.006519	Uncorrected
+avian flu humans + avian flu in chickens + avian f_de498a91	0.006845	Uncorrected
+epidemic	0.007068	Uncorrected
+how long does the flu last	0.008524	Uncorrected
+stomach virus symptoms	0.008530	Uncorrected
+(TOPIC)028tns	0.008569	Uncorrected
+pandemic	0.010189	Uncorrected
+pneumonia	0.012127	Uncorrected
+avian flu california + avian flu symptoms in human_44b9fefd	0.013568	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.014305	Uncorrected
+flu cough	0.015145	Uncorrected
+(TOPIC)01c751	0.015332	Uncorrected
+dangerous fever	0.016825	Uncorrected
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.017261	Uncorrected
+influenza symptoms	0.017287	Uncorrected
+stomach flu	0.020567	Uncorrected
+rsv symptoms	0.024587	Uncorrected
+avian flu california + avian flu symptoms in human_d16842ee	0.025196	Uncorrected
+symptoms of cold	0.025690	Uncorrected
+h1n1	0.026737	Uncorrected
+flu treatment	0.027414	Uncorrected
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid	0.027704	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b	0.027803	Uncorrected
+the flu symptoms	0.028862	Uncorrected
+(TOPIC)03t8j0	0.029781	Uncorrected
+pneumonia symptoms	0.030246	Uncorrected
+cure flu	0.031872	Uncorrected
+flu medicine	0.031920	Uncorrected
+(TOPIC)0683jy	0.032034	Uncorrected
+period fever	0.032045	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_ac91b042	0.033678	Uncorrected
+tylenol extra strength	0.034641	Uncorrected
+avian flu california + avian flu symptoms in human_20e1d83d	0.035204	Uncorrected
+(TOPIC)0b2cnj	0.038358	Uncorrected
+period flu	0.038948	Uncorrected
+fever reducer	0.039641	Uncorrected
+flu virus	0.040280	Uncorrected
+flu stomach pain	0.042255	Uncorrected
+flu texas	0.042548	Uncorrected
+(TOPIC)06n3pj	0.042889	Uncorrected
+flu care	0.046015	Uncorrected
+low body	0.046278	Uncorrected

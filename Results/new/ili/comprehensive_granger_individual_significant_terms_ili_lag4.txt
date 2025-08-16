@@ -1,0 +1,80 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: % WEIGHTED ILI
+Max lag: 4
+Number of tests: 596
+Bonferroni threshold: 0.000084
+Overall Granger causality F-statistic: 6.9426
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9956
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 65 terms
+Bonferroni significant (p < 0.000084): 1 terms
+FDR significant: 0 terms
+
+=== ALL SIGNIFICANT TERMS (n=64) ===
+Term	Min_p_value	Most_Conservative_Significance
+flu texas_lag2	0.000133	Uncorrected
+how long does the flu last_lag1	0.000342	Uncorrected
+flu a symptoms_lag1	0.000920	Uncorrected
+sinus infections_lag1	0.001185	Uncorrected
+tessalon_lag2	0.001338	Uncorrected
+(TOPIC)0cjf0_lag4	0.001974	Uncorrected
+incubation period_lag3	0.002216	Uncorrected
+flu children_lag1	0.002341	Uncorrected
+flu remedies_lag1	0.002530	Uncorrected
+strep_lag2	0.004310	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a_lag2	0.006352	Uncorrected
+flu cough_lag2	0.007080	Uncorrected
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug_lag4	0.007316	Uncorrected
+what is the flu_lag1	0.007378	Uncorrected
+(TOPIC)0j5fv_lag1	0.007628	Uncorrected
+symptoms of pneumonia_lag2	0.008247	Uncorrected
+flu and fever_lag4	0.008528	Uncorrected
+stomach virus symptoms_lag3	0.009367	Uncorrected
+flu and fever_lag3	0.009777	Uncorrected
+(TOPIC)0cjf0_lag1	0.010259	Uncorrected
+flu treatment_lag4	0.011600	Uncorrected
+(TOPIC)0cjf0_lag3	0.011881	Uncorrected
+strep throat_lag2	0.012833	Uncorrected
+symptoms of the flu_lag2	0.014090	Uncorrected
+symptoms of the flu_lag3	0.014250	Uncorrected
+stomach flu virus_lag1	0.014731	Uncorrected
+(TOPIC)01b_21_lag4	0.015515	Uncorrected
+how long does flu last_lag1	0.016103	Uncorrected
+expectorant_lag3	0.017209	Uncorrected
+flu virus_lag4	0.017836	Uncorrected
+period fever_lag2	0.018596	Uncorrected
+flu like symptoms_lag2	0.018839	Uncorrected
+pneumonia symptoms_lag3	0.018977	Uncorrected
+(TOPIC)087cyy_lag1	0.019547	Uncorrected
+(TOPIC)087cyy_lag2	0.020008	Uncorrected
+avian flu california + avian flu symptoms in human_58835c33_lag2	0.020138	Uncorrected
+flu incubation_lag2	0.021603	Uncorrected
+period flu_lag2	0.022975	Uncorrected
+high fever_lag1	0.024477	Uncorrected
+break a fever_lag2	0.025157	Uncorrected
+flu a symptoms_lag4	0.025916	Uncorrected
+avian flu california + avian flu symptoms in human_44b9fefd_lag3	0.026285	Uncorrected
+break a fever_lag4	0.029921	Uncorrected
+(TOPIC)08pr_0_lag3	0.030074	Uncorrected
+flu children_lag3	0.030107	Uncorrected
+low body_lag1	0.030276	Uncorrected
+pneumonia symptoms_lag4	0.031262	Uncorrected
+flu treatment_lag3	0.034887	Uncorrected
+stomach flu virus_lag4	0.035275	Uncorrected
+flu headache_lag2	0.035526	Uncorrected
+rsv symptoms_lag4	0.036646	Uncorrected
+how long contagious_lag4	0.038359	Uncorrected
+walking pneumonia_lag3	0.038959	Uncorrected
+(TOPIC)0416v7_lag3	0.039327	Uncorrected
+avian flu california + avian flu symptoms in human_20e1d83d_lag4	0.039454	Uncorrected
+(TOPIC)0416v7_lag4	0.039827	Uncorrected
+chest cold_lag3	0.041753	Uncorrected
+the flu virus_lag4	0.044704	Uncorrected
+flu headache_lag1	0.044720	Uncorrected
+flu care_lag2	0.045169	Uncorrected
+sinus infections_lag2	0.047217	Uncorrected
+symptoms of bronchitis_lag2	0.047497	Uncorrected
+cold flu symptoms_lag2	0.048500	Uncorrected
+fever with flu_lag2	0.049874	Uncorrected
