@@ -159,10 +159,10 @@ with open(output_file, "w") as f:
     
     f.write("\n" + "="*80 + "\n\n")
     
-    # FDR significant terms (excluding those already in Bonferroni)
+    # FDR significant terms (including those already in Bonferroni)
     fdr_terms = {term: data for term, data in term_data.items() 
-                 if data['fdr_count'] > 0 and data['bonferroni_count'] == 0}
-    f.write(f"Total FDR significant terms (not Bonferroni): {len(fdr_terms)}\n\n")
+                 if data['fdr_count'] > 0}
+    f.write(f"Total FDR significant terms: {len(fdr_terms)}\n\n")
     
     if fdr_terms:
         f.write("Term\tCount/10\tMean_p_value\tMedian_p_value\tFiles\n")
@@ -170,14 +170,14 @@ with open(output_file, "w") as f:
             mean_p, median_p = calculate_statistics(data['fdr_pvalues'])
             f.write(f"{term}\t{data['fdr_count']}/10\t{mean_p:.6f}\t{median_p:.6f}\t{', '.join(data['files_found_in'])}\n")
     else:
-        f.write("No terms were FDR significant (but not Bonferroni) in any file.\n")
+        f.write("No terms were FDR significant in any file.\n")
     
     f.write("\n" + "="*80 + "\n\n")
     
-    # Uncorrected significant terms (excluding those already in Bonferroni or FDR)
+    # Uncorrected significant terms (including those already in Bonferroni or FDR)
     uncorrected_terms = {term: data for term, data in term_data.items() 
-                        if data['uncorrected_count'] > 0 and data['bonferroni_count'] == 0 and data['fdr_count'] == 0}
-    f.write(f"Total Uncorrected significant terms (not Bonferroni or FDR): {len(uncorrected_terms)}\n\n")
+                        if data['uncorrected_count'] > 0}
+    f.write(f"Total Uncorrected significant terms: {len(uncorrected_terms)}\n\n")
     
     if uncorrected_terms:
         f.write("Term\tCount/10\tMean_p_value\tMedian_p_value\tFiles\n")
@@ -185,7 +185,7 @@ with open(output_file, "w") as f:
             mean_p, median_p = calculate_statistics(data['uncorrected_pvalues'])
             f.write(f"{term}\t{data['uncorrected_count']}/10\t{mean_p:.6f}\t{median_p:.6f}\t{', '.join(data['files_found_in'])}\n")
     else:
-        f.write("No terms were Uncorrected significant (but not Bonferroni or FDR) in any file.\n")
+        f.write("No terms were Uncorrected significant in any file.\n")
     
     f.write("\n" + "="*80 + "\n\n")
     
@@ -206,10 +206,10 @@ with open(output_file, "w") as f:
     
     f.write("\n")
     
-    # ILI FDR significant terms (excluding those already in Bonferroni)
+    # ILI FDR significant terms (including those already in Bonferroni)
     ili_fdr_terms = {term: data for term, data in term_data.items() 
-                     if data['ili_fdr_count'] > 0 and data['ili_bonferroni_count'] == 0}
-    f.write(f"ILI FDR significant terms (not Bonferroni): {len(ili_fdr_terms)}\n\n")
+                     if data['ili_fdr_count'] > 0}
+    f.write(f"ILI FDR significant terms: {len(ili_fdr_terms)}\n\n")
     
     if ili_fdr_terms:
         f.write("Term\tCount/5\tMean_p_value\tMedian_p_value\tILI_Files\n")
@@ -217,14 +217,14 @@ with open(output_file, "w") as f:
             mean_p, median_p = calculate_statistics(data['ili_fdr_pvalues'])
             f.write(f"{term}\t{data['ili_fdr_count']}/5\t{mean_p:.6f}\t{median_p:.6f}\t{', '.join(data['ili_files_found_in'])}\n")
     else:
-        f.write("No terms were FDR significant (but not Bonferroni) in ILI files.\n")
+        f.write("No terms were FDR significant in ILI files.\n")
     
     f.write("\n")
     
-    # ILI Uncorrected significant terms (excluding those already in Bonferroni or FDR)
+    # ILI Uncorrected significant terms (including those already in Bonferroni or FDR)
     ili_uncorrected_terms = {term: data for term, data in term_data.items() 
-                            if data['ili_uncorrected_count'] > 0 and data['ili_bonferroni_count'] == 0 and data['ili_fdr_count'] == 0}
-    f.write(f"ILI Uncorrected significant terms (not Bonferroni or FDR): {len(ili_uncorrected_terms)}\n\n")
+                            if data['ili_uncorrected_count'] > 0}
+    f.write(f"ILI Uncorrected significant terms: {len(ili_uncorrected_terms)}\n\n")
     
     if ili_uncorrected_terms:
         f.write("Term\tCount/5\tMean_p_value\tMedian_p_value\tILI_Files\n")
@@ -232,7 +232,7 @@ with open(output_file, "w") as f:
             mean_p, median_p = calculate_statistics(data['ili_uncorrected_pvalues'])
             f.write(f"{term}\t{data['ili_uncorrected_count']}/5\t{mean_p:.6f}\t{median_p:.6f}\t{', '.join(data['ili_files_found_in'])}\n")
     else:
-        f.write("No terms were Uncorrected significant (but not Bonferroni or FDR) in ILI files.\n")
+        f.write("No terms were Uncorrected significant in ILI files.\n")
     
     f.write("\n" + "="*80 + "\n\n")
     
@@ -253,10 +253,10 @@ with open(output_file, "w") as f:
     
     f.write("\n")
     
-    # NREVSS FDR significant terms (excluding those already in Bonferroni)
+    # NREVSS FDR significant terms (including those already in Bonferroni)
     nrevss_fdr_terms = {term: data for term, data in term_data.items() 
-                        if data['nrevss_fdr_count'] > 0 and data['nrevss_bonferroni_count'] == 0}
-    f.write(f"NREVSS FDR significant terms (not Bonferroni): {len(nrevss_fdr_terms)}\n\n")
+                        if data['nrevss_fdr_count'] > 0}
+    f.write(f"NREVSS FDR significant terms: {len(nrevss_fdr_terms)}\n\n")
     
     if nrevss_fdr_terms:
         f.write("Term\tCount/5\tMean_p_value\tMedian_p_value\tNREVSS_Files\n")
@@ -264,14 +264,14 @@ with open(output_file, "w") as f:
             mean_p, median_p = calculate_statistics(data['nrevss_fdr_pvalues'])
             f.write(f"{term}\t{data['nrevss_fdr_count']}/5\t{mean_p:.6f}\t{median_p:.6f}\t{', '.join(data['nrevss_files_found_in'])}\n")
     else:
-        f.write("No terms were FDR significant (but not Bonferroni) in NREVSS files.\n")
+        f.write("No terms were FDR significant in NREVSS files.\n")
     
     f.write("\n")
     
-    # NREVSS Uncorrected significant terms (excluding those already in Bonferroni or FDR)
+    # NREVSS Uncorrected significant terms (including those already in Bonferroni or FDR)
     nrevss_uncorrected_terms = {term: data for term, data in term_data.items() 
-                               if data['nrevss_uncorrected_count'] > 0 and data['nrevss_bonferroni_count'] == 0 and data['nrevss_fdr_count'] == 0}
-    f.write(f"NREVSS Uncorrected significant terms (not Bonferroni or FDR): {len(nrevss_uncorrected_terms)}\n\n")
+                               if data['nrevss_uncorrected_count'] > 0}
+    f.write(f"NREVSS Uncorrected significant terms: {len(nrevss_uncorrected_terms)}\n\n")
     
     if nrevss_uncorrected_terms:
         f.write("Term\tCount/5\tMean_p_value\tMedian_p_value\tNREVSS_Files\n")
@@ -279,7 +279,7 @@ with open(output_file, "w") as f:
             mean_p, median_p = calculate_statistics(data['nrevss_uncorrected_pvalues'])
             f.write(f"{term}\t{data['nrevss_uncorrected_count']}/5\t{mean_p:.6f}\t{median_p:.6f}\t{', '.join(data['nrevss_files_found_in'])}\n")
     else:
-        f.write("No terms were Uncorrected significant (but not Bonferroni or FDR) in NREVSS files.\n")
+        f.write("No terms were Uncorrected significant in NREVSS files.\n")
     
     f.write("\n" + "="*80 + "\n\n")
     

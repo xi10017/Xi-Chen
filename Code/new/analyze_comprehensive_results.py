@@ -54,12 +54,12 @@ def parse_dataset_section(section, dataset_name):
     for line in lines:
         line = line.strip()
         
-        # Detect category headers
+        # Detect category headers - updated for new format
         if 'Bonferroni significant terms:' in line:
             current_category = 'Bonferroni'
-        elif 'FDR significant terms (not Bonferroni):' in line:
+        elif 'FDR significant terms:' in line:
             current_category = 'FDR'
-        elif 'Uncorrected significant terms (not Bonferroni or FDR):' in line:
+        elif 'Uncorrected significant terms:' in line:
             current_category = 'Uncorrected'
         
         # Parse data lines (tab-separated)
