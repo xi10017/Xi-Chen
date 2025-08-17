@@ -22,8 +22,8 @@ FDR significant: 8 terms
 
 === ALL SIGNIFICANT TERMS (n=51) ===
 Term	Min_p_value	Most_Conservative_Significance
-(TOPIC)028tns	0.000179	FDR
-(TOPIC)0g9pc	0.000260	FDR
+(TOPIC)028tns	0.000179	Bonferroni
+(TOPIC)0g9pc	0.000260	Bonferroni
 the flu virus	0.000366	FDR
 (TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.000416	FDR
 influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.000660	FDR

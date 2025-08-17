@@ -3,6 +3,7 @@ Response variable: % WEIGHTED ILI
 Max lag: 5
 Number of tests: 149
 Bonferroni threshold: 0.000336
+FDR correction applied (Benjamini-Hochberg method)
 Overall Granger causality F-statistic: 6.5340
 Overall Granger causality p-value: 0.000000
 Model R-squared: 0.9973
@@ -11,6 +12,8 @@ Model R-squared: 0.9973
 Autocorrelation detected: No
 Durbin-Watson statistic: 2.1497
 Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 22.9337
+HAC-adjusted p-value: 0.000000
 
 === SIGNIFICANCE SUMMARY ===
 Uncorrected significant (p < 0.05): 51 terms
@@ -19,7 +22,7 @@ FDR significant: 4 terms
 
 === ALL SIGNIFICANT TERMS (n=51) ===
 Term	Min_p_value	Most_Conservative_Significance
-avian flu california + avian flu symptoms in human_58835c33	0.000292	FDR
+avian flu california + avian flu symptoms in human_58835c33	0.000292	Bonferroni
 (TOPIC)01b_21	0.001026	FDR
 flu texas	0.001113	FDR
 h1n1	0.001337	FDR

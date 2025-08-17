@@ -3,44 +3,68 @@ Response variable: % WEIGHTED ILI
 Max lag: 2
 Number of tests: 149
 Bonferroni threshold: 0.000336
-Overall Granger causality F-statistic: 6.5340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 9.6563
 Overall Granger causality p-value: 0.000000
-Model R-squared: 0.9973
+Model R-squared: 0.9910
 
 === AUTOCORRELATION ANALYSIS ===
 Autocorrelation detected: No
-Durbin-Watson statistic: 2.1497
+Durbin-Watson statistic: 2.0048
 Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 22.9337
+HAC-adjusted p-value: 0.000000
 
 === SIGNIFICANCE SUMMARY ===
-Uncorrected significant (p < 0.05): 25 terms
-Bonferroni significant (p < 0.000336): 1 terms
-FDR significant: 1 terms
+Uncorrected significant (p < 0.05): 46 terms
+Bonferroni significant (p < 0.000336): 7 terms
+FDR significant: 22 terms
 
-=== ALL SIGNIFICANT TERMS (n=25) ===
+=== ALL SIGNIFICANT TERMS (n=46) ===
 Term	Min_p_value	Most_Conservative_Significance
-avian flu california + avian flu symptoms in human_58835c33	0.000292	FDR
-flu texas	0.001113	Uncorrected
-strep	0.002892	Uncorrected
-the flue	0.003264	Uncorrected
-how long does the flu last	0.005039	Uncorrected
-what is the flu	0.005167	Uncorrected
-symptoms of bronchitis	0.007197	Uncorrected
-strep throat	0.007296	Uncorrected
-break a fever	0.007449	Uncorrected
-flu like symptoms	0.009692	Uncorrected
-avian flu news + avian flu outbreak + bird flu out_804ade0a	0.011866	Uncorrected
-period fever	0.012652	Uncorrected
-flu incubation	0.017854	Uncorrected
-symptoms of cold	0.019924	Uncorrected
-symptoms of pneumonia	0.021755	Uncorrected
-flu headache	0.022357	Uncorrected
-robitussin	0.023237	Uncorrected
-fever	0.025877	Uncorrected
-stomach flu virus	0.026998	Uncorrected
-how long contagious	0.030953	Uncorrected
-(TOPIC)0j5fv	0.032157	Uncorrected
-tessalon	0.039091	Uncorrected
-normal body	0.041848	Uncorrected
-(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.045696	Uncorrected
-flu children	0.049223	Uncorrected
+(TOPIC)0j5fv	0.000028	Bonferroni
+flu texas	0.000058	Bonferroni
+flu children	0.000062	Bonferroni
+strep throat	0.000097	Bonferroni
+high fever	0.000254	Bonferroni
+stomach flu virus	0.000289	Bonferroni
+tylenol extra strength	0.000294	Bonferroni
+(TOPIC)0b76bty	0.000541	FDR
+symptoms of pneumonia	0.000811	FDR
+strep	0.000984	FDR
+how long contagious	0.001042	FDR
+low body	0.001329	FDR
+the flu virus	0.001528	FDR
+how long does the flu last	0.002031	FDR
+cold flu symptoms	0.002318	FDR
+fever reducer	0.002414	FDR
+(TOPIC)087cyy	0.003731	FDR
+symptoms of the flu	0.003891	FDR
+best cold medicine	0.004089	FDR
+(TOPIC)0cjf0	0.004587	FDR
+symptoms of stomach flu	0.004743	FDR
+(TOPIC)06n3pj	0.005728	FDR
+stomach virus	0.008514	Uncorrected
+(TOPIC)0n073	0.008846	Uncorrected
+thermoscan	0.009835	Uncorrected
+flu remedies	0.012177	Uncorrected
+flu incubation	0.012272	Uncorrected
+flu cough	0.013313	Uncorrected
+robitussin	0.016032	Uncorrected
+(TOPIC)0b2cnj	0.016439	Uncorrected
+food poisoning	0.017495	Uncorrected
+flu care	0.018010	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.019921	Uncorrected
+break a fever	0.023617	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.024579	Uncorrected
+the flue	0.024792	Uncorrected
+flu medicine	0.025933	Uncorrected
+flu headache	0.026053	Uncorrected
+cold symptoms	0.027770	Uncorrected
+(TOPIC)01b_21	0.030861	Uncorrected
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid	0.031338	Uncorrected
+the flu symptoms	0.033149	Uncorrected
+current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms	0.038367	Uncorrected
+h1n1	0.041562	Uncorrected
+pneumonia symptoms	0.048923	Uncorrected
+pandemic	0.049930	Uncorrected

@@ -3,30 +3,74 @@ Response variable: % WEIGHTED ILI
 Max lag: 1
 Number of tests: 149
 Bonferroni threshold: 0.000336
-Overall Granger causality F-statistic: 6.5340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 13.0390
 Overall Granger causality p-value: 0.000000
-Model R-squared: 0.9973
+Model R-squared: 0.9803
 
 === AUTOCORRELATION ANALYSIS ===
-Autocorrelation detected: No
-Durbin-Watson statistic: 2.1497
-Interpretation: No significant autocorrelation
+Autocorrelation detected: Yes
+Durbin-Watson statistic: 1.4245
+Interpretation: Strong positive autocorrelation
+HAC-adjusted F-statistic: 22.9337
+HAC-adjusted p-value: 0.000000
 
 === SIGNIFICANCE SUMMARY ===
-Uncorrected significant (p < 0.05): 11 terms
-Bonferroni significant (p < 0.000336): 0 terms
-FDR significant: 0 terms
+Uncorrected significant (p < 0.05): 52 terms
+Bonferroni significant (p < 0.000336): 9 terms
+FDR significant: 25 terms
 
-=== ALL SIGNIFICANT TERMS (n=11) ===
+=== ALL SIGNIFICANT TERMS (n=52) ===
 Term	Min_p_value	Most_Conservative_Significance
-how long does the flu last	0.005039	Uncorrected
-what is the flu	0.005167	Uncorrected
-flu incubation	0.017854	Uncorrected
-symptoms of cold	0.019924	Uncorrected
-flu headache	0.022357	Uncorrected
-fever	0.025877	Uncorrected
-stomach flu virus	0.026998	Uncorrected
-how long contagious	0.030953	Uncorrected
-(TOPIC)0j5fv	0.032157	Uncorrected
-(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.045696	Uncorrected
-flu children	0.049223	Uncorrected
+h1n1	0.000000	Bonferroni
+cough and fever	0.000000	Bonferroni
+stomach flu virus	0.000013	Bonferroni
+high fever	0.000013	Bonferroni
+dry cough	0.000020	Bonferroni
+flu cough	0.000027	Bonferroni
+stomach flu	0.000048	Bonferroni
+what is the flu	0.000198	Bonferroni
+how long does flu last	0.000319	Bonferroni
+cold symptoms	0.000363	FDR
+incubation period	0.000719	FDR
+flu incubation	0.000753	FDR
+(TOPIC)0j5fv	0.001581	FDR
+covid + covid deaths + covid incubation period + covid vs flu vs cold + incubation period for covid + medicine for covid + spanish flu vs covid	0.001595	FDR
+break a fever	0.002118	FDR
+stomach virus symptoms	0.002552	FDR
+rsv symptoms	0.002929	FDR
+(TOPIC)028tns	0.004188	FDR
+cure flu	0.004449	FDR
+body temperature	0.004786	FDR
+(TOPIC)0683jy	0.004954	FDR
+flu a symptoms	0.005866	FDR
+(TOPIC)03t8j0	0.007076	FDR
+(TOPIC)0b2cnj	0.007216	FDR
+reduce fever	0.007543	FDR
+cold flu symptoms	0.009065	Uncorrected
+strep	0.009086	Uncorrected
+sinus	0.009443	Uncorrected
+advil cold and flu + allergies vs cold + best cold_52555453	0.011380	Uncorrected
+sinus medicine	0.013038	Uncorrected
+ear thermometer	0.013198	Uncorrected
+best cough medicine	0.014164	Uncorrected
+current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms	0.014565	Uncorrected
+epidemic	0.014687	Uncorrected
+taking temperature	0.015597	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.016050	Uncorrected
+sinus infections	0.016475	Uncorrected
+low body	0.017775	Uncorrected
+food poisoning symptoms	0.018730	Uncorrected
+tussin	0.024490	Uncorrected
+stomach virus	0.026813	Uncorrected
+best flu medicine for adults + children's tylenol _de4e67e7	0.026949	Uncorrected
+flu treatment	0.027356	Uncorrected
+best over the counter flu medicine + cold and flu _53c4abfe	0.028231	Uncorrected
+flu remedies	0.036244	Uncorrected
+thermoscan	0.036585	Uncorrected
+flu stomach pain	0.037667	Uncorrected
+chest cold	0.040144	Uncorrected
+the flu	0.040612	Uncorrected
+pandemic	0.041935	Uncorrected
+i have the flu	0.043007	Uncorrected
+flu medicine	0.046855	Uncorrected

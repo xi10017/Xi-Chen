@@ -731,10 +731,10 @@ def save_comprehensive_results(term_significance, significant_uncorrected, signi
             for term in all_significant_terms:
                 pval = [p for t, p in term_significance if t == term][0]
                 # Determine most conservative significance
-                if term in fdr_significant_terms:
-                    most_conservative = "FDR"
-                elif pval < bonferroni_threshold:
+                if pval < bonferroni_threshold:
                     most_conservative = "Bonferroni"
+                elif term in fdr_significant_terms:
+                    most_conservative = "FDR"
                 else:
                     most_conservative = "Uncorrected"
                 

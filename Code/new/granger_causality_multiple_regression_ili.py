@@ -49,7 +49,7 @@ def perform_diagnostic_analysis(df_search):
     return filtered_columns
 
 
-def merge_and_prepare_data(df_ili, df_search, filtered_columns, max_lag=1):
+def merge_and_prepare_data(df_ili, df_search, filtered_columns, max_lag):
     """Merge data and create lagged variables"""
     # Merge data
     df_ili['YEAR'] = df_ili['YEAR'].astype(int)
@@ -62,7 +62,6 @@ def merge_and_prepare_data(df_ili, df_search, filtered_columns, max_lag=1):
     )
     
     # Create lagged variables
-    max_lag = 5
     response_var = '% WEIGHTED ILI'
     
     flu_lags = []
@@ -224,15 +223,142 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
     print(f"Significant terms (Bonferroni-corrected p < {bonferroni_threshold:.6f}): {len(significant_bonferroni)}")
     print(f"Significant terms (FDR-corrected): {len(fdr_significant_terms)}")
     
-    # Save comprehensive results to file
-    comprehensive_txt_filename = f"ShiHaoYang/Results/comprehensive_granger_individual_significant_terms_ili_lag{max_lag}.txt"
-    with open(comprehensive_txt_filename, "w") as f:
+    return term_significance, significant_uncorrected, significant_bonferroni, fdr_significant_terms, bonferroni_threshold
+
+def create_comprehensive_visualization(model_unrestricted, filtered_columns, max_lag, term_significance, 
+                                     significant_uncorrected, significant_bonferroni, fdr_significant_terms, 
+                                     bonferroni_threshold, response_var):
+    """Create comprehensive visualization of individual term significance"""
+    print(f"\n=== CREATING VISUALIZATION ===")
+    
+    # Check for valid p-values (not nan)
+    valid_pvals = [(term, pval) for term, pval in term_significance if not np.isnan(pval)]
+    
+    if not valid_pvals:
+        print("\nWARNING: All p-values are NaN. This indicates the multiple regression model failed to fit properly.")
+        return
+    
+    # Use only valid p-values for plotting
+    valid_terms_plot = [term for term, pval in valid_pvals]
+    granger_pvals_plot = [pval for term, pval in valid_pvals]
+    
+    # Dynamic figure sizing based on number of terms
+    num_terms = len(valid_terms_plot)
+    if num_terms <= 20:
+        fig_width = 16
+        fig_height = 8
+        font_size = 8
+        value_font_size = 6
+    elif num_terms <= 50:
+        fig_width = 20
+        fig_height = 10
+        font_size = 6
+        value_font_size = 5
+    else:
+        fig_width = 24
+        fig_height = 12
+        font_size = 4
+        value_font_size = 4
+    
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Create bars with colors for different significance levels
+    colors = []
+    for i, term in enumerate(valid_terms_plot):
+        pval = granger_pvals_plot[i]
+        if term in fdr_significant_terms:
+            colors.append('purple')  # FDR significant
+        elif pval < bonferroni_threshold:
+            colors.append('darkred')  # Bonferroni significant
+        elif pval < 0.05:
+            colors.append('red')      # Uncorrected significant
+        else:
+            colors.append('orange')   # Not significant
+    
+    bars = plt.bar(valid_terms_plot, granger_pvals_plot, color=colors, alpha=0.7)
+    
+    plt.ylabel('Min p-value (across lags)', fontsize=12)
+    plt.title(f'Individual Term Significance from Multiple Regression Model with Max Lag = {max_lag}', fontsize=14, pad=20)
+    plt.axhline(0.05, color='red', linestyle='--', label='p=0.05 (uncorrected)', linewidth=2)
+    
+    # Add custom legend entries for bar colors
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor='purple', alpha=0.7, label='FDR significant'),
+        Patch(facecolor='darkred', alpha=0.7, label='Bonferroni significant'),
+        Patch(facecolor='red', alpha=0.7, label='Uncorrected significant'),
+        Patch(facecolor='orange', alpha=0.7, label='Not significant')
+    ]
+    
+    # Improve x-axis labels with better rotation and positioning
+    plt.xticks(rotation=45, fontsize=font_size, ha='right')
+    
+    # Add value labels on bars with better positioning
+    for bar, pval in zip(bars, granger_pvals_plot):
+        height = bar.get_height()
+        # Position text above bar with small offset
+        plt.text(bar.get_x() + bar.get_width()/2., height + 0.005,
+                f'{pval:.3f}', ha='center', va='bottom', fontsize=value_font_size, rotation=90)
+    
+    # Set y-axis limits to ensure visibility (only if we have valid values)
+    if granger_pvals_plot:
+        plt.ylim(0, max(granger_pvals_plot) * 1.1)
+    
+    plt.legend(handles=legend_elements, fontsize=12)
+    plt.grid(axis='y', alpha=0.3)
+    
+    # Better layout with more space
+    plt.tight_layout(pad=2.0)
+    plt.savefig(f"ShiHaoYang/Results/granger_pvalues_multiple_regression_ili_lag{max_lag}.png", 
+                dpi=300, bbox_inches='tight')
+    plt.show()
+    
+    # Print summary statistics
+    significant_uncorrected_plot = [term for term, pval in valid_pvals if pval < 0.05]
+    significant_bonferroni_plot = [term for term, pval in valid_pvals if pval < bonferroni_threshold]
+    significant_fdr_plot = [term for term in valid_terms_plot if term in fdr_significant_terms]
+    
+    print(f"\nSummary:")
+    print(f"Total terms with valid p-values: {len(valid_terms_plot)}")
+    print(f"Terms with NaN p-values: {len(term_significance) - len(valid_terms_plot)}")
+    print(f"Uncorrected (p < 0.05): {len(significant_uncorrected_plot)} terms")
+    print(f"Bonferroni-corrected (p < {bonferroni_threshold:.6f}): {len(significant_bonferroni_plot)} terms")
+    print(f"FDR-corrected: {len(significant_fdr_plot)} terms")
+    
+    if significant_fdr_plot:
+        print(f"\nTop 5 FDR-significant terms:")
+        sorted_valid = sorted(valid_pvals, key=lambda x: x[1])
+        for i, (term, pval) in enumerate(sorted_valid[:5]):
+            significance = "***" if term in fdr_significant_terms else "**" if pval < 0.05 else ""
+            print(f"{i+1}. {term}: p = {pval:.4f}{significance}")
+    elif significant_bonferroni_plot:
+        print(f"\nTop 5 Bonferroni-significant terms:")
+        sorted_valid = sorted(valid_pvals, key=lambda x: x[1])
+        for i, (term, pval) in enumerate(sorted_valid[:5]):
+            significance = "***" if pval < bonferroni_threshold else "**" if pval < 0.05 else ""
+            print(f"{i+1}. {term}: p = {pval:.4f}{significance}")
+    elif significant_uncorrected_plot:
+        print(f"\nTop 5 uncorrected-significant terms:")
+        sorted_valid = sorted(valid_pvals, key=lambda x: x[1])
+        for i, (term, pval) in enumerate(sorted_valid[:5]):
+            print(f"{i+1}. {term}: p = {pval:.4f}")
+
+def save_comprehensive_results(term_significance, significant_uncorrected, significant_bonferroni, 
+                             fdr_significant_terms, bonferroni_threshold, F, p_value, 
+                             model_unrestricted, max_lag, response_var, has_autocorrelation=None, 
+                             dw_statistic=None, hac_results=None):
+    """Save comprehensive results to a text file"""
+    print(f"\n=== SAVING COMPREHENSIVE RESULTS ===")
+    
+    txt_filename = f"ShiHaoYang/Results/comprehensive_granger_individual_significant_terms_ili_lag{max_lag}.txt"
+    with open(txt_filename, "w") as f:
         # Write summary at the top
         f.write(f"=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===\n")
         f.write(f"Response variable: {response_var}\n")
         f.write(f"Max lag: {max_lag}\n")
-        f.write(f"Number of tests: {num_tests}\n")
+        f.write(f"Number of tests: {len(term_significance)}\n")
         f.write(f"Bonferroni threshold: {bonferroni_threshold:.6f}\n")
+        f.write(f"FDR correction applied (Benjamini-Hochberg method)\n")
         f.write(f"Overall Granger causality F-statistic: {F:.4f}\n")
         f.write(f"Overall Granger causality p-value: {p_value:.6f}\n")
         f.write(f"Model R-squared: {model_unrestricted.rsquared:.4f}\n\n")
@@ -253,7 +379,7 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
             f.write(f"HAC-adjusted F-statistic: {hac_results['fvalue']:.4f}\n")
             f.write(f"HAC-adjusted p-value: {hac_results['pvalue']:.6f}\n")
         f.write(f"\n")
-            
+        
         f.write(f"=== SIGNIFICANCE SUMMARY ===\n")
         f.write(f"Uncorrected significant (p < 0.05): {len(significant_uncorrected)} terms\n")
         f.write(f"Bonferroni significant (p < {bonferroni_threshold:.6f}): {len(significant_bonferroni)} terms\n")
@@ -271,17 +397,17 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
             
             # Sort by p-value (most significant first)
             significant_terms_sorted = []
-            for term, pval in term_significance:
-                if term in all_significant_terms:
-                    # Determine most conservative significance
-                    if term in fdr_significant_terms:
-                        most_conservative = "FDR"
-                    elif pval < bonferroni_threshold:
-                        most_conservative = "Bonferroni"
-                    else:
-                        most_conservative = "Uncorrected"
-                    
-                    significant_terms_sorted.append((term, pval, most_conservative))
+            for term in all_significant_terms:
+                pval = [p for t, p in term_significance if t == term][0]
+                # Determine most conservative significance
+                if pval < bonferroni_threshold:
+                    most_conservative = "Bonferroni"
+                elif term in fdr_significant_terms:
+                    most_conservative = "FDR"
+                else:
+                    most_conservative = "Uncorrected"
+                
+                significant_terms_sorted.append((term, pval, most_conservative))
             
             # Sort by p-value
             significant_terms_sorted.sort(key=lambda x: x[1])
@@ -291,156 +417,29 @@ def analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, resp
         else:
             f.write("No terms were significant at any level.\n")
     
-    print(f"Detailed results saved to {comprehensive_txt_filename}")
+    print(f"Comprehensive results saved to {txt_filename}")
+
+
+def detect_autocorrelation(model_unrestricted):
+    """Detect autocorrelation in residuals using Durbin-Watson test"""
+    print(f"\n=== AUTOCORRELATION DETECTION ===")
     
-    # Create visualization
-    create_comprehensive_visualization(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value, bonferroni_threshold, fdr_significant_terms)
+    # Durbin-Watson test
+    dw_stat = sm.stats.durbin_watson(model_unrestricted.resid)
+    print(f"Durbin-Watson statistic: {dw_stat:.4f}")
     
-    return term_significance, significant_uncorrected, significant_bonferroni, fdr_significant_terms, bonferroni_threshold
-
-
-def create_comprehensive_visualization(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value, bonferroni_threshold, fdr_significant_terms):
-    """Create visualization for comprehensive model results"""
-    # Get minimum p-values for each search term
-    term_min_pvalues = []
-    for term in filtered_columns:
-        term_lags = [f'{term}_lag{lag}' for lag in range(1, max_lag + 1)]
-        term_pvals = []
-        for lag_col in term_lags:
-            if lag_col in model_unrestricted.params.index:
-                # Get p-value for this lag
-                try:
-                    pval = model_unrestricted.pvalues[lag_col]
-                except (IndexError, TypeError):
-                    # For HAC results, pvalues might be a numpy array
-                    if hasattr(model_unrestricted.pvalues, 'loc'):
-                        pval = model_unrestricted.pvalues.loc[lag_col]
-                    else:
-                        # Find the index position
-                        param_index = list(model_unrestricted.params.index).index(lag_col)
-                        pval = model_unrestricted.pvalues[param_index]
-                term_pvals.append(pval)
-        if term_pvals:
-            min_p = min(term_pvals)
-            term_min_pvalues.append((term, min_p))
-    
-    # Sort by p-value (most significant first)
-    term_min_pvalues.sort(key=lambda x: x[1])
-    valid_terms = [term for term, pval in term_min_pvalues if not np.isnan(pval)]
-    granger_pvals = [pval for term, pval in term_min_pvalues if not np.isnan(pval)]
-    
-    if valid_terms:
-        # Dynamic figure sizing based on number of terms
-        num_terms = len(valid_terms)
-        if num_terms <= 20:
-            fig_width = 16
-            fig_height = 8
-            font_size = 8
-            value_font_size = 6
-        elif num_terms <= 50:
-            fig_width = 20
-            fig_height = 10
-            font_size = 6
-            value_font_size = 5
-        else:
-            fig_width = 24
-            fig_height = 12
-            font_size = 4
-            value_font_size = 4
-
-        plt.figure(figsize=(fig_width, fig_height))
-
-        # Create bars with colors for different significance levels
-        colors = []
-        for i, term in enumerate(valid_terms):
-            pval = granger_pvals[i]
-            # Check if any lag of this term is FDR significant
-            term_lags = [f'{term}_lag{lag}' for lag in range(1, max_lag + 1)]
-            is_fdr_sig = any(lag in fdr_significant_terms for lag in term_lags)
-            
-            if is_fdr_sig:
-                colors.append('purple')  # FDR significant
-            elif pval < bonferroni_threshold:
-                colors.append('darkred')  # Bonferroni significant
-            elif pval < 0.05:
-                colors.append('red')      # Uncorrected significant
-            else:
-                colors.append('orange')   # Not significant
-        
-        bars = plt.bar(valid_terms, granger_pvals, color=colors, alpha=0.7)
-
-        plt.ylabel('Min p-value (across lags)', fontsize=12)
-        plt.title(f'Individual Term Significance from Comprehensive Granger Causality Model\nResponse: {response_var}, Max Lag: {max_lag}', fontsize=14, pad=20)
-        plt.axhline(0.05, color='red', linestyle='--', label='p=0.05 (uncorrected)', linewidth=2)
-        
-        # Add custom legend entries for bar colors
-        from matplotlib.patches import Patch
-        legend_elements = [
-            Patch(facecolor='purple', alpha=0.7, label='FDR significant'),
-            Patch(facecolor='darkred', alpha=0.7, label='Bonferroni significant'),
-            Patch(facecolor='red', alpha=0.7, label='Uncorrected significant'),
-            Patch(facecolor='orange', alpha=0.7, label='Not significant')
-        ]
-
-        # Improve x-axis labels with better rotation and positioning
-        plt.xticks(rotation=45, fontsize=font_size, ha='right')
-
-        # Add value labels on bars with better positioning
-        for bar, pval in zip(bars, granger_pvals):
-            height = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width()/2., height + 0.005,
-                     f'{pval:.3f}', ha='center', va='bottom', fontsize=value_font_size, rotation=90)
-
-        # Set y-axis limits to ensure visibility
-        if granger_pvals:
-            plt.ylim(0, max(granger_pvals) * 1.1)
-
-        plt.legend(handles=legend_elements, fontsize=12)
-        plt.grid(axis='y', alpha=0.3)
-
-        # Better layout with more space
-        plt.tight_layout(pad=2.0)
-        plt.savefig(f"ShiHaoYang/Results/granger_pvalues_comprehensive_model_ili_lag{max_lag}.png",
-                    dpi=300, bbox_inches='tight')
-        plt.show()
-
-        # Print summary statistics
-        significant_uncorrected = [term for term, pval in zip(valid_terms, granger_pvals) if pval < 0.05]
-        significant_bonferroni = [term for term, pval in zip(valid_terms, granger_pvals) if pval < bonferroni_threshold]
-        
-        # Count FDR significant terms
-        significant_fdr = []
-        for term in valid_terms:
-            term_lags = [f'{term}_lag{lag}' for lag in range(1, max_lag + 1)]
-            if any(lag in fdr_significant_terms for lag in term_lags):
-                significant_fdr.append(term)
-        
-        print(f"Visualization summary:")
-        print(f"  Uncorrected (p < 0.05): {len(significant_uncorrected)}/{len(valid_terms)} terms")
-        print(f"  Bonferroni-corrected (p < {bonferroni_threshold:.6f}): {len(significant_bonferroni)}/{len(valid_terms)} terms")
-        print(f"  FDR-corrected: {len(significant_fdr)}/{len(valid_terms)} terms")
-
-        if significant_fdr:
-            print(f"Top 5 FDR-significant terms:")
-            sorted_valid = sorted(zip(valid_terms, granger_pvals), key=lambda x: x[1])
-            for i, (term, pval) in enumerate(sorted_valid[:5]):
-                term_lags = [f'{term}_lag{lag}' for lag in range(1, max_lag + 1)]
-                is_fdr_sig = any(lag in fdr_significant_terms for lag in term_lags)
-                significance = "***" if is_fdr_sig else "**" if pval < 0.05 else ""
-                print(f"  {i+1}. {term}: p = {pval:.4f}{significance}")
-        elif significant_bonferroni:
-            print(f"Top 5 Bonferroni-significant terms:")
-            sorted_valid = sorted(zip(valid_terms, granger_pvals), key=lambda x: x[1])
-            for i, (term, pval) in enumerate(sorted_valid[:5]):
-                significance = "***" if pval < bonferroni_threshold else "**" if pval < 0.05 else ""
-                print(f"  {i+1}. {term}: p = {pval:.4f}{significance}")
-        elif significant_uncorrected:
-            print(f"Top 5 uncorrected-significant terms:")
-            sorted_valid = sorted(zip(valid_terms, granger_pvals), key=lambda x: x[1])
-            for i, (term, pval) in enumerate(sorted_valid[:5]):
-                print(f"  {i+1}. {term}: p = {pval:.4f}")
+    # Interpretation
+    if dw_stat < 1.5:
+        print("Strong positive autocorrelation detected")
+        has_autocorrelation = True
+    elif dw_stat > 2.5:
+        print("Strong negative autocorrelation detected")
+        has_autocorrelation = True
     else:
-        print("No valid terms found for plotting")
+        print("No significant autocorrelation detected")
+        has_autocorrelation = False
+    
+    return has_autocorrelation
 
 
 def perform_hac_analysis(df_ili, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None):
@@ -528,8 +527,7 @@ def perform_hac_analysis(df_ili, existing_flu_lags, existing_all_lags, response_
                 self.params = original_model.params
                 self.bse = np.sqrt(np.diag(hac_cov))
                 self.tvalues = self.params / self.bse
-                df = len(original_model.resid) - len(self.params)
-                self.pvalues = 2 * (1 - t.cdf(np.abs(self.tvalues), df))
+                self.pvalues = 2 * (1 - t.cdf(np.abs(self.tvalues), len(original_model.resid) - len(self.params)))
                 self.rsquared = original_model.rsquared
                 self.fvalue = f_stat
                 self.pvalue = p_val
@@ -537,6 +535,10 @@ def perform_hac_analysis(df_ili, existing_flu_lags, existing_all_lags, response_
                     0: self.params - 1.96 * self.bse,
                     1: self.params + 1.96 * self.bse
                 }, index=self.params.index)
+                # Add summary method for compatibility
+                def summary():
+                    return "HAC-adjusted results summary"
+                self.summary = summary
         
         hac_results = HACResults(ols_u, hac_cov, f_stat_hac, p_val_hac)
         
@@ -713,46 +715,67 @@ def main():
             df_ili_fresh, existing_flu_lags, existing_all_lags, response_var
         )
         
-        if model_restricted is not None and model_unrestricted is not None:
-            # Perform autocorrelation analysis
-            dw_restricted, dw_unrestricted, has_autocorrelation = perform_autocorrelation_analysis(model_restricted, model_unrestricted)
+        if model_unrestricted is None:
+            print("Granger causality test failed. Continuing to next lag.")
+            continue
+        
+        # Detect autocorrelation
+        has_autocorrelation = detect_autocorrelation(model_unrestricted)
+        dw_statistic = sm.stats.durbin_watson(model_unrestricted.resid)
+        
+        # If autocorrelation is detected, perform corrections
+        if has_autocorrelation:
+            print(f"\n⚠️  Autocorrelation detected! Performing corrections...")
             
-            # If autocorrelation is detected, perform corrections
-            if has_autocorrelation:
-                print(f"\n⚠️  Autocorrelation detected! Performing corrections...")
-                
-                # Method 1: HAC standard errors (corrected approach)
-                ols_u_hac, wald_res = perform_hac_analysis(
-                    df_ili_fresh, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None
-                )
-                
-                # Method 2: Cochrane-Orcutt transformation
-                model_corrected, rho = perform_autocorrelation_correction(
-                    df_ili_fresh, existing_flu_lags, existing_all_lags, response_var
-                )
-                
-                # Use HAC-adjusted results for individual term analysis
-                if ols_u_hac is not None:
-                    print(f"\nUsing HAC-adjusted results for individual term analysis...")
-                    # Use the HAC-adjusted model for individual term analysis
-                    analyze_individual_terms(ols_u_hac, filtered_columns, max_lag, response_var, wald_res['fvalue'], wald_res['pvalue'],
-                                           has_autocorrelation, dw_unrestricted, wald_res)
-                else:
-                    print(f"\nUsing original results for individual term analysis...")
-                    analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value,
-                                           has_autocorrelation, dw_unrestricted, None)
-                
-                # Perform HAC sensitivity analysis
-                perform_hac_sensitivity_analysis(df_ili_fresh, existing_flu_lags, existing_all_lags, response_var)
+            # Method 1: HAC standard errors (corrected approach)
+            ols_u_hac, wald_res = perform_hac_analysis(
+                df_ili_fresh, existing_flu_lags, existing_all_lags, response_var, F, p_value, maxlags=None
+            )
+            
+            # Method 2: Cochrane-Orcutt transformation
+            model_corrected, rho = perform_autocorrelation_correction(
+                df_ili_fresh, existing_flu_lags, existing_all_lags, response_var
+            )
+            
+            # Method 3: HAC sensitivity analysis
+            hac_sensitivity_results = perform_hac_sensitivity_analysis(
+                df_ili_fresh, existing_flu_lags, existing_all_lags, response_var
+            )
+            
+            # Use HAC results for individual term analysis if available
+            if ols_u_hac is not None:
+                print(f"\nUsing HAC-adjusted results for individual term analysis...")
+                analyze_individual_terms(ols_u_hac, filtered_columns, max_lag, response_var, 
+                                       wald_res['fvalue'], wald_res['pvalue'])
             else:
-                # No autocorrelation detected, use original results
-                print(f"\n✓ No autocorrelation detected. Using standard results...")
-                analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value,
-                                       has_autocorrelation, dw_unrestricted, None)
-            
-            print(f"\n=== ANALYSIS COMPLETE FOR MAX LAG = {max_lag} ===")
+                print(f"\nHAC analysis failed, using original results...")
+                analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
         else:
-            print("Analysis could not be completed due to errors in model fitting.")
+            # No autocorrelation detected, use original results
+            print(f"\n✅ No autocorrelation detected. Using standard results.")
+            analyze_individual_terms(model_unrestricted, filtered_columns, max_lag, response_var, F, p_value)
+        
+        # Perform individual term analysis
+        term_significance, significant_uncorrected, significant_bonferroni, fdr_significant_terms, bonferroni_threshold = analyze_individual_terms(
+            model_unrestricted, filtered_columns, max_lag, response_var, F, p_value
+        )
+        
+        # Create visualization
+        create_comprehensive_visualization(
+            model_unrestricted, filtered_columns, max_lag, term_significance,
+            significant_uncorrected, significant_bonferroni, fdr_significant_terms,
+            bonferroni_threshold, response_var
+        )
+        
+        # Save comprehensive results
+        save_comprehensive_results(
+            term_significance, significant_uncorrected, significant_bonferroni,
+            fdr_significant_terms, bonferroni_threshold, F, p_value,
+            model_unrestricted, max_lag, response_var, has_autocorrelation, 
+            dw_statistic=dw_statistic, hac_results=wald_res if ols_u_hac is not None else None
+        )
+        
+        print(f"\n=== ANALYSIS COMPLETE FOR MAX LAG = {max_lag} ===")
     
     print(f"\n=== ALL ANALYSES COMPLETE ===")
 

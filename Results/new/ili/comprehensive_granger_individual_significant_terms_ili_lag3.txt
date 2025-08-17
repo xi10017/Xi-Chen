@@ -3,52 +3,69 @@ Response variable: % WEIGHTED ILI
 Max lag: 3
 Number of tests: 149
 Bonferroni threshold: 0.000336
-Overall Granger causality F-statistic: 6.5340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 7.4072
 Overall Granger causality p-value: 0.000000
-Model R-squared: 0.9973
+Model R-squared: 0.9933
 
 === AUTOCORRELATION ANALYSIS ===
 Autocorrelation detected: No
-Durbin-Watson statistic: 2.1497
+Durbin-Watson statistic: 2.1013
 Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 22.9337
+HAC-adjusted p-value: 0.000000
 
 === SIGNIFICANCE SUMMARY ===
-Uncorrected significant (p < 0.05): 33 terms
-Bonferroni significant (p < 0.000336): 1 terms
-FDR significant: 1 terms
+Uncorrected significant (p < 0.05): 47 terms
+Bonferroni significant (p < 0.000336): 2 terms
+FDR significant: 10 terms
 
-=== ALL SIGNIFICANT TERMS (n=33) ===
+=== ALL SIGNIFICANT TERMS (n=47) ===
 Term	Min_p_value	Most_Conservative_Significance
-avian flu california + avian flu symptoms in human_58835c33	0.000292	FDR
-flu texas	0.001113	Uncorrected
-strep	0.002892	Uncorrected
-the flue	0.003264	Uncorrected
-how long does the flu last	0.005039	Uncorrected
-what is the flu	0.005167	Uncorrected
-symptoms of bronchitis	0.007197	Uncorrected
-strep throat	0.007296	Uncorrected
-break a fever	0.007449	Uncorrected
-(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b	0.008029	Uncorrected
-expectorant	0.009350	Uncorrected
-flu like symptoms	0.009692	Uncorrected
-avian flu news + avian flu outbreak + bird flu out_804ade0a	0.011866	Uncorrected
-stomach virus symptoms	0.012339	Uncorrected
-period fever	0.012652	Uncorrected
-flu incubation	0.017854	Uncorrected
-symptoms of cold	0.019924	Uncorrected
-symptoms of pneumonia	0.021755	Uncorrected
-flu headache	0.022357	Uncorrected
-(TOPIC)0cjf0	0.022530	Uncorrected
-robitussin	0.023237	Uncorrected
-fever	0.025877	Uncorrected
-stomach flu virus	0.026998	Uncorrected
-incubation period	0.029615	Uncorrected
-how long contagious	0.030953	Uncorrected
-fever flu symptoms	0.031996	Uncorrected
-(TOPIC)0j5fv	0.032157	Uncorrected
-flu treatment	0.033934	Uncorrected
-tessalon	0.039091	Uncorrected
-normal body	0.041848	Uncorrected
-flu and fever	0.042281	Uncorrected
-(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.045696	Uncorrected
-flu children	0.049223	Uncorrected
+flu texas	0.000040	Bonferroni
+low body	0.000263	Bonferroni
+stomach flu virus	0.000432	FDR
+incubation period	0.000496	FDR
+symptoms of pneumonia	0.000809	FDR
+flu treatment	0.000939	FDR
+stomach virus	0.001151	FDR
+high fever	0.001570	FDR
+(TOPIC)0j5fv	0.001978	FDR
+strep	0.003038	FDR
+walking pneumonia	0.003728	Uncorrected
+cold flu symptoms	0.004149	Uncorrected
+flu incubation	0.004481	Uncorrected
+how long does the flu last	0.005353	Uncorrected
+how long contagious	0.006166	Uncorrected
+rsv symptoms	0.008627	Uncorrected
+flu remedies	0.008720	Uncorrected
+(TOPIC)087cyy	0.008822	Uncorrected
+sinus infections	0.008848	Uncorrected
+tessalon	0.009123	Uncorrected
+fever reducer	0.011567	Uncorrected
+symptoms of the flu	0.012912	Uncorrected
+flu like symptoms	0.013309	Uncorrected
+(TOPIC)06n3pj	0.015727	Uncorrected
+fever with flu	0.015996	Uncorrected
+bronchitis	0.019987	Uncorrected
+flu headache	0.020597	Uncorrected
+flu care	0.021490	Uncorrected
+cough and sore throat	0.025603	Uncorrected
+strep throat	0.027835	Uncorrected
+(TOPIC)0cjf0	0.028745	Uncorrected
+stomach flu diarrhea	0.029685	Uncorrected
+flu and fever	0.030839	Uncorrected
+flu a symptoms	0.030872	Uncorrected
+robitussin	0.031196	Uncorrected
+avian flu california + avian flu symptoms in human_58835c33	0.033903	Uncorrected
+oscillococcinum	0.034461	Uncorrected
+avian flu california + avian flu symptoms in human_20e1d83d	0.035411	Uncorrected
+fever flu symptoms	0.037678	Uncorrected
+sinus medicine	0.042065	Uncorrected
+what is the flu	0.042414	Uncorrected
+flu children	0.042471	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.044035	Uncorrected
+(TOPIC)08pr_0	0.044999	Uncorrected
+fever symptoms	0.045507	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.045800	Uncorrected
+flu cough	0.049075	Uncorrected

@@ -22,7 +22,7 @@ FDR significant: 16 terms
 
 === ALL SIGNIFICANT TERMS (n=58) ===
 Term	Min_p_value	Most_Conservative_Significance
-incubation period	0.000293	FDR
+incubation period	0.000293	Bonferroni
 the flu virus	0.000476	FDR
 (TOPIC)0g9pc	0.000793	FDR
 cough and sore throat	0.000919	FDR
