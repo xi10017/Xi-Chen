@@ -1,0 +1,61 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 3
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 3.3162
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9895
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.1103
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 10.0548
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 37 terms
+Bonferroni significant (p < 0.000340): 4 terms
+FDR significant: 8 terms
+
+=== ALL SIGNIFICANT TERMS (n=37) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)028tns	0.000001	Bonferroni
+tessalon	0.000033	Bonferroni
+h1n1	0.000225	Bonferroni
+the flu virus	0.000294	Bonferroni
+signs of flu	0.000752	FDR
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.001068	FDR
+epidemic	0.002130	FDR
+the flu	0.002392	FDR
+the flue	0.003209	Uncorrected
+symptoms of the flu	0.004355	Uncorrected
+flu like symptoms	0.005130	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b	0.005245	Uncorrected
+fever with flu	0.006593	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.009079	Uncorrected
+best cough medicine	0.013715	Uncorrected
+fever reducer	0.014408	Uncorrected
+how long does flu last	0.017066	Uncorrected
+what is a fever	0.017488	Uncorrected
+cold symptoms	0.021457	Uncorrected
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.022212	Uncorrected
+flu test	0.022459	Uncorrected
+pneumonia symptoms	0.023508	Uncorrected
+flu texas	0.024032	Uncorrected
+symptoms of pneumonia	0.024220	Uncorrected
+flu medicine	0.024425	Uncorrected
+cold flu symptoms	0.026386	Uncorrected
+avian flu	0.026897	Uncorrected
+dry cough	0.027182	Uncorrected
+fever flu symptoms	0.028605	Uncorrected
+normal body temperature	0.030736	Uncorrected
+what is the flu	0.031439	Uncorrected
+(TOPIC)087cyy	0.033958	Uncorrected
+treat flu	0.035101	Uncorrected
+flu children	0.038196	Uncorrected
+(TOPIC)01c751	0.040690	Uncorrected
+advil cold and flu + allergies vs cold + best cold_7dd0ee04	0.040932	Uncorrected
+cold and cough	0.049594	Uncorrected

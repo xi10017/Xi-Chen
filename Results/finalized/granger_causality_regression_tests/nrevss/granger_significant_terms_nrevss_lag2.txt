@@ -1,0 +1,59 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 2
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 3.6145
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9842
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.0597
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 10.0548
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 35 terms
+Bonferroni significant (p < 0.000340): 6 terms
+FDR significant: 13 terms
+
+=== ALL SIGNIFICANT TERMS (n=35) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.000002	Bonferroni
+(TOPIC)028tns	0.000010	Bonferroni
+h1n1	0.000067	Bonferroni
+the flu virus	0.000070	Bonferroni
+flu children	0.000088	Bonferroni
+flu like symptoms	0.000217	Bonferroni
+what is the flu	0.000793	FDR
+tessalon	0.000999	FDR
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.001396	FDR
+symptoms of the flu	0.001514	FDR
+avian flu	0.001966	FDR
+fever reducer	0.002177	FDR
+fever with flu	0.002888	FDR
+normal body temperature	0.004908	Uncorrected
+the flu	0.006029	Uncorrected
+cold flu symptoms	0.006091	Uncorrected
+what is a fever	0.007048	Uncorrected
+i have the flu	0.009521	Uncorrected
+best flu medicine for adults + children's tylenol _de4e67e7	0.010851	Uncorrected
+sinus	0.011827	Uncorrected
+how long does the flu last	0.018560	Uncorrected
+tussionex	0.020597	Uncorrected
+oscillococcinum	0.020717	Uncorrected
+flu texas	0.027373	Uncorrected
+symptoms of cold	0.027835	Uncorrected
+how long contagious	0.029137	Uncorrected
+food poisoning	0.031925	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_e404534b	0.033881	Uncorrected
+cold symptoms	0.034346	Uncorrected
+treat flu	0.035234	Uncorrected
+current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms	0.036308	Uncorrected
+flu test	0.038226	Uncorrected
+best flu medicine for adults + children's tylenol _c6535e4a	0.039435	Uncorrected
+period fever	0.046476	Uncorrected
+flu cough	0.047020	Uncorrected

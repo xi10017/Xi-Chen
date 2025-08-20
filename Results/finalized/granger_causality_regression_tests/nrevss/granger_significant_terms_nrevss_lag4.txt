@@ -1,0 +1,74 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 4
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 3.5427
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9943
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.0710
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 10.0548
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 50 terms
+Bonferroni significant (p < 0.000340): 1 terms
+FDR significant: 8 terms
+
+=== ALL SIGNIFICANT TERMS (n=50) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)028tns	0.000058	Bonferroni
+the flu virus	0.000345	FDR
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.000489	FDR
+(TOPIC)0g9pc	0.000516	FDR
+epidemic	0.000859	FDR
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.001079	FDR
+tessalon	0.001104	FDR
+tussionex	0.001394	FDR
+avian flu humans + avian flu in chickens + avian f_de498a91	0.004202	Uncorrected
+flu texas	0.004547	Uncorrected
+avian flu	0.005282	Uncorrected
+flu like symptoms	0.005713	Uncorrected
+(TOPIC)01c751	0.008812	Uncorrected
+stomach virus symptoms	0.010977	Uncorrected
+stomach flu	0.014064	Uncorrected
+pneumonia symptoms	0.014271	Uncorrected
+advil cold and flu + allergies vs cold + best cold_7dd0ee04	0.016653	Uncorrected
+i have the flu	0.017071	Uncorrected
+acute bronchitis	0.017097	Uncorrected
+how long does the flu last	0.017370	Uncorrected
+h1n1	0.017652	Uncorrected
+stomach flu diarrhea	0.017826	Uncorrected
+what is a fever	0.018442	Uncorrected
+stomach virus	0.018754	Uncorrected
+symptoms of the flu	0.020107	Uncorrected
+spanish flu	0.020860	Uncorrected
+congestion medicine	0.022088	Uncorrected
+sinus medicine	0.024160	Uncorrected
+avian flu news + avian flu outbreak + bird flu out_804ade0a	0.024431	Uncorrected
+fever reducer	0.024925	Uncorrected
+the flue	0.026264	Uncorrected
+advil cold and flu + allergies vs cold + best cold_52555453	0.027118	Uncorrected
+what is the flu	0.027729	Uncorrected
+advil cold and flu + allergies vs cold + best cold_2d4fc80d	0.028957	Uncorrected
+(TOPIC)01b_21	0.033825	Uncorrected
+fever with flu	0.034135	Uncorrected
+influenza symptoms	0.035533	Uncorrected
+avian flu california + avian flu symptoms in human_20e1d83d	0.035839	Uncorrected
+(TOPIC)0cjf0	0.036017	Uncorrected
+dry cough	0.036409	Uncorrected
+low body	0.038545	Uncorrected
+the flu	0.039652	Uncorrected
+cold flu	0.040593	Uncorrected
+signs of flu	0.041871	Uncorrected
+alka seltzer cold and cough + cold vs sinus infect_75a01e90	0.042465	Uncorrected
+cough and fever	0.042707	Uncorrected
+robitussin	0.043156	Uncorrected
+cold flu symptoms	0.043509	Uncorrected
+best cough medicine	0.044578	Uncorrected
+cough and sore throat	0.048483	Uncorrected

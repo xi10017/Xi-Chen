@@ -1,0 +1,55 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 1
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 6.1557
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9673
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: Yes
+Durbin-Watson statistic: 1.4029
+Interpretation: Strong positive autocorrelation
+HAC-adjusted F-statistic: 10.0548
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 31 terms
+Bonferroni significant (p < 0.000340): 4 terms
+FDR significant: 10 terms
+
+=== ALL SIGNIFICANT TERMS (n=31) ===
+Term	Min_p_value	Most_Conservative_Significance
+h1n1	0.000000	Bonferroni
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.000000	Bonferroni
+flu cough	0.000000	Bonferroni
+the flu	0.000167	Bonferroni
+(TOPIC)06p_bp	0.000543	FDR
+fever flu symptoms	0.000624	FDR
+flu incubation	0.000988	FDR
+incubation period	0.001351	FDR
+cold flu symptoms	0.001356	FDR
+(TOPIC)03t8j0	0.001628	FDR
+symptoms of pneumonia	0.006008	Uncorrected
+congestion medicine	0.006019	Uncorrected
+stomach virus	0.007827	Uncorrected
+epidemic	0.008974	Uncorrected
+advil cold and flu + allergies vs cold + best cold_46a6a780	0.011473	Uncorrected
+chest cold	0.012320	Uncorrected
+cold symptoms	0.013669	Uncorrected
+the flu virus	0.014181	Uncorrected
+cold flu	0.015212	Uncorrected
+reduce fever	0.016759	Uncorrected
+flu stomach pain	0.017645	Uncorrected
+avian flu	0.018689	Uncorrected
+sinus medicine	0.024256	Uncorrected
+break a fever	0.026785	Uncorrected
+flu children	0.028066	Uncorrected
+stomach flu symptoms	0.028730	Uncorrected
+avian flu humans + avian flu in chickens + avian f_de498a91	0.033712	Uncorrected
+how long does the flu last	0.035213	Uncorrected
+treat flu	0.044632	Uncorrected
+difference in flu type a and b + flu b incubation _f0f3f08e	0.047391	Uncorrected
+tussionex	0.049549	Uncorrected

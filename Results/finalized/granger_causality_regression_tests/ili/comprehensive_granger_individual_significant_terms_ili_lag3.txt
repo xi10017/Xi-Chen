@@ -1,0 +1,62 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: % WEIGHTED ILI
+Max lag: 3
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 5.2736
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9934
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.1491
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 22.0637
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 38 terms
+Bonferroni significant (p < 0.000340): 3 terms
+FDR significant: 8 terms
+
+=== ALL SIGNIFICANT TERMS (n=38) ===
+Term	Min_p_value	Most_Conservative_Significance
+flu texas	0.000032	Bonferroni
+(TOPIC)0j5fv	0.000163	Bonferroni
+low body	0.000291	Bonferroni
+how long does the flu last	0.000384	FDR
+tessalon	0.001415	FDR
+how long does flu last	0.002128	FDR
+stomach flu virus	0.002192	FDR
+high fever	0.002302	FDR
+(TOPIC)087cyy	0.003095	Uncorrected
+fever with flu	0.003477	Uncorrected
+flu children	0.007330	Uncorrected
+fever reducer	0.009185	Uncorrected
+stomach virus	0.011639	Uncorrected
+(TOPIC)028tns	0.013128	Uncorrected
+dry cough	0.013758	Uncorrected
+strep	0.014069	Uncorrected
+flu remedies	0.014859	Uncorrected
+cold flu symptoms	0.015060	Uncorrected
+tylenol extra strength	0.017225	Uncorrected
+cdc	0.017554	Uncorrected
+symptoms of the flu	0.019009	Uncorrected
+(TOPIC)08pr_0	0.021477	Uncorrected
+flu treatment	0.024218	Uncorrected
+avian flu california + avian flu symptoms in human_20e1d83d	0.025605	Uncorrected
+avian flu california + avian flu symptoms in human_58835c33	0.025880	Uncorrected
+sinus medicine	0.027807	Uncorrected
+flu incubation	0.027885	Uncorrected
+the flue	0.028285	Uncorrected
+symptoms of cold	0.028717	Uncorrected
+pneumonia symptoms	0.029949	Uncorrected
+fever symptoms	0.031223	Uncorrected
+tussionex	0.035055	Uncorrected
+strep throat	0.035252	Uncorrected
+best over the counter flu medicine + cold and flu _4d7536f3	0.037108	Uncorrected
+signs of flu	0.040020	Uncorrected
+symptoms of pneumonia	0.043799	Uncorrected
+stomach flu symptoms	0.043969	Uncorrected
+sinus infections	0.044724	Uncorrected

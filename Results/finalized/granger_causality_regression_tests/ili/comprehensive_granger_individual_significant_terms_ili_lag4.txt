@@ -1,0 +1,52 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: % WEIGHTED ILI
+Max lag: 4
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 4.8364
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9962
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.0610
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 22.0637
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 28 terms
+Bonferroni significant (p < 0.000340): 1 terms
+FDR significant: 1 terms
+
+=== ALL SIGNIFICANT TERMS (n=28) ===
+Term	Min_p_value	Most_Conservative_Significance
+how long does the flu last	0.000204	Bonferroni
+flu texas	0.001179	Uncorrected
+how long does flu last	0.001832	Uncorrected
+low body	0.002046	Uncorrected
+high fever	0.002321	Uncorrected
+period fever	0.003004	Uncorrected
+flu and fever	0.003435	Uncorrected
+flu cough	0.004845	Uncorrected
+(TOPIC)0cjf0	0.005394	Uncorrected
+flu children	0.006305	Uncorrected
+sinus infections	0.008716	Uncorrected
+(TOPIC)087cyy	0.008851	Uncorrected
+dry cough	0.009049	Uncorrected
+fever with flu	0.010161	Uncorrected
+symptoms of the flu	0.011905	Uncorrected
+(TOPIC)03t8j0	0.012387	Uncorrected
+the flu virus	0.017187	Uncorrected
+(TOPIC)0j5fv	0.022607	Uncorrected
+pneumonia symptoms	0.023443	Uncorrected
+h1n1	0.027418	Uncorrected
+break a fever	0.027881	Uncorrected
+(TOPIC)0g9pc	0.028380	Uncorrected
+stomach flu virus	0.034922	Uncorrected
+epidemic	0.039485	Uncorrected
+influenza symptoms	0.042479	Uncorrected
+fever	0.043548	Uncorrected
+sinus	0.047543	Uncorrected
+(TOPIC)0416v7	0.048131	Uncorrected

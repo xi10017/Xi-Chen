@@ -1,0 +1,48 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: % WEIGHTED ILI
+Max lag: 5
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 4.6404
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9983
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.2560
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 22.0637
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 24 terms
+Bonferroni significant (p < 0.000340): 1 terms
+FDR significant: 2 terms
+
+=== ALL SIGNIFICANT TERMS (n=24) ===
+Term	Min_p_value	Most_Conservative_Significance
+how long does the flu last	0.000165	Bonferroni
+h1n1	0.000392	FDR
+period fever	0.001280	Uncorrected
+how long does flu last	0.003171	Uncorrected
+what is the flu	0.003453	Uncorrected
+best over the counter flu medicine + cold and flu _4d7536f3	0.004610	Uncorrected
+the flu virus	0.006839	Uncorrected
+incubation period	0.007558	Uncorrected
+the flue	0.010774	Uncorrected
+(TOPIC)087cyy	0.012567	Uncorrected
+dangerous fever	0.014360	Uncorrected
+stomach flu diarrhea	0.019903	Uncorrected
+pandemic	0.024925	Uncorrected
+(TOPIC)0j5fv	0.025474	Uncorrected
+congestion medicine	0.029373	Uncorrected
+sinus	0.031373	Uncorrected
+chest cold	0.032946	Uncorrected
+(TOPIC)0cjf0	0.035455	Uncorrected
+signs of flu	0.035532	Uncorrected
+expectorant	0.040284	Uncorrected
+symptoms of cold	0.041123	Uncorrected
+cold and cough	0.041823	Uncorrected
+flu stomach pain	0.042281	Uncorrected
+flu children	0.043399	Uncorrected

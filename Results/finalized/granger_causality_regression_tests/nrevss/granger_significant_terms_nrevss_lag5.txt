@@ -1,0 +1,76 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: flu_total_positive
+Max lag: 5
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 3.7826
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9976
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.2898
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 10.0548
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 52 terms
+Bonferroni significant (p < 0.000340): 1 terms
+FDR significant: 1 terms
+
+=== ALL SIGNIFICANT TERMS (n=52) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)0g9pc	0.000249	Bonferroni
+the flu virus	0.000785	Uncorrected
+incubation period	0.001628	Uncorrected
+congestion medicine	0.001770	Uncorrected
+stomach flu diarrhea	0.003687	Uncorrected
+how long does the flu last	0.004516	Uncorrected
+cough and sore throat	0.004557	Uncorrected
+symptoms of pneumonia	0.004652	Uncorrected
+pneumonia	0.004801	Uncorrected
+(TOPIC)03t8j0	0.004810	Uncorrected
+sinus medicine	0.005405	Uncorrected
+stomach flu	0.005995	Uncorrected
+alka seltzer cold and cough + cold vs sinus infect_75a01e90	0.006059	Uncorrected
+the flue	0.008924	Uncorrected
+epidemic	0.009505	Uncorrected
+best over the counter flu medicine + cold and flu _4d7536f3	0.009801	Uncorrected
+h1n1	0.010163	Uncorrected
+pandemic	0.010576	Uncorrected
+flu medicine	0.010697	Uncorrected
+(TOPIC)028tns	0.011031	Uncorrected
+how long contagious	0.011166	Uncorrected
+stomach virus	0.012495	Uncorrected
+(TOPIC)0b2cnj	0.013299	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.015642	Uncorrected
+flu like symptoms	0.015789	Uncorrected
+influenza symptoms	0.016053	Uncorrected
+stomach virus symptoms	0.016409	Uncorrected
+avian flu california + avian flu symptoms in human_44b9fefd	0.017923	Uncorrected
+tylenol extra strength	0.018665	Uncorrected
+flu virus	0.019661	Uncorrected
+high fever	0.019744	Uncorrected
+difference in flu type a and b + flu b incubation _f0f3f08e	0.022971	Uncorrected
+dangerous fever	0.022992	Uncorrected
+best over the counter flu medicine + cold and flu _53c4abfe	0.023133	Uncorrected
+spanish flu	0.025201	Uncorrected
+period fever	0.026128	Uncorrected
+influenza a vs b symptoms + medicine for flu and cough + stomach flu vs stomach bug	0.026172	Uncorrected
+flu children	0.026955	Uncorrected
+pneumonia symptoms	0.027212	Uncorrected
+(TOPIC)06n3pj	0.027290	Uncorrected
+flu cough	0.028135	Uncorrected
+avian flu california + avian flu symptoms in human_20e1d83d	0.033287	Uncorrected
+avian flu humans + avian flu in chickens + avian f_de498a91	0.033738	Uncorrected
+tussionex	0.033996	Uncorrected
+flu incubation	0.035094	Uncorrected
+tussin	0.035334	Uncorrected
+(TOPIC)01c751	0.037159	Uncorrected
+low body	0.037236	Uncorrected
+(TOPIC)0b76bty	0.037519	Uncorrected
+fever reducer	0.040094	Uncorrected
+robitussin	0.041582	Uncorrected
+flu stomach pain	0.049319	Uncorrected

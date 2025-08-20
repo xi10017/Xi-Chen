@@ -1,0 +1,61 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: % WEIGHTED ILI
+Max lag: 2
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 6.3045
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9901
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: No
+Durbin-Watson statistic: 2.0423
+Interpretation: No significant autocorrelation
+HAC-adjusted F-statistic: 22.0637
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 37 terms
+Bonferroni significant (p < 0.000340): 2 terms
+FDR significant: 16 terms
+
+=== ALL SIGNIFICANT TERMS (n=37) ===
+Term	Min_p_value	Most_Conservative_Significance
+(TOPIC)0j5fv	0.000027	Bonferroni
+the flu virus	0.000166	Bonferroni
+flu texas	0.000674	FDR
+strep throat	0.000728	FDR
+fever reducer	0.000827	FDR
+stomach flu virus	0.000842	FDR
+tylenol extra strength	0.001220	FDR
+how long does the flu last	0.001514	FDR
+(TOPIC)087cyy	0.001527	FDR
+high fever	0.002161	FDR
+symptoms of the flu	0.002327	FDR
+cold flu symptoms	0.002811	FDR
+symptoms of pneumonia	0.003292	FDR
+low body	0.003662	FDR
+strep	0.004312	FDR
+flu children	0.004326	FDR
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.006446	Uncorrected
+flu test	0.010356	Uncorrected
+(TOPIC)06n3pj	0.015955	Uncorrected
+how long contagious	0.018852	Uncorrected
+flu care	0.019440	Uncorrected
+stomach virus	0.019614	Uncorrected
+expectorant	0.022375	Uncorrected
+best cold medicine	0.024099	Uncorrected
+thermoscan	0.025374	Uncorrected
+avian flu california + avian flu symptoms in human_d16842ee	0.030214	Uncorrected
+how long does flu last	0.031033	Uncorrected
+reduce fever	0.031824	Uncorrected
+robitussin	0.031842	Uncorrected
+(TOPIC)0b76bty	0.032056	Uncorrected
+symptoms of cold	0.033403	Uncorrected
+food poisoning	0.035218	Uncorrected
+flu medicine	0.039262	Uncorrected
+what is the flu	0.044418	Uncorrected
+pneumonia symptoms	0.044570	Uncorrected
+avian flu california + avian flu symptoms in human_58835c33	0.045368	Uncorrected
+symptoms of stomach flu	0.046417	Uncorrected

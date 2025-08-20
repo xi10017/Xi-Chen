@@ -1,0 +1,64 @@
+=== COMPREHENSIVE GRANGER CAUSALITY ANALYSIS SUMMARY ===
+Response variable: % WEIGHTED ILI
+Max lag: 1
+Number of tests: 147
+Bonferroni threshold: 0.000340
+FDR correction applied (Benjamini-Hochberg method)
+Overall Granger causality F-statistic: 9.7483
+Overall Granger causality p-value: 0.000000
+Model R-squared: 0.9787
+
+=== AUTOCORRELATION ANALYSIS ===
+Autocorrelation detected: Yes
+Durbin-Watson statistic: 1.4625
+Interpretation: Strong positive autocorrelation
+HAC-adjusted F-statistic: 22.0637
+HAC-adjusted p-value: 0.000000
+
+=== SIGNIFICANCE SUMMARY ===
+Uncorrected significant (p < 0.05): 40 terms
+Bonferroni significant (p < 0.000340): 4 terms
+FDR significant: 10 terms
+
+=== ALL SIGNIFICANT TERMS (n=40) ===
+Term	Min_p_value	Most_Conservative_Significance
+incubation period	0.000000	Bonferroni
+how long does flu last	0.000002	Bonferroni
+stomach flu virus	0.000011	Bonferroni
+high fever	0.000103	Bonferroni
+flu cough	0.000429	FDR
+break a fever	0.000775	FDR
+cold symptoms	0.001524	FDR
+(TOPIC)03t8j0	0.001755	FDR
+h1n1	0.001922	FDR
+cough and fever	0.002186	FDR
+pandemic	0.005044	Uncorrected
+current flu symptoms + flu type a treatment + how long am i contagious with the flu + type a influenza symptoms	0.006356	Uncorrected
+flu incubation	0.006892	Uncorrected
+how long contagious	0.007605	Uncorrected
+dry cough	0.007724	Uncorrected
+stomach flu	0.010126	Uncorrected
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129	0.011007	Uncorrected
+fever symptoms	0.011163	Uncorrected
+sinus medicine	0.016024	Uncorrected
+advil cold and flu + allergies vs cold + best cold_46a6a780	0.017464	Uncorrected
+best cough medicine	0.018275	Uncorrected
+flu remedies	0.018977	Uncorrected
+flu children	0.020281	Uncorrected
+reduce fever	0.020599	Uncorrected
+chest cold	0.021899	Uncorrected
+food poisoning symptoms	0.022845	Uncorrected
+symptoms of stomach flu	0.027369	Uncorrected
+flu a symptoms	0.027790	Uncorrected
+ear thermometer	0.030290	Uncorrected
+cold flu symptoms	0.032149	Uncorrected
+flu stomach pain	0.032951	Uncorrected
+flu virus	0.033932	Uncorrected
+cure flu	0.034906	Uncorrected
+sinus	0.040546	Uncorrected
+what is the flu	0.040988	Uncorrected
+low body	0.041021	Uncorrected
+strep	0.041359	Uncorrected
+(TOPIC)0j5fv	0.041716	Uncorrected
+the flu virus	0.041768	Uncorrected
+avian flu	0.041916	Uncorrected
