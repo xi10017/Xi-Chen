@@ -1,0 +1,29 @@
+=== DETAILED SIGNIFICANT TERMS ANALYSIS ===
+Test Type: ILI
+Response Variable: % WEIGHTED ILI
+Max Lag: 2
+Model R-squared: 0.9901
+
+Format: Term	Lag	Coefficient	P-value	Significance_Level
+================================================================================
+
+the flu virus	1	0.008433	0.000166	***
+(TOPIC)0j5fv	1	-0.000485	0.000027	***
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Bonferroni threshold: 0.000170
+Total Bonferroni significant terms: 2
+Terms with p < 0.001: 2
+Terms with p < 0.01: 2
+Terms with p < Bonferroni threshold: 2
+
+TERMS BY SIGNIFICANCE (ALL LAGS COMBINED):
+================================================================================
+
+(TOPIC)0j5fv (min p-value: 0.000027):
+  Lag 1: coef=-0.000485, p=0.000027 ***
+
+the flu virus (min p-value: 0.000166):
+  Lag 1: coef=0.008433, p=0.000166 ***

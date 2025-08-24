@@ -1,0 +1,25 @@
+=== DETAILED SIGNIFICANT TERMS ANALYSIS ===
+Test Type: ILI
+Response Variable: % WEIGHTED ILI
+Max Lag: 3
+Model R-squared: 0.9934
+
+Format: Term	Lag	Coefficient	P-value	Significance_Level
+================================================================================
+
+flu texas	2	0.005348	0.000032	***
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Bonferroni threshold: 0.000113
+Total Bonferroni significant terms: 1
+Terms with p < 0.001: 1
+Terms with p < 0.01: 1
+Terms with p < Bonferroni threshold: 1
+
+TERMS BY SIGNIFICANCE (ALL LAGS COMBINED):
+================================================================================
+
+flu texas (min p-value: 0.000032):
+  Lag 2: coef=0.005348, p=0.000032 ***

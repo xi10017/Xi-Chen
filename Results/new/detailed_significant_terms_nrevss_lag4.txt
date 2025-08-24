@@ -1,0 +1,25 @@
+=== DETAILED SIGNIFICANT TERMS ANALYSIS ===
+Test Type: NREVSS
+Response Variable: flu_total_positive
+Max Lag: 4
+Model R-squared: 0.9943
+
+Format: Term	Lag	Coefficient	P-value	Significance_Level
+================================================================================
+
+(TOPIC)028tns	2	-9.016084	0.000058	***
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Bonferroni threshold: 0.000085
+Total Bonferroni significant terms: 1
+Terms with p < 0.001: 1
+Terms with p < 0.01: 1
+Terms with p < Bonferroni threshold: 1
+
+TERMS BY SIGNIFICANCE (ALL LAGS COMBINED):
+================================================================================
+
+(TOPIC)028tns (min p-value: 0.000058):
+  Lag 2: coef=-9.016084, p=0.000058 ***

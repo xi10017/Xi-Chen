@@ -1,0 +1,21 @@
+=== DETAILED SIGNIFICANT TERMS ANALYSIS ===
+Test Type: ILI
+Response Variable: % WEIGHTED ILI
+Max Lag: 4
+Model R-squared: 0.9962
+
+Format: Term	Lag	Coefficient	P-value	Significance_Level
+================================================================================
+
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Bonferroni threshold: 0.000085
+Total Bonferroni significant terms: 0
+Terms with p < 0.001: 0
+Terms with p < 0.01: 0
+Terms with p < Bonferroni threshold: 0
+
+TERMS BY SIGNIFICANCE (ALL LAGS COMBINED):
+================================================================================

@@ -1,0 +1,43 @@
+=== BONFERRONI SIGNIFICANT TERMS SUMMARY ===
+Total Bonferroni-significant term-lag combinations: 16
+Unique terms: 11
+Tests included: ILI, NREVSS
+
+(TOPIC)028tns significant terms:
+(TOPIC)028tns 1 0.000001 nrevss_maxlag_3
+(TOPIC)028tns 2 0.000010 nrevss_maxlag_2
+(TOPIC)028tns 2 0.000043 nrevss_maxlag_3
+(TOPIC)028tns 2 0.000058 nrevss_maxlag_4
+
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129 significant terms:
+(TOPIC)09gh4jl + best flu medicine + best medicine_c82ee129 1 0.000002 nrevss_maxlag_2
+
+(TOPIC)0j5fv significant terms:
+(TOPIC)0j5fv 1 0.000027 ili_maxlag_2
+
+flu texas significant terms:
+flu texas 2 0.000032 ili_maxlag_3
+
+tessalon significant terms:
+tessalon 2 0.000033 nrevss_maxlag_3
+
+h1n1 significant terms:
+h1n1 1 0.000067 nrevss_maxlag_2
+h1n1 1 0.000155 nrevss_maxlag_1
+
+the flu virus significant terms:
+the flu virus 1 0.000166 ili_maxlag_2
+the flu virus 1 0.000070 nrevss_maxlag_2
+
+incubation period significant terms:
+incubation period 1 0.000081 ili_maxlag_1
+
+flu children significant terms:
+flu children 2 0.000088 nrevss_maxlag_2
+
+flu cough significant terms:
+flu cough 1 0.000105 nrevss_maxlag_1
+
+how long does flu last significant terms:
+how long does flu last 1 0.000111 ili_maxlag_1
+

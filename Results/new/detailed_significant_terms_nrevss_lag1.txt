@@ -1,0 +1,29 @@
+=== DETAILED SIGNIFICANT TERMS ANALYSIS ===
+Test Type: NREVSS
+Response Variable: flu_total_positive
+Max Lag: 1
+Model R-squared: 0.9673
+
+Format: Term	Lag	Coefficient	P-value	Significance_Level
+================================================================================
+
+h1n1	1	-0.379831	0.000155	***
+flu cough	1	-19.823555	0.000105	***
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Bonferroni threshold: 0.000340
+Total Bonferroni significant terms: 2
+Terms with p < 0.001: 2
+Terms with p < 0.01: 2
+Terms with p < Bonferroni threshold: 2
+
+TERMS BY SIGNIFICANCE (ALL LAGS COMBINED):
+================================================================================
+
+flu cough (min p-value: 0.000105):
+  Lag 1: coef=-19.823555, p=0.000105 ***
+
+h1n1 (min p-value: 0.000155):
+  Lag 1: coef=-0.379831, p=0.000155 ***
