@@ -132,6 +132,11 @@ def create_nrevss_plot(term, df_nrevss, significant_lags, term_significant, term
     else:
         fig.suptitle(f'{term} - NREVSS Analysis', fontsize=14, fontweight='bold', y=0.98)
     
+    # Normalize NREVSS data
+    nrevss_min = df_nrevss['flu_pct_positive'].min()
+    nrevss_max = df_nrevss['flu_pct_positive'].max()
+    df_nrevss['flu_pct_positive_normalized'] = (df_nrevss['flu_pct_positive'] - nrevss_min) / (nrevss_max - nrevss_min)
+    
     for lag in range(1, 6):
         ax = axes[lag-1]
         
@@ -150,14 +155,14 @@ def create_nrevss_plot(term, df_nrevss, significant_lags, term_significant, term
         else:
             ax.plot(x, df_nrevss[f'{term}_lag{lag}'], label=f'{term} (lag {lag})', color='blue', alpha=0.7, linewidth=1)
         
-        # Plot NREVSS data - right y-axis
+        # Plot normalized NREVSS data - right y-axis
         ax2 = ax.twinx()
-        ax2.plot(x, df_nrevss['flu_pct_positive'], label='NREVSS % Positive', color='orange', alpha=0.8, linewidth=2)
+        ax2.plot(x, df_nrevss['flu_pct_positive_normalized'], label='NREVSS % Positive (normalized)', color='orange', alpha=0.8, linewidth=2)
         
         # Customize plot
         ax.set_title(f'Lag {lag}', fontweight='bold')
         ax.set_ylabel(f'{term} Search Volume', color='blue')
-        ax2.set_ylabel('NREVSS Activity (%)', color='orange')
+        ax2.set_ylabel('NREVSS Activity (normalized)', color='orange')
         ax.grid(True, alpha=0.3)
         
         # Add legends
@@ -205,6 +210,15 @@ def create_combined_plot(term, df_ili, df_nrevss, term_significant, term_dir):
     ili_significant_lags = [s['lag'] for s in term_significant if s['test_type'] == 'ili']
     nrevss_significant_lags = [s['lag'] for s in term_significant if s['test_type'] == 'nrevss']
     
+    # Normalize both ILI and NREVSS data for combined plot
+    ili_min = df_ili['% WEIGHTED ILI'].min()
+    ili_max = df_ili['% WEIGHTED ILI'].max()
+    df_ili['% WEIGHTED ILI_normalized'] = (df_ili['% WEIGHTED ILI'] - ili_min) / (ili_max - ili_min)
+    
+    nrevss_min = df_nrevss['flu_pct_positive'].min()
+    nrevss_max = df_nrevss['flu_pct_positive'].max()
+    df_nrevss['flu_pct_positive_normalized'] = (df_nrevss['flu_pct_positive'] - nrevss_min) / (nrevss_max - nrevss_min)
+    
     for lag in range(1, 6):
         ax = axes[lag-1]
         
@@ -225,22 +239,22 @@ def create_combined_plot(term, df_ili, df_nrevss, term_significant, term_dir):
         else:
             ax.plot(x, df_ili[f'{term}_lag{lag}'], label=f'{term} (lag {lag})', color='blue', alpha=0.7, linewidth=1)
         
-        # Plot both flu datasets - right y-axis
+        # Plot both normalized flu datasets - right y-axis
         ax2 = ax.twinx()
         
-        # Plot ILI data
-        ax2.plot(x, df_ili['% WEIGHTED ILI'], label='ILI %', color='green', alpha=0.8, linewidth=2)
+        # Plot normalized ILI data
+        ax2.plot(x, df_ili['% WEIGHTED ILI_normalized'], label='ILI % (normalized)', color='green', alpha=0.8, linewidth=2)
         
-        # Plot NREVSS data (align dates)
+        # Plot normalized NREVSS data (align dates)
         # Handle duplicate dates by taking the mean
-        nrevss_data = df_nrevss.groupby('date')['flu_pct_positive'].mean()
+        nrevss_data = df_nrevss.groupby('date')['flu_pct_positive_normalized'].mean()
         nrevss_aligned = nrevss_data.reindex(x).ffill()
-        ax2.plot(x, nrevss_aligned, label='NREVSS %', color='orange', alpha=0.8, linewidth=2)
+        ax2.plot(x, nrevss_aligned, label='NREVSS % (normalized)', color='orange', alpha=0.8, linewidth=2)
         
         # Customize plot
         ax.set_title(f'Lag {lag}', fontweight='bold')
         ax.set_ylabel(f'{term} Search Volume', color='blue')
-        ax2.set_ylabel('Flu Activity (%)', color='green')
+        ax2.set_ylabel('Flu Activity (normalized)', color='green')
         ax.grid(True, alpha=0.3)
         
         # Add legends
