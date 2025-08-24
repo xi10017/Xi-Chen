@@ -147,18 +147,18 @@ def create_nrevss_plot(term, df_nrevss, significant_lags, term_significant, term
         # Plot lagged search term (highlight if significant) - left y-axis
         # The lagged data shows what the search term was 'lag' weeks ago at each current time point
         if lag in significant_lags:
-            ax.plot(x, df_nrevss[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago)', color='red', alpha=0.8, linewidth=2)
+            ax.plot(x, df_nrevss[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago)', color='orange', alpha=0.8, linewidth=2)
         else:
             ax.plot(x, df_nrevss[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago)', color='blue', alpha=0.7, linewidth=1)
         
-        # Plot normalized NREVSS data - right y-axis (current time)
+        # Plot normalized NREVSS data - right y-axis
         ax2 = ax.twinx()
-        ax2.plot(x, df_nrevss['flu_pct_positive_normalized'], label='NREVSS % (normalized, current)', color='orange', alpha=0.8, linewidth=2)
+        ax2.plot(x, df_nrevss['flu_pct_positive_normalized'], label='NREVSS % (normalized, current)', color='brown', alpha=0.8, linewidth=2)
         
         # Customize plot
         ax.set_title(f'Lag {lag} - Testing if search term from {lag} week(s) ago predicts current NREVSS', fontweight='bold')
         ax.set_ylabel(f'{term} Search Volume', color='blue')
-        ax2.set_ylabel('NREVSS Activity (normalized)', color='orange')
+        ax2.set_ylabel('NREVSS Activity (normalized)', color='brown')
         ax.grid(True, alpha=0.3)
         
         # Add legends
@@ -225,13 +225,23 @@ def create_combined_plot(term, df_ili, df_nrevss, term_significant, term_dir):
         # Plot search term data (use ILI dates as reference) - left y-axis
         x = df_ili['date']
         
-        # Plot lagged search term (highlight if significant in either test) - left y-axis
+        # Plot lagged search term with different colors based on significance
         # The lagged data shows what the search term was 'lag' weeks ago at each current time point
-        is_significant = (lag in ili_significant_lags) or (lag in nrevss_significant_lags)
-        if is_significant:
-            ax.plot(x, df_ili[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago)', color='red', alpha=0.8, linewidth=2)
+        is_ili_significant = lag in ili_significant_lags
+        is_nrevss_significant = lag in nrevss_significant_lags
+        
+        if is_ili_significant and is_nrevss_significant:
+            # Significant in both tests - purple
+            ax.plot(x, df_ili[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago) - ILI & NREVSS significant', color='purple', alpha=0.8, linewidth=3)
+        elif is_ili_significant:
+            # Significant in ILI only - red
+            ax.plot(x, df_ili[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago) - ILI significant', color='red', alpha=0.8, linewidth=2)
+        elif is_nrevss_significant:
+            # Significant in NREVSS only - orange
+            ax.plot(x, df_ili[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago) - NREVSS significant', color='orange', alpha=0.8, linewidth=2)
         else:
-            ax.plot(x, df_ili[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago)', color='blue', alpha=0.7, linewidth=1)
+            # Not significant in either test - blue
+            ax.plot(x, df_ili[f'{term}_lag{lag}'], label=f'{term} ({lag} week(s) ago) - Not significant', color='blue', alpha=0.7, linewidth=1)
         
         # Plot both normalized flu datasets - right y-axis (current time)
         ax2 = ax.twinx()
@@ -243,10 +253,20 @@ def create_combined_plot(term, df_ili, df_nrevss, term_significant, term_dir):
         # Handle duplicate dates by taking the mean
         nrevss_data = df_nrevss.groupby('date')['flu_pct_positive_normalized'].mean()
         nrevss_aligned = nrevss_data.reindex(x).ffill()
-        ax2.plot(x, nrevss_aligned, label='NREVSS % (normalized, current)', color='orange', alpha=0.8, linewidth=2)
+        ax2.plot(x, nrevss_aligned, label='NREVSS % (normalized, current)', color='brown', alpha=0.8, linewidth=2)
         
-        # Customize plot
-        ax.set_title(f'Lag {lag} - Testing if search term from {lag} week(s) ago predicts current flu activity', fontweight='bold')
+        # Create enhanced subplot title showing significance
+        title_parts = [f'Lag {lag}']
+        if is_ili_significant:
+            title_parts.append('ILI ✓')
+        if is_nrevss_significant:
+            title_parts.append('NREVSS ✓')
+        if not is_ili_significant and not is_nrevss_significant:
+            title_parts.append('Not significant')
+        
+        subplot_title = f"{' | '.join(title_parts)} - Testing if search term from {lag} week(s) ago predicts current flu activity"
+        ax.set_title(subplot_title, fontweight='bold')
+        
         ax.set_ylabel(f'{term} Search Volume', color='blue')
         ax2.set_ylabel('Flu Activity (normalized)', color='green')
         ax.grid(True, alpha=0.3)
